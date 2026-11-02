@@ -1,0 +1,12 @@
+.virena-date-shell{display:flex;align-items:center;gap:10px;height:56px;padding:0 16px;border-radius:28px;background:var(--lab-soft);color:var(--lab-ink);box-shadow:inset 0 0 0 1px transparent;overflow:visible}
+.virena-date:focus-within .virena-date-shell{box-shadow:inset 0 0 0 2px #1657ff}
+.virena-date[data-invalid] .virena-date-shell{background:var(--lab-error-surface);box-shadow:inset 0 0 0 1px var(--lab-error)}
+.virena-date[data-disabled]{opacity:.45}
+.virena-date-input{display:flex;align-items:center;flex:1;min-width:0;font:16px Inter;white-space:nowrap}
+.virena-date-segment{padding:3px 1px;border-radius:3px;font-variant-numeric:tabular-nums;outline:none;caret-color:transparent}
+.virena-date-segment[data-placeholder]{color:var(--lab-subtle)}
+.virena-date-segment[data-focused]{background:transparent;color:var(--lab-ink);outline:none}
+.virena-date-clear span{display:flex;align-items:center;justify-content:center;width:24px;height:24px;background:var(--lab-selected);border-radius:50%;color:var(--lab-muted);font-size:20px;line-height:1}
+.virena-date-segment[data-focused][data-placeholder]{color:var(--lab-subtle)}
+.virena-date-segment[contenteditable=true]{cursor:text;caret-color:var(--lab-ink)}
+.virena-date-segment[data-type=literal]{color:var(--lab-subtle)}
