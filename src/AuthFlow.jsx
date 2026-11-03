@@ -12,13 +12,14 @@ const defaults={remember:true,samePhone:true};
 function readDraft(){try{return JSON.parse(sessionStorage.getItem(draftKey))||{};}catch{return {};}}
 const emailOK=v=>/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v||'');
 const cities={'Россия':['Москва','Санкт-Петербург'],'Казахстан':['Астана','Алматы'],'Германия':['Берлин','Мюнхен'],'США':['Нью-Йорк','Чикаго']};
-export default function AuthFlow({Shared,db}){
+export default function AuthFlow({Shared,db,onEnter}){
  const locale=useLocale();
  const pageRoot=useRef(null),transitionTimer=useRef(null);
  const [transitioning,setTransitioning]=useState(false);
  const initial=new URLSearchParams(location.search).get('screen');
- const [step,setStep]=useState(steps[initial]?initial:readDraft().step||'login'),[v,setV]=useState({...defaults,...readDraft().values}),[errors,setErrors]=useState({}),[busy,setBusy]=useState(false),[scenario,setScenario]=useState('success'),[notice,setNotice]=useState(''),[modal,setModal]=useState(''),[lang,setLang]=useState(false),[cooldown,setCooldown]=useState(0),[google,setGoogle]=useState(false);
+ const [step,setStep]=useState(steps[initial]&&initial!=='destination'?initial:(steps[readDraft().step]&&readDraft().step!=='destination'?readDraft().step:'login')),[v,setV]=useState({...defaults,...readDraft().values}),[errors,setErrors]=useState({}),[busy,setBusy]=useState(false),[scenario,setScenario]=useState('success'),[notice,setNotice]=useState(''),[modal,setModal]=useState(''),[lang,setLang]=useState(false),[cooldown,setCooldown]=useState(0),[google,setGoogle]=useState(false);
  const screenLoading=transitioning||scenario==='loading';
+ useEffect(()=>{if(step==='destination')onEnter?.();},[step]);
  const form=useRef(null),language=useRef(null),timer=useRef(null),current=useRef(0),resendAt=useRef(0),codeIssued=useRef(Date.now()),codeAttempts=useRef(0),autoCode=useRef('');
  useEffect(()=>{const {password,newPassword,confirm,code,...safe}=v;sessionStorage.setItem(draftKey,JSON.stringify({step,values:safe}));},[step,v]);
  useEffect(()=>{if(!['verify','reset-code'].includes(step)||v.code?.length!==6){autoCode.current='';return;}const key=step+v.code;if(autoCode.current===key)return;autoCode.current=key;submit();},[step,v.code]);

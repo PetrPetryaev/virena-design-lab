@@ -1,0 +1,14 @@
+.overview-comparison [data-surface=white]{background:var(--lab-surface)}
+.overview-comparison [data-surface=soft]{background:var(--cab-card,var(--lab-soft));--lab-skeleton:color-mix(in srgb,var(--lab-muted) 4%,var(--cab-card,var(--lab-soft)))}
+.card-demo-stage{--cab-radius:24px;--cab-card:var(--lab-soft);padding:24px;min-width:0}
+.card-demo-stage.overview-comparison{display:block}
+.card-demo-stage.overview-comparison>.overview-option,.card-demo-stage.overview-comparison>.overview-card{width:100%;grid-column:auto;grid-row:auto}
+.card-demo-stage .overview-time-ring{position:absolute;inset:0;width:64px;height:64px;fill:none;stroke-width:1.5}
+.card-demo-stage .cab-solar-icon{display:inline-block;width:24px;height:24px;flex-shrink:0;background:currentColor;mask-size:contain;mask-position:center;mask-repeat:no-repeat}
+.card-demo-stage .overview-profile-meta .cab-solar-icon{width:20px;height:20px}
+.card-demo-stage .overview-notice>div:first-child{flex:0 0 64px}
+.card-demo-status{padding:0 24px 20px;color:var(--lab-muted);font-size:13px}
+@media(max-width:600px){.card-demo-stage{padding:16px}}
+
+.overview-comparison .card-loading{position:relative;background:var(--lab-skeleton);box-shadow:none;pointer-events:none}
+.overview-comparison .card-loading>*{visibility:hidden}

@@ -1,0 +1,86 @@
+{
+  "fileKey": "URggc7GKG5oATSdjbN632z",
+  "exported": "2026-11-03",
+  "icons": [
+    {
+      "id": "136:95262",
+      "name": "wallet-linear"
+    },
+    {
+      "id": "135:72171",
+      "name": "headphones-round-linear"
+    },
+    {
+      "id": "136:96524",
+      "name": "widget-linear"
+    },
+    {
+      "id": "135:59122",
+      "name": "calendar-linear"
+    },
+    {
+      "id": "135:76391",
+      "name": "map-point-linear"
+    },
+    {
+      "id": "135:58029",
+      "name": "book-linear"
+    },
+    {
+      "id": "135:65883",
+      "name": "document-linear"
+    },
+    {
+      "id": "136:90921",
+      "name": "tag-linear"
+    },
+    {
+      "id": "135:81538",
+      "name": "presentation-graph-linear"
+    },
+    {
+      "id": "135:85825",
+      "name": "shield-linear"
+    },
+    {
+      "id": "135:85635",
+      "name": "settings-linear"
+    },
+    {
+      "id": "136:93732",
+      "name": "user-circle-linear"
+    },
+    {
+      "id": "135:60389",
+      "name": "cart-linear"
+    },
+    {
+      "id": "135:86005",
+      "name": "shop-linear"
+    },
+    {
+      "id": "135:78616",
+      "name": "notebook-2-linear"
+    },
+    {
+      "id": "135:74260",
+      "name": "library-linear"
+    },
+    {
+      "id": "135:79427",
+      "name": "panel-left-close-linear"
+    },
+    {
+      "id": "135:79463",
+      "name": "panel-left-open-linear"
+    },
+    {
+      "id": "135:54878",
+      "name": "alt-arrow-right-linear"
+    }
+  ],
+  "supplementalSources": {
+    "box-linear": "https://api.iconify.design/solar/box-linear.svg",
+    "medal-ribbon-star-linear": "https://api.iconify.design/solar/medal-ribbon-star-linear.svg"
+  }
+}

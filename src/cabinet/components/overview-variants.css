@@ -1,0 +1,162 @@
+/* Selected Literal composition: identity row and compact actions. */
+.overview-identity{display:grid;grid-template-columns:minmax(0,3fr) minmax(0,2fr);gap:24px}
+.overview-comparison .overview-profile,.overview-comparison .overview-sponsor{padding:32px 24px;box-shadow:inset 0 0 0 1px var(--lab-line);background:transparent;border-radius:24px}
+.overview-comparison .overview-person h2{font-size:24px}
+.overview-comparison .overview-avatar{width:48px;height:48px;font-size:18px}
+.overview-comparison .overview-profile-meta{margin-top:16px;gap:16px}
+.overview-comparison .overview-deadline{flex-basis:100%;margin-left:0}
+.overview-comparison .overview-sponsor h3{margin-top:12px}
+.overview-comparison .overview-sponsor-icon{display:none}
+.overview-comparison .overview-sponsor-action{padding-top:16px}
+.overview-comparison .overview-notice{padding:16px 24px}
+.overview-comparison .overview-columns{grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}
+.overview-comparison .overview-start,.overview-comparison .overview-options{display:contents}
+.overview-comparison .overview-option{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:24px;padding:32px 24px;border:0;border-radius:16px;background:var(--cab-card);grid-column:1}
+.overview-comparison .overview-option>button{grid-column:auto;justify-self:end;align-self:center}
+.overview-comparison .overview-option p{max-width:none}
+.overview-comparison .overview-option-icon,.overview-comparison .overview-art{display:none}
+.overview-comparison .overview-partner{grid-column:2;grid-row:1/3;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);gap:24px;text-align:left;background:transparent;box-shadow:inset 0 0 0 1px var(--lab-line)}
+.overview-comparison .overview-partner .overview-art{display:flex;justify-content:center;align-items:center;width:100%;height:auto}
+.overview-partner-content{display:flex;flex-direction:column;align-items:flex-start;gap:20px;min-width:0}
+.overview-partner-content>button{max-width:100%}
+.overview-company-avatar{background:var(--lab-soft)!important}
+.overview-company-avatar img{width:34px;height:auto}
+[data-theme=dark] .overview-company-avatar img{filter:brightness(0) invert(1)}
+.overview-art img{mix-blend-mode:multiply}
+[data-theme=dark] .overview-art:has(img){background:white;border-radius:16px}
+[data-theme=dark] .overview-art img{mix-blend-mode:normal}
+.networking-art{position:relative;display:block;width:240px;height:180px;max-width:100%;flex-shrink:0}
+.overview-comparison .networking-art img{display:block;width:100%;height:auto;object-fit:contain}
+
+.overview-comparison .networking-art{width:260px;height:auto;aspect-ratio:966/869}
+
+@media(max-width:1200px){
+ .overview-identity{grid-template-columns:1fr}
+ .overview-comparison .overview-columns{grid-template-columns:1fr}
+ .overview-comparison .overview-partner{grid-column:1;grid-row:3}
+}
+@media(max-width:720px){
+ .overview-identity{gap:16px}
+ .overview-comparison .overview-profile,.overview-comparison .overview-sponsor,.overview-comparison .overview-option{padding:28px 20px}
+ .overview-comparison .overview-person h2{font-size:22px}
+ .overview-comparison .overview-option{grid-template-columns:1fr;gap:16px}
+ .overview-comparison .overview-option>button{justify-self:end;max-width:100%}
+}
+
+@media(max-width:600px){.overview-comparison .overview-partner{grid-template-columns:1fr}.overview-comparison .overview-partner .overview-art{justify-content:flex-start}.overview-comparison .networking-art{width:240px}}
+
+/* Product bleeds past the card edge intentionally, like the supplied launch reference. */
+.overview-comparison .overview-product{position:relative;overflow:hidden;isolation:isolate;grid-template-columns:minmax(120px,.8fr) minmax(0,1.2fr);gap:16px 24px;min-height:240px}
+.overview-comparison .overview-product .overview-art-products{display:block;position:absolute;left:0;bottom:0;width:43%;height:100%;overflow:hidden;border-radius:0;background:transparent;mask-image:linear-gradient(to right,#000 82%,transparent)}
+.overview-comparison .overview-art-products img{position:absolute;display:block;width:155%;max-width:none;height:auto;left:-36%;bottom:-26%;object-fit:contain}
+.overview-comparison .overview-product>div:not(.overview-art){grid-column:2;position:relative}
+.overview-comparison .overview-product>button{grid-column:2;justify-self:end;position:relative}
+[data-theme=dark] .overview-product .overview-art-products{background:transparent}
+@media(max-width:600px){
+ .overview-comparison .overview-product{grid-template-columns:1fr;padding-top:216px}
+ .overview-comparison .overview-product .overview-art-products{top:0;bottom:auto;width:100%;height:192px;mask-image:linear-gradient(to bottom,#000 85%,transparent)}
+ .overview-comparison .overview-art-products img{width:115%;left:-12%;bottom:-65%}
+ .overview-comparison .overview-product>div:not(.overview-art),.overview-comparison .overview-product>button{grid-column:1}
+}
+
+/* Owner-supplied alpha PNG needs no white backing or blend mode. */
+.overview-comparison .overview-art:has(.networking-art){background:transparent}
+.overview-comparison .networking-art img{mix-blend-mode:normal}
+
+/* Profile facts use a consistent label/value rhythm; deadline lives in the notice. */
+.overview-comparison .overview-profile-meta{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin:24px 0 0;padding-top:20px;border-top:1px solid var(--lab-line)}
+.overview-profile-meta dt{font-size:12px;color:var(--lab-muted);margin-bottom:8px}
+.overview-profile-meta dd{margin:0;min-height:32px;display:flex;align-items:center;font-size:14px;color:var(--lab-ink)}
+.overview-profile-meta .overview-chip{font-size:12px;padding:6px 10px}
+.overview-comparison .overview-notice{background:var(--lab-surface);color:var(--lab-ink);box-shadow:inset 0 0 0 1px var(--lab-line)}
+.overview-comparison .overview-notice p{color:var(--lab-muted)}
+.overview-notice-icon{padding:12px;background:var(--lab-soft);border-radius:50%}
+/* Let the partner tile fit its content, instead of stretching across both left rows. */
+.overview-comparison .overview-partner{align-self:start;min-height:280px}
+.cab-top-actions .cab-avatar{box-shadow:inset 0 0 0 1px var(--lab-line)}
+@media(max-width:600px){.overview-comparison .overview-profile-meta{grid-template-columns:1fr 1fr}.overview-comparison .overview-partner{min-height:0}}
+
+/* Package introduction above two equally weighted choices. */
+.overview-comparison .overview-package{grid-column:1/-1;grid-row:1;grid-template-columns:64px minmax(0,1fr) auto;padding:24px 32px}
+.overview-comparison .overview-package .overview-art-package{display:flex;align-items:center;justify-content:center;width:64px;height:64px;border-radius:16px;background:var(--lab-surface)}
+.overview-art-package .cab-solar-icon,.overview-art-package .demo-icon{width:28px;height:28px}
+.overview-comparison .overview-product{grid-column:1;grid-row:2}
+.overview-comparison .overview-partner{grid-column:2;grid-row:2;align-self:stretch;min-height:300px}
+.overview-comparison .overview-notice{padding:24px;gap:24px}
+.overview-notice-icon{position:relative;width:64px;height:64px;box-sizing:border-box;display:flex;align-items:center;justify-content:center;background:transparent;padding:16px;flex-shrink:0}
+.cabinet .overview-time-ring{position:absolute;inset:0;width:64px;height:64px;overflow:visible;fill:none;stroke-width:2}
+.time-track{stroke:var(--lab-line)}
+.time-remaining{stroke:var(--lab-link);transform:rotate(-90deg);transform-origin:center;stroke-linecap:round;transition:stroke-dasharray .3s ease}
+.time-tick{fill:var(--lab-link);stroke:none;animation:time-breathe 3s ease-in-out infinite}
+@keyframes time-breathe{50%{opacity:.35}}
+.overview-profile-meta dt{display:flex;align-items:center;gap:8px}
+.overview-profile-meta dd .cab-solar-icon,.overview-profile-meta dd .demo-icon{width:20px;height:20px;flex-basis:20px;color:var(--lab-muted)}
+@media(prefers-reduced-motion:reduce){.time-tick{animation:none}.time-remaining{transition:none}}
+@media(max-width:1200px){.overview-comparison .overview-product{grid-column:1;grid-row:2}.overview-comparison .overview-partner{grid-column:1;grid-row:3;min-height:0}}
+@media(max-width:600px){.overview-comparison .overview-package{grid-template-columns:48px minmax(0,1fr);padding:24px 20px}.overview-comparison .overview-package .overview-art-package{width:48px;height:48px}.overview-comparison .overview-package>button{grid-column:1/-1}.overview-comparison .overview-notice{gap:16px}.overview-comparison .overview-notice>div{flex-basis:calc(100% - 80px)}}
+
+/* Reference-style decorative time motif; not a percentage of the demo deadline. */
+.cabinet .overview-time-ring{stroke-width:1.5}
+.cabinet .overview-time-ring .time-track{stroke:var(--lab-line);stroke-width:1.5}
+.cabinet .overview-time-ring .time-remaining{stroke:var(--lab-link);stroke-width:1.5;stroke-linecap:butt}
+.overview-profile-meta dd{gap:8px}
+
+.overview-profile-photo{width:100%;height:100%;object-fit:cover;border-radius:50%}
+
+/* Distinguish completed registration from missing package/rank. */
+.overview-profile-meta .overview-status-registered .overview-chip{color:var(--lab-success);background:var(--lab-success-surface)}
+.overview-profile-meta .overview-fact-empty{color:var(--lab-muted)}
+
+/* Shared action-card hierarchy and aligned text/CTA groups. */
+.overview-comparison .overview-option h3,.overview-comparison .overview-notice strong{font-size:18px;font-weight:600;line-height:1.4}
+.overview-product-content{display:flex;flex-direction:column;align-items:flex-start;gap:20px;min-width:0}
+.overview-product-content>button{max-width:100%}
+.overview-comparison .overview-package .overview-art-package{border-radius:50%}
+
+/* Keep the brand side visible; only the right edge of the device bleeds out. */
+.overview-comparison .overview-product{grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr)}
+.overview-comparison .overview-product>div.overview-product-content{grid-column:1;z-index:1}
+.overview-comparison .overview-product .overview-art-products{left:auto;right:0;width:43%;mask-image:none;overflow:hidden}
+.overview-comparison .overview-art-products img{width:122%;left:0;bottom:auto;top:50%;transform:translateY(-50%);mix-blend-mode:normal}
+.cab-top-actions .cab-avatar{box-sizing:border-box;border:1.5px solid var(--lab-link);padding:3px;background:var(--lab-surface);box-shadow:none}
+@media(max-width:600px){
+ .overview-comparison .overview-product{grid-template-columns:1fr;padding-top:28px;padding-bottom:216px}
+ .overview-comparison .overview-product .overview-art-products{top:auto;bottom:0;width:90%;height:192px}
+ .overview-comparison .overview-art-products img{width:110%;left:0;top:0;bottom:auto;transform:none}
+}
+
+/* Shared insets for the two action tiles and the two full-width rows. */
+.overview-comparison .overview-product,.overview-comparison .overview-partner{padding:32px;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:24px;min-height:300px}
+.overview-comparison .overview-partner-content{grid-column:1;grid-row:1}
+.overview-comparison .overview-partner .overview-art{grid-column:2;grid-row:1}
+.overview-comparison .overview-art-products img{width:140%}
+.overview-comparison .overview-notice,.overview-comparison .overview-package{padding:24px 32px;gap:24px}
+@media(max-width:600px){
+ .overview-comparison .overview-product,.overview-comparison .overview-partner{padding:28px 20px;grid-template-columns:1fr;min-height:0}
+ .overview-comparison .overview-product{padding-bottom:216px}
+ .overview-comparison .overview-partner .overview-art{grid-column:1;grid-row:2;justify-content:center}
+ .overview-comparison .overview-partner-content{grid-column:1;grid-row:1}
+ .overview-comparison .overview-art-products img{width:120%}
+ .overview-comparison .overview-notice,.overview-comparison .overview-package{padding:24px 20px;gap:16px}
+ .overview-comparison .overview-package{grid-template-columns:64px minmax(0,1fr)}
+ .overview-comparison .overview-package .overview-art-package{width:64px;height:64px}
+}
+
+/* Reserve ready-state geometry for independent loading/error states. */
+.overview-profile,.overview-sponsor{position:relative}
+.overview-identity-content{width:100%}
+.overview-sponsor .overview-identity-content{display:flex;flex-direction:column;flex:1}
+.overview-identity-content.is-pending{visibility:hidden;pointer-events:none}
+.overview-profile>.overview-loading,.overview-sponsor>.overview-loading,.overview-profile>.overview-error,.overview-sponsor>.overview-error{position:absolute;inset:32px 24px;width:auto;min-height:0;margin:0}
+.overview-loading{align-content:start}
+.overview-loading span{background:var(--lab-skeleton)}
+.overview-comparison .overview-product,.overview-comparison .overview-package{box-shadow:inset 0 0 0 1px var(--lab-line)}
+.overview-comparison .overview-product,.overview-comparison .overview-partner{transition:box-shadow 180ms ease}
+@media(hover:hover){.overview-comparison .overview-product:hover,.overview-comparison .overview-partner:hover,.overview-comparison .overview-package:hover{box-shadow:inset 0 0 0 1px var(--lab-line),0 6px 20px color-mix(in srgb,var(--lab-ink) 4%,transparent)}}
+@media(prefers-reduced-motion:reduce){.overview-comparison .overview-product,.overview-comparison .overview-partner{transition:none}}
+
+.overview-comparison .overview-profile,.overview-comparison .overview-sponsor{padding:32px}
+.overview-profile>.overview-loading,.overview-sponsor>.overview-loading,.overview-profile>.overview-error,.overview-sponsor>.overview-error{inset:32px}
+.overview-comparison .overview-package{transition:box-shadow 180ms ease}
+@media(max-width:600px){.overview-comparison .overview-profile,.overview-comparison .overview-sponsor{padding:28px 20px}.overview-profile>.overview-loading,.overview-sponsor>.overview-loading,.overview-profile>.overview-error,.overview-sponsor>.overview-error{inset:28px 20px}}
+@media(prefers-reduced-motion:reduce){.overview-comparison .overview-package{transition:none}}

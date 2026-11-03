@@ -32,3 +32,5 @@ header .theme-control{position:relative;display:flex;align-items:center;justify-
 [data-content-fullscreen] .playground{grid-template-columns:minmax(0,1fr)}
 [data-content-fullscreen] .auth-page{margin:0;min-height:100dvh}
 @media(min-width:721px){[data-content-fullscreen] .auth-page{height:100dvh;min-height:0}}
+
+:root{--lab-skeleton:color-mix(in srgb,var(--lab-muted) 4%,var(--lab-surface))}
