@@ -1,0 +1,33 @@
+{
+  "generatedAt": "2026-11-03",
+  "fileKey": "dmsrC5mmWpl8HYgprXt22D",
+  "tool": "Figma generate_image",
+  "model": "gpt-image-2.5-flare",
+  "note": "Synthetic prototype angles, not technical product photography. Original accepted idle visual is retained. One extra alternate 11:13 rejected because proportions drifted; not used.",
+  "images": [
+    {
+      "file": "angle-1.png",
+      "nodeId": "11:9",
+      "width": 1280,
+      "height": 960
+    },
+    {
+      "file": "angle-2.png",
+      "nodeId": "11:10",
+      "width": 1280,
+      "height": 960
+    },
+    {
+      "file": "angle-3.png",
+      "nodeId": "11:11",
+      "width": 1280,
+      "height": 960
+    },
+    {
+      "file": "angle-4.png",
+      "nodeId": "11:12",
+      "width": 1280,
+      "height": 960
+    }
+  ]
+}

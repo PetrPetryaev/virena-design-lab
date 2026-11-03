@@ -1,0 +1,34 @@
+{
+  "date": "2026-11-03",
+  "fileKey": "dmsrC5mmWpl8HYgprXt22D",
+  "model": "gemini-3.1-flash-lite-image",
+  "generationCalls": 3,
+  "note": "Demo concept imagery. 22 views in three contact sheets; not actual product photography or approved packaging. Cropped non-destructively in React SVG. Expert retains previous four views.",
+  "references": [
+    "SQNuXYzgdJADJpzgbKd7g1/2040:7030",
+    "SQNuXYzgdJADJpzgbKd7g1/2040:7031"
+  ],
+  "sheets": [
+    {
+      "file": "sheet-0.jpg",
+      "nodeId": "13:9",
+      "rows": 5,
+      "columns": 2,
+      "prompt": "Create a clean product contact sheet, EXACTLY 5 equal rows and 2 equal columns, pure white background, NO borders or grid lines. Each cell independent with at least 15% blank margins, no object crossing its cell. Each row same device twice: left front three-quarter view, right opposite angle. Row1 silver wearable circular Balance puck. Row2 Beauty: elongated curved rose-pink handheld beauty massager, white bottom cap, silver head with four small round metal contact pads, narrow vertical button strip on front. Row3 Water: polished silver round water coaster, low cylindrical base. Row4 Mini Balance: small rounded silver wearable pebble with subtle light indicator. Row5 Deep Sleep: compact silver oval bedside device, slim blue light. Photorealistic consistent studio lighting, restrained contact shadows, premium materials. No captions, no claims, no text outside products. Whole objects centered, landscape-shaped cells. Precisely ten product images total."
+    },
+    {
+      "file": "sheet-1.jpg",
+      "nodeId": "13:10",
+      "rows": 3,
+      "columns": 2,
+      "prompt": "Create product contact sheet EXACTLY 3 equal rows and 2 equal columns, pure white background, NO borders or grid lines, exactly SIX separate compositions. Each cell independently croppable, at least 15% whitespace, whole products never cross cell boundaries. Each row shows the same demo wellness product twice from distinct angles. Row1 Bio Life inspired by two transparent elongated glassy capsules filled with clear gel and tiny bubbles, rounded chrome silver caps, elegant floating pair. Row2 More Life premium golden and cream sachet box with two matching slim sachets. Row3 Neuro Life premium blue-white compact box and two matching slim sachets. Only minimal brand Virena and product names on packaging if any. No medical claims, no dosage, no captions, no pills beyond row1 capsule-shaped conceptual render. Consistent realistic studio lighting and subtle shadows, modern ecommerce beauty still life."
+    },
+    {
+      "file": "sheet-2.jpg",
+      "nodeId": "13:11",
+      "rows": 3,
+      "columns": 2,
+      "prompt": "Create catalog contact sheet EXACTLY 3 equal rows and 2 equal columns, pure white background, NO grid lines/borders, exactly SIX independent images. Every cell has 15% blank margins with full illustration centered. Each row same blue-white 3D motif from two different camera angles. Row1 Virena Pulse represented by a luminous blue flowing waveform wrapped around a smooth white circular ring. Row2 training bot represented by a friendly minimal white and blue assistant orb beside two floating rounded learning cards, without text. Row3 A-Scan represented by a smooth white abstract face silhouette framed by a fine blue scanning arc. Premium restrained photorealistic 3D materials, soft studio shadows, no UI screenshots, no text, no captions, no health claims. Two columns exactly, three rows exactly."
+    }
+  ]
+}

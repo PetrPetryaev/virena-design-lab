@@ -34,3 +34,9 @@ header .theme-control{position:relative;display:flex;align-items:center;justify-
 @media(min-width:721px){[data-content-fullscreen] .auth-page{height:100dvh;min-height:0}}
 
 :root{--lab-skeleton:color-mix(in srgb,var(--lab-muted) 4%,var(--lab-surface))}
+
+/* Lab sections wrap after adding the storefront entry. */
+@media(max-width:720px){#root>header>nav{display:flex;flex-wrap:wrap;max-width:100%;gap:8px}}
+@media(min-width:721px) and (max-width:1200px){#root>header{height:auto;min-height:72px;flex-wrap:wrap;gap:16px;padding:16px 24px}#root>header small{display:none}#root>header>nav{display:flex;flex-wrap:wrap;gap:8px}}
+
+:root{--lab-primary:#1657ff;--lab-on-primary:#fff}

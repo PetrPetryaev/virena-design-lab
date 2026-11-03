@@ -6,6 +6,7 @@ import mark from './assets/virena-mark.svg';
 import chevronSource from './assets/navigation/alt-arrow-right-linear.svg?raw';
 const compactChevron=chevronSource.replace('<svg ', '<svg aria-hidden="true" ').replace('<path ', '<path vector-effect="non-scaling-stroke" ').replace('stroke="black"','stroke="currentColor"');
 import './cabinet.css';
+import Storefront,{products} from './Storefront.jsx';
 import Overview,{profilePhoto} from './cabinet/components/Overview.jsx';
 
 const solarAssets=import.meta.glob('./assets/navigation/*.svg',{eager:true,query:'?url',import:'default'});
@@ -41,12 +42,13 @@ export default function CabinetShell({Shared,db,dark,onTheme,onLogout}){
  const root=useRef(null),drawer=useRef(null),menuButton=useRef(null),pop=useRef(null);
  const [page,setPage]=useState(()=>{const key=new URLSearchParams(location.search).get('page');return pages[key]?key:'overview'});
  const [tip,setTip]=useState(null);
+ const [catalogCount,setCatalogCount]=useState(products.length);
  const [overviewScenario,setOverviewScenario]=useState('ready');
  const [member,setMember]=useState(()=>normalizeMember(new URLSearchParams(location.search).get('member')));
  const changeMember=value=>{setMember(value);const url=new URL(location.href);url.searchParams.set('member',value);history.replaceState({},'',url);};
  const [intent,setIntent]=useState(()=>new URLSearchParams(location.search).get('intent')||'');
  const [mobile,setMobile]=useState(false),[collapsed,setCollapsed]=useState(false),[structure,setStructure]=useState(true),[more,setMore]=useState(false),[popup,setPopup]=useState('');
- const nav=(key,purpose='')=>{setIntent(purpose);setTip(null);setPage(key);setMobile(false);setPopup('');const url=new URL(location.href);url.searchParams.set('tab','cabinet');url.searchParams.set('page',key);if(purpose)url.searchParams.set('intent',purpose);else url.searchParams.delete('intent');history.pushState({},'',url);};
+ const nav=(key,purpose='')=>{setIntent(purpose);setTip(null);setPage(key);setMobile(false);setPopup('');const url=new URL(location.href);url.searchParams.set('tab','cabinet');url.searchParams.set('page',key);for(const param of ['product','category','q'])url.searchParams.delete(param);if(purpose)url.searchParams.set('intent',purpose);else url.searchParams.delete('intent');history.pushState({},'',url);};
  useEffect(()=>{const back=()=>{setMember(normalizeMember(new URLSearchParams(location.search).get('member')));setIntent(new URLSearchParams(location.search).get('intent')||'');const key=new URLSearchParams(location.search).get('page');setPage(pages[key]?key:'overview');setMobile(false);setPopup('');};window.addEventListener('popstate',back);return()=>window.removeEventListener('popstate',back);},[]);
  useLayoutEffect(()=>{const update=()=>{if(root.current)root.current.style.setProperty('--cabinet-height',`${innerHeight-root.current.getBoundingClientRect().top}px`);};update();const ro=new ResizeObserver(update);const header=document.querySelector('#root>header');if(header)ro.observe(header);const toolbar=document.querySelector('.cab-overview-toolbar');if(toolbar)ro.observe(toolbar);window.addEventListener('resize',update);return()=>{ro.disconnect();window.removeEventListener('resize',update);};},[page]);
  useEffect(()=>{if(!popup)return;const outside=e=>{if(!pop.current?.contains(e.target))setPopup('');};document.addEventListener('pointerdown',outside);return()=>document.removeEventListener('pointerdown',outside);},[popup]);
@@ -73,7 +75,7 @@ export default function CabinetShell({Shared,db,dark,onTheme,onLogout}){
  <div className="cab-body" inert={mobile||undefined}>
  <header className="cab-header">
  <button ref={menuButton} className="cab-mobile-menu cab-icon-button" aria-label="Открыть меню" aria-expanded={mobile} onClick={()=>setMobile(true)}><Glyph name="menu"/></button>
- <h1 className="cab-title">{pages[page][0]}</h1>
+ <h1 className="cab-title">{pages[page][0]}{page==='shop'&&!intent&&catalogCount!==null&&<span className="cab-title-count" aria-live="polite">{catalogCount}</span>}</h1>
  <div className="cab-top-actions" ref={pop}>
  <span className="cab-desktop">{iconButton(dark?'Светлая тема':'Тёмная тема',<Glyph name={dark?'sun':'moon'}/>,onTheme)}</span>
 
@@ -87,7 +89,7 @@ export default function CabinetShell({Shared,db,dark,onTheme,onLogout}){
  </div>
  </header>
  <main className="cab-main" key={page}>
- <>{page==='overview'?<Overview key={member} member={member} Shared={Shared} db={db} icon={icon} navigate={nav} scenario={overviewScenario}/>:<section className="cab-placeholder"><div className="cab-placeholder-icon">{icon(pages[page][1])}</div><h2>{page==='overview'?'Ваш Бизнес-центр':'Раздел готовится'}</h2><p>{page==='shop'&&intent==='restore'?'Восстановление активности · 240 €':page==='shop'&&intent==='renewal'?'Продление в льготном окне · 240 €':page==='shop'&&intent==='upgrade'?'Апгрейд партнёрского пакета · демонстрация':page==='shop'&&intent==='activity'?'Оплата годовой активности · 120 €':page==='shop'&&intent==='packages'?'Выбор партнёрского пакета':pages[page][2]}</p><span>Содержимое появится в следующих обновлениях.</span>
+ <>{page==='overview'?<Overview key={member} member={member} Shared={Shared} db={db} icon={icon} navigate={nav} scenario={overviewScenario}/>:page==='shop'&&!intent?<Storefront Shared={Shared} db={db} onCountChange={setCatalogCount}/>:<section className="cab-placeholder"><div className="cab-placeholder-icon">{icon(pages[page][1])}</div><h2>{page==='overview'?'Ваш Бизнес-центр':'Раздел готовится'}</h2><p>{page==='shop'&&intent==='restore'?'Восстановление активности · 240 €':page==='shop'&&intent==='renewal'?'Продление в льготном окне · 240 €':page==='shop'&&intent==='upgrade'?'Апгрейд партнёрского пакета · демонстрация':page==='shop'&&intent==='activity'?'Оплата годовой активности · 120 €':page==='shop'&&intent==='packages'?'Выбор партнёрского пакета':pages[page][2]}</p><span>Содержимое появится в следующих обновлениях.</span>
  {page==='overview'&&<div className="cab-start-links">{['genealogy','profile','orders'].map(key=><button key={key} onClick={()=>nav(key)}>{pages[key][0]} {icon('alt-arrow-right')}</button>)}</div>}
  </section>}</>
  <footer className="cab-footer"><span>© Virena</span><button onClick={()=>nav('support')}>Поддержка</button></footer>
