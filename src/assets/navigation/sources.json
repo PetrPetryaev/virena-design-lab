@@ -82,5 +82,10 @@
   "supplementalSources": {
     "box-linear": "https://api.iconify.design/solar/box-linear.svg",
     "medal-ribbon-star-linear": "https://api.iconify.design/solar/medal-ribbon-star-linear.svg"
+  },
+  "additionalSources": {
+    "clock-circle-linear.svg": "https://api.iconify.design/solar/clock-circle-linear.svg",
+    "copy-linear.svg": "https://api.iconify.design/solar/copy-linear.svg",
+    "snowflake-linear.svg": "https://api.iconify.design/solar/snowflake-linear.svg"
   }
 }

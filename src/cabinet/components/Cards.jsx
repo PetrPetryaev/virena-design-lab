@@ -11,10 +11,10 @@ export function IdentityCard({kind='profile',label,state='ready',fallback,childr
  </section>;
 }
 /** One horizontal card for notices and package offers; icon, copy and action are slots. */
-export function BannerCard({loading=false,kind='notice',label,title,description,price,icon,action,surface=kind==='notice'?'white':'soft'}){
+export function BannerCard({loading=false,kind='notice',label,title,description,price,icon,action,surface=kind==='notice'?'white':'soft',attention=false}){
  const notice=kind==='notice';
  const IconTag=notice?'span':'div';
- return <section className={`${notice?'overview-notice':'overview-option overview-package'}${loading?' card-loading':''}`} aria-busy={loading} inert={loading?true:undefined} data-surface={surface} aria-label={label}>
+ return <section className={`${notice?'overview-notice':'overview-option overview-package'}${loading?' card-loading':''}${attention?' is-attention':''}`} aria-busy={loading} inert={loading?true:undefined} data-surface={surface} aria-label={label}>
   <IconTag className={notice?'overview-notice-icon':'overview-art overview-art-package'} aria-hidden="true">{icon}</IconTag>
   <div><h3>{title}</h3><p>{description}</p>{price&&<strong className="overview-price">{price}</strong>}</div>{action}
  </section>;
@@ -22,7 +22,7 @@ export function BannerCard({loading=false,kind='notice',label,title,description,
 /** Same media card, with either a cropped product or a contained illustration. */
 export function MediaCard({loading=false,title,description,price,src,imageFit='contain',action,surface='white'}){
  const product=imageFit==='bleed';
- return <article className={`overview-option ${product?'overview-product':'overview-partner'}${loading?' card-loading':''}`} aria-busy={loading} inert={loading?true:undefined} data-surface={surface}>
+ return <article className={`overview-option ${product?'overview-product':'overview-partner'}${imageFit==='framed'?' overview-media-framed':''}${action?' card-clickable':''}${loading?' card-loading':''}`} aria-busy={loading} inert={loading?true:undefined} data-surface={surface}>
   <div className={`overview-art${product?' overview-art-products':''}`} aria-hidden="true">{product?<img src={src} alt=""/>:<span className="networking-art"><img src={src} alt=""/></span>}</div>
   <div className={product?'overview-product-content':'overview-partner-content'}><div><h3>{title}</h3><p>{description}</p>{price&&<strong className="overview-price">{price}</strong>}</div>{action}</div>
  </article>;

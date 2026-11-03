@@ -1,0 +1,54 @@
+.partner-dashboard{display:grid;gap:24px;min-width:0}
+.partner-media-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}
+.overview-comparison .partner-media-grid>.overview-option{grid-column:auto;grid-row:auto;min-width:0}
+.partner-business-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}
+.partner-stat{display:flex;flex-direction:column;min-width:0;padding:32px;border:1px solid var(--lab-line);border-radius:24px;background:var(--lab-surface);gap:12px}
+.partner-stat-title{display:flex;align-items:center;gap:12px}.partner-stat-title h3{margin:0;font-size:18px;line-height:1.4;font-weight:600}
+.partner-stat-title .cab-solar-icon{flex:none;width:24px;height:24px}.partner-stat-value{font-size:24px;line-height:1.3}.partner-stat p{margin:0;font-size:14px;line-height:1.6;color:var(--lab-muted)}
+.partner-stat-action{margin-top:auto}.partner-stat-action:empty{display:none}.partner-stat dl,.partnership-dialog dl{display:grid;gap:12px;margin:0}.partner-stat dl>div,.partnership-dialog dl>div{display:flex;justify-content:space-between;gap:16px;font-size:14px}.partner-stat dt,.partnership-dialog dt{color:var(--lab-muted)}.partner-stat dd,.partnership-dialog dd{margin:0;text-align:right}.partner-stat summary{font-size:14px;cursor:pointer}.partner-stat details p{margin-top:12px}
+.partnership-dialog{box-sizing:border-box;width:min(560px,calc(100vw - 32px));max-height:calc(100dvh - 40px);padding:32px;border:1px solid var(--lab-line);border-radius:24px;background:var(--lab-surface);color:var(--lab-ink)}.partnership-dialog::backdrop{background:rgb(0 0 0 / 30%)}.partnership-dialog-head{display:flex;justify-content:space-between;align-items:center;gap:16px}.partnership-dialog h2{font-size:24px;margin:0}.partnership-dialog-head>button{border:0;background:var(--lab-soft);color:inherit;border-radius:50%;width:40px;height:40px;flex:none;font-size:24px;cursor:pointer}.partnership-dialog p{font-size:14px;line-height:1.6;color:var(--lab-muted);margin:20px 0}.partnership-dialog-actions{display:flex;gap:12px;flex-wrap:wrap}
+@media(max-width:1200px){.partner-business-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.partner-media-grid{grid-template-columns:minmax(0,1fr)}}
+@media(max-width:700px){.partner-business-grid{grid-template-columns:minmax(0,1fr)}.partner-stat{padding:28px 20px}.partner-dashboard,.partner-media-grid,.partner-business-grid{gap:16px}.partnership-dialog{padding:24px}}
+.overview-status-registered.is-frozen .overview-chip{background:var(--lab-soft);color:var(--lab-muted)}
+.partner-activity-summary{margin:16px 0 0;color:var(--lab-muted);font-size:14px;line-height:1.5}
+
+/* Short overview first; secondary facts and navigation remain available on demand. */
+.partner-dashboard>.overview-notice .overview-notice-icon{box-shadow:inset 0 0 0 1px var(--lab-line)}
+.partner-stat-details{margin-top:auto;padding-top:4px}
+.partner-stat-details>summary{color:var(--lab-muted);width:fit-content;border-radius:4px}
+.partner-stat-details>summary:hover{color:var(--lab-ink)}
+.partner-stat-details>summary:focus-visible{outline:2px solid var(--lab-link);outline-offset:4px}
+.partner-stat-detail-body{display:grid;gap:16px;padding-top:16px}
+.partner-stat .partner-stat-detail-body p{margin:0}
+
+/* Direction B: a quiet metric strip, illustrated destinations and compact development rows. */
+.partner-metric-strip{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border:1px solid var(--lab-line);border-radius:24px;overflow:hidden;background:var(--lab-surface)}
+.partner-metric-strip .partner-stat{border:0;border-radius:0;padding:20px 24px;gap:6px;border-right:1px solid var(--lab-line)}
+.partner-metric-strip .partner-stat:last-child{border-right:0}
+.partner-metric-strip .partner-stat-title{gap:8px}
+.partner-metric-strip .partner-stat-title h3{font-size:13px;font-weight:500;color:var(--lab-muted)}
+.partner-metric-strip .partner-stat-title .cab-solar-icon,.partner-metric-strip .partner-stat-title .demo-icon{width:18px;height:18px;flex:0 0 18px}
+.partner-metric-strip .partner-stat-value{font-size:22px;font-weight:600;letter-spacing:-.4px}
+.partner-metric-strip .partner-stat p,.partner-metric-strip .partner-stat summary{font-size:12px}
+.partner-workspace{display:grid;grid-template-columns:minmax(0,2fr) minmax(260px,1fr);gap:24px;align-items:start}
+.partner-workspace .partner-business-grid{display:flex;flex-direction:column;border:1px solid var(--lab-line);border-radius:24px;gap:0;overflow:hidden}
+.partner-workspace .partner-business-grid .partner-stat{border:0;border-bottom:1px solid var(--lab-line);border-radius:0;padding:24px;gap:8px}
+.partner-workspace .partner-business-grid .partner-stat:last-child{border-bottom:0}
+.partner-workspace .partner-business-grid .partner-stat-title h3{font-size:14px}
+.partner-workspace .partner-business-grid .partner-stat-value{font-size:16px;font-weight:600}
+.partner-workspace .partner-business-grid .partner-stat p,.partner-workspace .partner-business-grid .partner-stat summary{font-size:13px}
+.partner-workspace .partner-media-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}
+.overview-comparison .partner-workspace .overview-option{display:flex;flex-direction:column;gap:20px;min-height:440px;padding:0 24px 24px;overflow:hidden;align-items:stretch;background:var(--lab-soft)}
+.overview-comparison .partner-workspace .overview-option .overview-art{position:relative;inset:auto;width:calc(100% + 48px);height:220px;min-height:220px;margin:0 -24px;border-radius:0;overflow:hidden;background:transparent;mask-image:none;flex:none}
+.overview-comparison .partner-workspace .overview-option .overview-art img{position:absolute;inset:auto;left:12%;top:10%;width:112%;height:90%;object-fit:contain;transform:none;max-width:none}
+.overview-comparison .partner-workspace .overview-product-content,.overview-comparison .partner-workspace .overview-partner-content{display:flex;flex-direction:column;align-items:flex-start;flex:1;gap:20px}
+.overview-comparison .partner-workspace .overview-option h3{font-size:18px;line-height:1.4}
+.overview-comparison .partner-workspace .overview-option p{font-size:14px;line-height:1.6}
+.overview-comparison .partner-workspace .overview-option button{margin-top:auto;max-width:100%}
+.overview-comparison .partner-workspace .networking-art{position:static;display:block;width:100%;height:100%}
+.overview-comparison .partner-workspace .overview-partner .overview-art img{left:0;top:0;width:100%;height:100%;object-fit:cover}
+.partner-dashboard .overview-identity{grid-template-columns:minmax(0,2fr) minmax(260px,1fr)}
+.partner-dashboard .overview-profile-meta{margin-top:16px;padding-top:12px}
+.partner-dashboard .partner-activity-summary{margin-top:8px;font-size:12px}
+@media(max-width:1200px){.partner-workspace{grid-template-columns:1fr}.partner-workspace .partner-business-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.partner-workspace .partner-business-grid .partner-stat{border-bottom:1px solid var(--lab-line)}.partner-workspace .partner-business-grid .partner-stat:nth-child(odd){border-right:1px solid var(--lab-line)}.partner-metric-strip{grid-template-columns:repeat(2,minmax(0,1fr))}.partner-metric-strip .partner-stat:nth-child(2){border-right:0}.partner-metric-strip .partner-stat:nth-child(-n+2){border-bottom:1px solid var(--lab-line)}}
+@media(max-width:700px){.partner-dashboard .overview-identity{grid-template-columns:1fr}.partner-workspace .partner-media-grid{grid-template-columns:1fr}.partner-workspace .partner-business-grid{display:flex}.partner-workspace .partner-business-grid .partner-stat:nth-child(odd){border-right:0}.partner-workspace{gap:16px}.partner-metric-strip .partner-stat{padding:16px 12px}.partner-metric-strip .partner-stat-value{font-size:20px}.overview-comparison .partner-workspace .overview-option{min-height:400px}}

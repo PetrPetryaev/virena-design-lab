@@ -160,3 +160,9 @@
 .overview-comparison .overview-package{transition:box-shadow 180ms ease}
 @media(max-width:600px){.overview-comparison .overview-profile,.overview-comparison .overview-sponsor{padding:28px 20px}.overview-profile>.overview-loading,.overview-sponsor>.overview-loading,.overview-profile>.overview-error,.overview-sponsor>.overview-error{inset:28px 20px}}
 @media(prefers-reduced-motion:reduce){.overview-comparison .overview-package{transition:none}}
+
+/* Client retains the same card families; no registration deadline or income blocks. */
+.overview-client-actions .overview-product{grid-column:1;grid-row:1}
+.overview-client-actions .overview-partner{grid-column:2;grid-row:1}
+@media(max-width:1200px){.overview-client-actions .overview-partner{grid-column:1;grid-row:2}}
+.overview-comparison>.overview-package{grid-row:auto;grid-column:auto}

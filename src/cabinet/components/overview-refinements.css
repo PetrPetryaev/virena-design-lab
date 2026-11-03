@@ -1,0 +1,131 @@
+/* Overview typography: 12 labels, 14 body/actions, 18 card titles, 24 identity/metrics.
+   Page heading is the fifth level (32), defined by the cabinet shell. */
+.overview-comparison{--overview-label:12px;--overview-body:14px;--overview-title:18px;--overview-value:24px}
+.overview-comparison .overview-profile-meta dt,.overview-comparison .overview-eyebrow{font-size:var(--overview-label)}
+.overview-comparison .overview-profile-meta dd,.overview-comparison .overview-profile-meta .overview-chip,.overview-comparison .overview-status-term,.overview-comparison .partner-stat p,.overview-comparison .partner-stat dl>div,.overview-comparison .partner-stat-title h3{font-size:var(--overview-body)}
+.overview-comparison .overview-notice h3,.overview-comparison .overview-option h3{font-size:var(--overview-title)}
+.overview-comparison .partner-stat-value{font-size:var(--overview-value)}
+.overview-comparison .partner-business-grid .partner-stat-value{font-size:var(--overview-title)}
+.overview-comparison .overview-profile-meta dd{flex-wrap:wrap;gap:8px}
+.overview-comparison .overview-status-term{color:var(--lab-muted)}
+.overview-comparison .overview-profile-meta>div:first-child{min-width:0}
+.overview-comparison .overview-profile-meta{grid-template-columns:repeat(3,minmax(0,1fr))}
+.overview-comparison .overview-profile-meta dt .cab-solar-icon,.overview-comparison .overview-profile-meta dt .demo-icon,.overview-comparison .partner-stat-title .cab-solar-icon,.overview-comparison .partner-stat-title .demo-icon{width:24px;height:24px;flex:0 0 24px;color:var(--lab-ink);opacity:1}
+.overview-comparison .overview-notice.is-attention:not(.card-loading){background:color-mix(in srgb,var(--lab-link) 7%,var(--lab-surface));border-color:color-mix(in srgb,var(--lab-link) 24%,var(--lab-line))}
+.overview-comparison .is-attention .overview-notice-icon{color:var(--lab-link);background:var(--lab-surface);border-radius:50%}
+.partner-stat-link{color:var(--lab-ink);text-decoration:none;position:relative;transition:background .18s ease;cursor:pointer}
+.partner-stat-link:hover{background:var(--lab-soft)}
+.partner-stat-link:focus-visible{outline:2px solid var(--lab-link);outline-offset:-3px}
+.partner-stat-chevron{margin-left:auto;opacity:.55;display:flex;transition:transform .18s ease,opacity .18s ease}
+.partner-stat-link:hover .partner-stat-chevron{transform:translateX(3px);opacity:1}
+.partner-stat-facts{margin-top:8px}
+.partner-stat-facts dl{gap:6px}
+.partner-stat-action{padding-top:12px}
+.overview-comparison .partner-workspace .overview-product .overview-art img{left:0;top:0;width:100%;height:100%;padding:var(--ov-sm);box-sizing:border-box;object-fit:contain;object-position:center;--art-scale:1}
+.overview-comparison .partner-workspace .overview-partner .overview-art img{left:0;width:100%;object-position:center}
+.overview-comparison .overview-option .overview-art img{scale:var(--art-scale,1);transition:scale .55s cubic-bezier(.22,1,.36,1);transform-origin:center}
+.overview-comparison .overview-client-actions .overview-product,.overview-comparison .overview-client-actions .overview-partner{background:var(--lab-soft);border:1px solid var(--lab-line);border-radius:24px}
+@media(max-width:700px){.overview-comparison .overview-profile-meta{grid-template-columns:1fr 1fr}.overview-comparison .overview-profile-meta>div:first-child{grid-column:1/-1}.partner-metric-strip{grid-template-columns:1fr}.partner-metric-strip .partner-stat{border-right:0;border-bottom:1px solid var(--lab-line)}.partner-metric-strip .partner-stat:last-child{border-bottom:0}}
+@media(prefers-reduced-motion:reduce){.overview-comparison .overview-option .overview-art img{scale:var(--art-scale,1);transition:none}.partner-stat-chevron,.partner-stat-link{transition:none}}
+
+.overview-comparison .overview-profile-meta .demo-icon [style*="mask"],.overview-comparison .partner-stat-title .demo-icon [style*="mask"]{background-color:var(--lab-ink)!important}
+
+@media(hover:hover) and (prefers-reduced-motion:no-preference){.overview-comparison .overview-option:not(.card-loading):hover .overview-art img{scale:calc(var(--art-scale,1) * 1.01)}}
+
+/* Fixed media window; zoom only the image inside it. */
+.overview-comparison .overview-option .overview-art{overflow:hidden}
+.partner-stat-copy{min-width:0}
+.partner-stat-value-row{display:flex;align-items:center;gap:12px}
+.partner-stat-value-row .partner-stat-value{margin:0}
+.partner-stat-value-row{margin:8px 0}
+.binary-branches{display:grid;gap:6px;margin-top:10px}
+.binary-labels{display:flex;justify-content:space-between;gap:12px;font-size:var(--overview-label);line-height:1.4;color:var(--lab-muted)}
+.binary-labels>span,.partner-stat-facts dt{display:flex;align-items:center;gap:6px}
+.binary-labels strong{font:inherit;color:var(--lab-ink);font-variant-numeric:tabular-nums}
+.partner-business-grid{container-type:inline-size}
+@container(min-width:430px){.partner-business-grid .partner-stat:has(.partner-stat-action){display:grid;grid-template-columns:minmax(0,1fr) auto;gap:16px;align-items:center}.partner-business-grid .partner-stat-action{padding:0;margin:0;align-self:center}.partner-business-grid .partner-stat-action button{white-space:nowrap}}
+
+/* One label role across identity, metrics and development cards, in every member state. */
+.overview-comparison .overview-eyebrow,
+.overview-comparison .overview-profile-meta dt,
+.overview-comparison .partner-stat-title h3{
+ font-size:var(--overview-body);font-weight:500;line-height:1.5;color:var(--lab-muted)
+}
+.overview-comparison .partner-business-grid .partner-stat-value{
+ font-size:var(--overview-title);font-weight:600;line-height:1.4;letter-spacing:normal
+}
+.overview-comparison .partner-business-grid .partner-stat-copy>p{margin:0;line-height:1.5}
+.overview-comparison .partner-stat-facts dd{font-variant-numeric:tabular-nums}
+
+.overview-comparison .partner-stat .finance-legend{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:6px 16px;margin:8px 0 0}
+.overview-comparison .partner-stat .finance-legend>div{display:flex;flex-wrap:nowrap;align-items:baseline;justify-content:start;gap:6px;white-space:nowrap;font-size:var(--overview-label);line-height:1.4}
+.overview-comparison .partner-stat .finance-legend dd{margin:0;white-space:nowrap}
+
+.overview-comparison .overview-profile-meta dt{display:flex;align-items:center;gap:8px}
+
+/* Owner review: two identity lines, compact actions, and more room below divider. */
+.overview-comparison .overview-profile-link{display:flex;align-items:center;justify-content:flex-end;flex-wrap:wrap;gap:var(--ov-xs);position:relative}
+.overview-copy-id{display:inline-flex;flex:none;position:relative}
+.overview-copy-id .cab-solar-icon,.overview-copy-id .demo-icon{width:24px;height:24px;flex:0 0 24px}
+.overview-comparison .overview-profile-meta{padding-top:var(--ov-md)}
+.overview-comparison .partner-workspace .overview-option .overview-art{height:auto;min-height:0;aspect-ratio:3/2}
+.overview-comparison .partner-workspace .overview-product-content,.overview-comparison .partner-workspace .overview-partner-content{justify-content:flex-end;flex:1;gap:var(--ov-sm)}
+.overview-comparison .partner-workspace .overview-option button{margin-top:0}
+
+
+/* Both media windows are 15% shorter than 3:2. */
+.overview-comparison .partner-workspace .overview-option .overview-art{aspect-ratio:30/17}
+
+/* Both cards follow content height without empty space below their images. */
+.overview-comparison .partner-workspace .overview-option{min-height:0;align-self:start}
+.overview-comparison .partner-workspace .overview-product-content,
+.overview-comparison .partner-workspace .overview-partner-content{flex:0 0 auto}
+
+/* Inset partnership photo for the newcomer/client horizontal offer. */
+.overview-comparison .overview-media-framed .overview-art{display:block;aspect-ratio:3/2;height:auto;overflow:hidden;border-radius:16px;border:1px solid var(--lab-line);background:var(--lab-surface)}
+.overview-comparison .overview-media-framed .networking-art{display:block;position:static;width:100%;height:100%}
+.overview-comparison .overview-media-framed .overview-art img{display:block;position:static;width:100%;height:100%;object-fit:cover;mix-blend-mode:normal}
+
+/* Horizontal offers share a square inset image and a narrower text column. */
+.overview-comparison .overview-columns .overview-option:is(.overview-product,.overview-media-framed){grid-template-columns:minmax(0,1fr) minmax(0,1fr);padding:var(--ov-lg);min-height:0;align-items:center}
+.overview-comparison .overview-columns .overview-option:is(.overview-product,.overview-media-framed) .overview-art{display:block;position:relative;inset:auto;grid-column:2;grid-row:1;width:100%;height:auto;aspect-ratio:1;mask-image:none;margin:0;align-self:center}
+.overview-comparison .overview-columns .overview-product .overview-art img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;transform:none;--art-scale:1}
+.overview-comparison .overview-columns :is(.overview-product-content,.overview-partner-content){max-width:280px}
+@media(max-width:1400px) and (min-width:601px){.overview-comparison .overview-columns{grid-template-columns:1fr}.overview-comparison .overview-columns .overview-option:is(.overview-product,.overview-media-framed){grid-column:1;grid-row:auto}}
+@media(max-width:600px){
+ .overview-comparison .overview-columns .overview-option:is(.overview-product,.overview-media-framed){grid-template-columns:1fr;padding:var(--ov-md)}
+ .overview-comparison .overview-columns .overview-option:is(.overview-product,.overview-media-framed) .overview-art{grid-column:1;grid-row:2}
+}
+
+/* Inset artwork follows the outer card curve: 16px outer minus 8px inset. */
+.overview-comparison .overview-columns .overview-option:is(.overview-product,.overview-media-framed){padding:8px 8px 8px var(--ov-lg)}
+.overview-comparison .overview-columns .overview-option:is(.overview-product,.overview-media-framed) .overview-art{border-radius:8px;overflow:hidden}
+.overview-comparison .overview-columns :is(.overview-product-content,.overview-partner-content){padding-block:var(--ov-md)}
+@media(max-width:600px){
+ .overview-comparison .overview-columns .overview-option:is(.overview-product,.overview-media-framed){padding:8px}
+ .overview-comparison .overview-columns :is(.overview-product-content,.overview-partner-content){padding:var(--ov-sm)}
+}
+
+/* Image column: 60% instead of 50% of available row width (+20%). */
+@media(min-width:601px){.overview-comparison .overview-columns .overview-option:is(.overview-product,.overview-media-framed){grid-template-columns:minmax(0,2fr) minmax(0,3fr)}}
+
+/* Frozen metrics use the muted semantic ink in both themes. */
+.partner-dashboard[data-member="frozen"] .partner-metric-strip .partner-stat-value{color:var(--lab-muted)}
+
+/* Shared original face collage: keep every portrait visible in each card format. */
+.overview-comparison .partner-workspace .overview-partner .overview-art img,
+.overview-comparison .overview-media-framed .overview-art img{object-fit:contain;object-position:center;padding:var(--ov-sm);box-sizing:border-box;--art-scale:1}
+
+/* Compact media cards across every member state; artwork no longer dictates a tall square. */
+.overview-comparison .overview-columns .overview-option:is(.overview-product,.overview-partner){min-height:0;padding:var(--ov-md) var(--ov-lg);grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:center}
+.overview-comparison .overview-columns .overview-option:is(.overview-product,.overview-partner) .overview-art{position:relative;inset:auto;display:block;grid-column:2;grid-row:1;width:100%;height:220px;aspect-ratio:auto;margin:0;overflow:hidden}
+.overview-comparison .overview-columns .overview-partner .networking-art{width:100%;height:100%;aspect-ratio:auto}
+.overview-comparison .overview-columns .overview-partner .overview-art img{width:100%;height:100%;object-fit:contain}
+.overview-comparison .overview-columns :is(.overview-product-content,.overview-partner-content){padding-block:0}
+.overview-comparison .partner-workspace .overview-option .overview-art{height:200px;min-height:0;aspect-ratio:auto}
+@media(max-width:600px){
+ .overview-comparison .overview-columns .overview-option:is(.overview-product,.overview-partner){grid-template-columns:1fr;padding:var(--ov-md)}
+ .overview-comparison .overview-columns .overview-option:is(.overview-product,.overview-partner) .overview-art{grid-column:1;grid-row:2;height:180px}
+ .overview-comparison .overview-columns :is(.overview-product-content,.overview-partner-content){padding:0}
+ .overview-comparison .partner-workspace .overview-option .overview-art{height:180px}
+}
