@@ -129,3 +129,31 @@
  .overview-comparison .overview-columns :is(.overview-product-content,.overview-partner-content){padding:0}
  .overview-comparison .partner-workspace .overview-option .overview-art{height:180px}
 }
+
+/* Lightweight media-card experiment: local light and a single hover response. */
+.overview-comparison .overview-option:is(.overview-product,.overview-partner){
+ --media-accent:var(--lab-link);--media-ease:cubic-bezier(.22,1,.36,1);
+}
+.overview-comparison .overview-option.overview-partner{--media-accent:#35a987}
+.overview-comparison .overview-option:is(.overview-product,.overview-partner) .overview-art{isolation:isolate}
+.overview-comparison .overview-option:is(.overview-product,.overview-partner) .overview-art::before{
+ content:"";position:absolute;inset:4%;z-index:-1;pointer-events:none;border-radius:50%;
+ background:radial-gradient(ellipse,color-mix(in srgb,var(--media-accent) 16%,transparent),transparent 70%);
+ opacity:.55;scale:.88;transition:opacity 500ms var(--media-ease),scale 650ms var(--media-ease);
+}
+
+.overview-comparison .overview-option:is(.overview-product,.overview-partner) .overview-art img{
+ transition:translate 650ms var(--media-ease),rotate 650ms var(--media-ease),scale 650ms var(--media-ease);
+}
+@media(hover:hover) and (pointer:fine){
+ .overview-comparison .overview-option:is(.overview-product,.overview-partner):not(.card-loading):is(:hover,:focus-within) .overview-art::before{opacity:1;scale:1.12}
+ .overview-comparison .overview-product:not(.card-loading):is(:hover,:focus-within) .overview-art img{translate:0 -5px;scale:1.025}
+ .overview-comparison .overview-partner:not(.card-loading):is(:hover,:focus-within) .overview-art img{translate:0 -2px;scale:1.035}
+}
+.overview-comparison .overview-option.card-loading .overview-art::before,
+.overview-comparison .overview-option.card-loading .overview-art::after{display:none}
+@media(prefers-reduced-motion:reduce){
+ .overview-comparison .overview-option:is(.overview-product,.overview-partner) .overview-art img{transition:none;translate:none!important;rotate:none!important;scale:none!important}
+ .overview-comparison .overview-option:is(.overview-product,.overview-partner) .overview-art::before,
+ .overview-comparison .overview-option:is(.overview-product,.overview-partner) .overview-art::after{transition:none;scale:1!important;rotate:none!important}
+}
