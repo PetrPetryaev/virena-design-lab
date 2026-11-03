@@ -8,10 +8,11 @@ try {
  await page.goto(process.env.TEST_URL||'http://localhost:5174/');
  await page.locator('aside').waitFor();
  assert.ok((await page.locator('h1').innerText()).includes('Virena'));
- await page.getByLabel('Тема',{exact:true}).selectOption('dark');
+ if(await page.getByRole('switch',{name:'Тёмная тема'}).getAttribute('aria-checked')!=='true')await page.getByRole('switch',{name:'Тёмная тема'}).click();
  await page.waitForFunction(()=>document.documentElement.dataset.theme==='dark');
  await page.getByRole('button',{name:'Флоу',exact:true}).click();
  await page.getByLabel('Экран',{exact:true}).selectOption('onboard-1');
+ await page.locator('.auth-skeleton').waitFor({state:'detached'});
  await page.locator('.virena-date [data-type=year]').click();
  assert.ok(await page.locator('.virena-date [data-type=day]').evaluate(e=>e===document.activeElement));
  await page.keyboard.type('12031990');

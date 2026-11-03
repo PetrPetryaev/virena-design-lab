@@ -30,8 +30,8 @@
 .auth-flow-tabs>button:hover{background:var(--lab-hover)}
 .auth-flow-tabs>button[aria-selected=true]{background:var(--lab-surface);color:var(--auth-ink);box-shadow:0 1px 3px #00000014}
 .auth-flow-tabs>button:focus-visible{outline:2px solid var(--auth-link);outline-offset:2px}
-.auth-mode-panel{display:flex;flex-direction:column;gap:24px}
-@media(max-width:720px){.auth-mode-panel{gap:20px}}
+.auth-mode-panel{--auth-block-gap:24px;--auth-field-gap:16px;display:flex;flex-direction:column;gap:var(--auth-block-gap)}
+@media(max-width:720px){.auth-mode-panel{--auth-block-gap:20px}}
 @media(prefers-reduced-motion:reduce){.auth-flow-tabs>button{transition:none}}
 
 /* Keep multiline check labels compact and aligned with the first line. */
@@ -56,3 +56,28 @@
 
 /* Related actions form one compact group. */
 .auth-actions{display:flex;flex-direction:column;gap:12px;width:100%}
+/* Auth owns the viewport below the lab toolbar; only the long form scrolls. */
+@media(min-width:721px){
+ .auth-page{height:var(--auth-available-height,calc(100dvh - 196px));min-height:0;overflow:hidden}
+ .auth-left{height:100%;min-height:0;overflow-y:auto;scrollbar-gutter:stable;padding-top:32px;gap:40px}
+ .auth-left>.auth-top,.auth-left>footer,.auth-left>.auth-form{flex-shrink:0}
+ .auth-promo{position:relative;top:auto;align-self:stretch;height:auto;min-height:0;margin:24px 24px 24px 0;scrollbar-gutter:auto;padding:clamp(24px,3vw,48px)}
+ .auth-promo>p{font-size:clamp(16px,1.4vw,20px);margin-top:20px}
+}
+.auth-form{position:relative}
+.auth-form[data-loading]>.auth-exit,.auth-form[data-loading] .auth-mode-panel>:not(.auth-skeleton){visibility:hidden}
+.auth-mode-panel{position:relative}
+.auth-skeleton{position:absolute;inset:0;display:flex;flex-direction:column;gap:24px;overflow:hidden;pointer-events:none}
+.auth-skeleton span{display:block;flex-shrink:0;background:var(--auth-skeleton-fill);border-radius:8px}
+:root{--auth-skeleton-fill:#f0f1f3}
+[data-theme=dark]{--auth-skeleton-fill:#22262d}
+.auth-skeleton .skeleton-short{width:42%;height:32px;border-radius:20px}
+.auth-skeleton .skeleton-title{width:80%;height:36px}
+.auth-skeleton .skeleton-copy{width:65%;height:16px}
+.skeleton-field{display:grid;gap:10px}
+.auth-skeleton .skeleton-label{height:12px;width:26%}
+.auth-skeleton .skeleton-input{height:56px;width:100%;border-radius:28px}
+.auth-skeleton .skeleton-button{height:48px;width:100%;border-radius:24px;margin-top:4px}
+
+/* Keep section spacing; tighten only consecutive form fields. */
+.auth-mode-panel>.auth-field+.auth-field{margin-top:calc(var(--auth-field-gap) - var(--auth-block-gap))}

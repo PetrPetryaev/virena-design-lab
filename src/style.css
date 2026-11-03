@@ -82,3 +82,6 @@ html,body,aside,main,.canvas,.real-stage,.preview-stage,.option-menu,.composite-
 .password-rules li[data-status=met] .password-rule-icon{opacity:1}
 @media(prefers-reduced-motion:reduce){.password-rule-icon{transition:none}}
 .code-paste{display:flex;align-items:center;flex-shrink:0;line-height:0}
+
+.password-rules{display:flex;flex-wrap:wrap;column-gap:16px;row-gap:6px}
+.password-rules li{white-space:nowrap;gap:6px}
