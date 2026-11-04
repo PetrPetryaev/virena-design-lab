@@ -1,17 +1,18 @@
 import {flushSync} from 'react-dom';
 import React, {useEffect, useMemo, useRef, useState} from 'react';
-import {genealogyCells as cells, formatPoints, activityLabel, legLabel, outermost} from './genealogyData.js';
+import {genealogyCells as defaultCells, formatPoints, activityLabel, legLabel, outermost} from './genealogyData.js';
 import './genealogy.css';
 import breadcrumbChevron from '../../assets/navigation/alt-arrow-right-linear.svg?raw';
 import starIcon from '../../assets/tree-icons/star-bold.svg?raw';
 import frozenIcon from '../../assets/tree-icons/snowflake-linear.svg?raw';
+import {strengthLevels} from './TreeStrength.jsx';
 import ParticipantDetails from './ParticipantDetails.jsx';
 
 // Product components: the snapshot has no binary-tree node or connector family.
 function TreeLibraryIcon({kind}){return <span className={`genealogy-library-icon icon-${kind}`} aria-hidden="true" dangerouslySetInnerHTML={{__html:(kind==='star'?starIcon:frozenIcon).replaceAll('"black"','"currentColor"')}}/>;}
 function TreeArrow({direction='right',Shared}){return <span className={`genealogy-arrow arrow-${direction}`} aria-hidden="true"><Shared.Icon name="Auth / Icon / Back"/></span>;}
 function Avatar({cell,photo}){const name=cell.personal?cell.name:'';return <span className="genealogy-avatar" aria-hidden="true">{photo?(typeof photo==='string'?<img src={photo} alt=""/>:<span className="genealogy-photo" style={{backgroundImage:`url(${photo.src})`,backgroundSize:photo.size,backgroundPosition:photo.position}}/>):name?name.split(' ').map(n=>n[0]).slice(0,2).join(''):cell.login.slice(0,2).toUpperCase()}</span>;}
-function MemberCard({cell, compact, onOpen, root, onDetails, Shared, db, boundary, photo}) {
+function MemberCard({cells,cell, compact, onOpen, root, onDetails, Shared, db, boundary, photo}) {
  const timer=useRef(null), held=useRef(false), start=useRef(null);
  const cancel=()=>clearTimeout(timer.current);
  useEffect(()=>()=>clearTimeout(timer.current),[]);
@@ -33,14 +34,14 @@ function MemberCard({cell, compact, onOpen, root, onDetails, Shared, db, boundar
  </button>{cell.state!=='partner'&&<span className={`genealogy-card-state state-${cell.state}`}>{activityLabel(cell)}{cell.state==='frozen'&&<TreeLibraryIcon kind="frozen"/>}</span>}{boundary&&extraLevels>0&&<button type="button" className={`genealogy-more ${boundary}`} onClick={onOpen} aria-label={`Открыть следующие ${extraLevels} уровня под ${cell.login}`}>Ещё {extraLevels} ур. <TreeArrow Shared={Shared} direction="down"/></button>}<span className="genealogy-info"><Shared.Button group={db.components.find(c=>c.name==='Boris / Icon button')} choice={{Tone:'Ghost',Size:'40'}} ariaLabel={`Подробная информация: ${cell.login}`} iconContent={<Shared.Icon name="Auth / Icon / Info"/>} onClick={()=>onDetails(cell)}/></span></div>;
 }
 
-export default function Genealogy({Shared, db, photo}) {
+export default function Genealogy({Shared, db, photo, cells=defaultCells, placementSide='L', navigation}) {
  const [rootPath, setRootPath] = useState('');
  const [selected,setSelected]=useState(null);
  const [busy,setBusy]=useState(false);
  const [compactView,setCompactView]=useState(()=>window.innerHeight<1000);
  const [compactRoot,setCompactRoot]=useState(false),[denseView,setDenseView]=useState(false);
  const scene=useRef(null),locked=useRef(false),alive=useRef(true),animations=useRef([]);
- const [links,setLinks]=useState([]);
+ const [links,setLinks]=useState([]),[signals,setSignals]=useState([]);
  useEffect(()=>{alive.current=true;return()=>{alive.current=false;animations.current.forEach(a=>a.cancel());};},[]);
  const [query, setQuery] = useState('');
  const [searchOpen, setSearchOpen] = useState(false);
@@ -74,7 +75,7 @@ export default function Genealogy({Shared, db, photo}) {
  };
  useEffect(()=>{
   const measure=()=>{
-   const el=scene.current;if(!el)return;const box=el.getBoundingClientRect();const paths=[];
+   const el=scene.current;if(!el)return;const box=el.getBoundingClientRect();const paths=[],markers=[];
    const root=el.querySelector('.genealogy-root .genealogy-member');
    el.querySelectorAll('.genealogy-slot.has-parent').forEach(slot=>{
     const path=slot.dataset.treePath;const target=slot.querySelector('.genealogy-member,.genealogy-vacant');
@@ -82,19 +83,21 @@ export default function Genealogy({Shared, db, photo}) {
     if(!parent||!target)return;const a=parent.getBoundingClientRect(),b=target.getBoundingClientRect();
     const left=path.endsWith('L'),x=(left?a.left-4:a.right+4)-box.left,y=a.top+a.height*.52-box.top;
     const endX=b.left+b.width/2-box.left,endY=b.top-box.top-4;const sign=left?-1:1;const radius=Math.min(24,Math.abs(endX-x),Math.max(0,endY-y));
+    if(parentPath===rootPath){const side=left?0:1;markers.push({x:(x+endX)/2,y,level:strengthLevels(current.points)[side]});}
     paths.push(`M ${x} ${y} H ${endX-sign*radius} Q ${endX} ${y} ${endX} ${y+radius} V ${endY}`);
-   });setLinks(paths);
+   });setLinks(paths);setSignals(markers);
   };const observer=new ResizeObserver(measure);observer.observe(scene.current);measure();return()=>observer.disconnect();
- },[rootPath,compactView,compactRoot,denseView]);
+ },[rootPath,compactView,compactRoot,denseView,current.points[0],current.points[1]]);
  const results = useMemo(()=>{
   const q=query.trim().toLocaleLowerCase('ru');
   return q.length<3 ? [] : cells.filter(c=>`${c.login} ${c.personal ? c.name : ''}`.toLocaleLowerCase('ru').includes(q)).slice(0,10);
  },[query]);
 
+ useEffect(()=>{if(navigation)open(navigation.path);},[navigation]);
  const path = Array.from({length:rootPath.length+1},(_,i)=>cells.find(c=>c.path===rootPath.slice(0,i))).filter(Boolean);
  const shortPath = path.length>4 ? [path[0],null,...path.slice(-2)] : path;
  const parent=path.at(-2);
- const nextPath = `${outermost('L').path}L`;
+ const nextPath = `${outermost(placementSide,cells).path}${placementSide}`;
  return <div className={`genealogy visual-tree ${compactView?'is-short':''}`}>
   <div className="genealogy-tools">
    <div className="genealogy-location"><nav aria-label="Путь в дереве">{shortPath.map((c,i)=><React.Fragment key={c?.path??'ellipsis'}>{i>0&&<span className="genealogy-breadcrumb-chevron" aria-hidden="true" dangerouslySetInnerHTML={{__html:breadcrumbChevron.replace('stroke="black"','stroke="currentColor"')}}/>}{c?<button type="button" onClick={()=>open(c.path)} aria-current={c.path===rootPath?'location':undefined} aria-label={c.login}>{c.path?c.login:'Моя ячейка'}</button>:<span>…</span>}</React.Fragment>)}</nav><span aria-live="polite">Уровень {rootPath.length}</span></div>
@@ -108,23 +111,23 @@ export default function Genealogy({Shared, db, photo}) {
   </div>
   <div className="genealogy-viewport" onPointerDown={panStart} onPointerMove={panMove} onPointerUp={panEnd} onPointerCancel={panEnd} ref={canvas} tabIndex={0} role="region" aria-label="Бинарное дерево, прокручиваемая область">
    <div className="genealogy-board-space"><div ref={scene} className="genealogy-canvas" aria-busy={busy} inert={busy||undefined}>
-    <svg className="genealogy-links" aria-hidden="true">{links.map((d,i)=><path key={i} d={d}/>)}</svg>
+    <svg className="genealogy-links" aria-hidden="true">{links.map((d,i)=><path key={i} d={d}/>)}{signals.map((s,i)=><g className="tree-link-strength" key={i} transform={`translate(${s.x},${s.y})`}><circle r="18"/>{s.level===null?<text textAnchor="middle" dominantBaseline="central" fill="currentColor">—</text>:[1,2,3].map(n=><rect key={n} className={n<=s.level?'is-filled':''} x={-10+(n-1)*7} y={8-n*5} width="4" height={n*5} rx="1"/>)}</g>)}</svg>
     <div className="genealogy-ancestry">
      {rootPath.length>1&&<button type="button" className="genealogy-ancestor-more" onClick={()=>open('')}><TreeArrow Shared={Shared} direction="up"/>Ещё {rootPath.length-1} {rootPath.length===2?'уровень':'уровня'} выше · к вашей ячейке</button>}
      {rootPath?<button type="button" className="genealogy-ancestor" aria-label={`Выше: ${path.at(-2).login}`} onClick={()=>open(rootPath.slice(0,-1))}><span className="genealogy-parent-person"><Avatar cell={parent} photo={parent.path===''?photo:parent.personal?parent.photo:null}/><span><strong title={parent.personal?parent.name:parent.login}>{parent.personal?parent.name:parent.login}</strong>{parent.personal&&<small>{parent.login}</small>}</span></span><span className="genealogy-up-action" aria-hidden="true"><TreeArrow Shared={Shared} direction="up"/></span></button>:<span className="genealogy-boundary">Ваша ячейка · начало доступной структуры</span>}
     </div>
-    <div className={`genealogy-root ${rootPath?'has-ancestors':''}`} ref={rootButton}><MemberCard Shared={Shared} db={db} onDetails={setSelected} cell={current} compact={compactRoot} photo={current.path===''?photo:current.personal?current.photo:null} root onOpen={()=>rootPath && open(rootPath.slice(0,-1))}/></div>
+    <div className={`genealogy-root ${rootPath?'has-ancestors':''}`} ref={rootButton}><MemberCard cells={cells} Shared={Shared} db={db} onDetails={setSelected} cell={current} compact={compactRoot} photo={current.path===''?photo:current.personal?current.photo:null} root onOpen={()=>rootPath && open(rootPath.slice(0,-1))}/></div>
     {(compactView?[1]:[1,2]).map(level=><div key={level} className={`genealogy-level level-${level}`} style={{'--tree-columns':2**level}}>{Array.from({length:2**level},(_,i)=>{
      const relative=i.toString(2).padStart(level,'0').replaceAll('0','L').replaceAll('1','R');
      const fullPath=rootPath+relative;
      const c=cells.find(c=>c.path===fullPath);
      const parent=cells.some(c=>c.path===fullPath.slice(0,-1));
      return <div key={relative} className={`genealogy-slot leg-${relative[0]==='L'?'left':'right'} ${parent?'has-parent':''}`} data-tree-path={fullPath}>
-      {c?<MemberCard Shared={Shared} db={db} onDetails={setSelected} cell={c} photo={c.personal?c.photo:null} boundary={level===(compactView?1:2)?'boundary-all':null} compact={level===2||denseView} onOpen={()=>open(c.path)}/>:<div className="genealogy-vacant" title="Свободная позиция"><span>Свободная позиция</span>{fullPath===nextPath&&<strong>Сюда встанет следующий</strong>}</div>}
+      {c?<MemberCard cells={cells} Shared={Shared} db={db} onDetails={setSelected} cell={c} photo={c.personal?c.photo:null} boundary={level===(compactView?1:2)?'boundary-all':null} compact={level===2||denseView} onOpen={()=>open(c.path)}/>:<div className="genealogy-vacant" title="Свободная позиция"><span>Свободная позиция</span>{fullPath===nextPath&&<strong>Сюда встанет следующий</strong>}</div>}
      </div>;
     })}</div>)}
    </div></div>
   </div>
- {selected&&<ParticipantDetails photo={selected.path===''?photo:selected.personal?selected.photo:null} cell={selected} Shared={Shared} db={db} onClose={()=>setSelected(null)} onNavigate={open}/>}
+ {selected&&<ParticipantDetails photo={selected.path===''?photo:selected.personal?selected.photo:null} cell={selected} cells={cells} Shared={Shared} db={db} onClose={()=>setSelected(null)} onNavigate={open}/>}
  </div>;
 }

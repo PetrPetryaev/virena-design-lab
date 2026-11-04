@@ -2,12 +2,12 @@ import React,{useEffect,useRef} from 'react';
 import {activityLabel,formatPoints,legLabel,participantDetails,genealogyCells} from './genealogyData.js';
 import './participant-details.css';
 
-export default function ParticipantDetails({cell,Shared,db,onClose,onNavigate,photo}){
+export default function ParticipantDetails({cell,Shared,db,onClose,onNavigate,photo,cells=genealogyCells}){
  const ref=useRef(null),closeRef=useRef(onClose);closeRef.current=onClose;
  const person=participantDetails(cell);
  const sponsor=person.sponsor;
 // Active account is path "". Browsing a subtree never changes that boundary.
- const accessibleSponsor=!sponsor?.isCompany && typeof sponsor?.path==='string' && genealogyCells.some(c=>c.path===sponsor.path && c.login===sponsor.login);
+ const accessibleSponsor=!sponsor?.isCompany && typeof sponsor?.path==='string' && cells.some(c=>c.path===sponsor.path && c.login===sponsor.login);
  useEffect(()=>{
   const dialog=ref.current,previous=document.activeElement;
   dialog.showModal();

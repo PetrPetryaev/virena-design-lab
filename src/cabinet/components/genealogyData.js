@@ -19,7 +19,7 @@ export const genealogyCells = [
 export const formatPoints = n => n === null ? '—' : n.toLocaleString('ru-RU', {minimumFractionDigits: 2, maximumFractionDigits: 2});
 export const activityLabel = c => ({partner: 'Активна до 02.03.2027', grace: 'Льготное окно до 12.11', frozen: 'Заморожен с 01.11.2026', client: 'Клиент', deactivated: 'Неактивна с 01.10.2026'})[c.state];
 export const legLabel = path => !path ? 'Ваша ячейка' : path[0] === 'L' ? 'Левая нога' : 'Правая нога';
-export function outermost(side) {return genealogyCells.filter(c => c.path && [...c.path].every(s => s === side)).sort((a,b) => b.path.length - a.path.length)[0];}
+export function outermost(side,cells=genealogyCells) {return cells.filter(c => c.path && [...c.path].every(s => s === side)).sort((a,b) => b.path.length - a.path.length)[0]||cells[0];}
 
 // Stage 2 fixtures. Sponsor links are explicit; a binary parent is not a sponsor.
 const sponsors = {
@@ -34,7 +34,7 @@ const sponsors = {
 // Project the permitted response before rendering. Backend must enforce this too.
 export function participantDetails(cell) {
  const own=cell.path==='';
- const sponsor=sponsors[cell.path];
+ const sponsor=cell.sponsor||sponsors[cell.path];
  const canSeeContacts=!own && cell.personal && sponsor?.path==='';
  const canSeePersonal=own || canSeeContacts;
  return {

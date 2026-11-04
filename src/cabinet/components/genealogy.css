@@ -121,6 +121,10 @@
 .genealogy-node>.genealogy-card-state{display:flex;align-items:center;justify-content:center;gap:8px;min-height:24px}
 .genealogy-library-icon{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;flex:0 0 24px}
 .cabinet .genealogy-library-icon svg{display:block;width:24px;height:24px}
+.genealogy{--tree-rank-gold:#b88416}
+[data-theme=dark] .genealogy{--tree-rank-gold:#e9bd53}
+.genealogy-rank .icon-star{color:var(--tree-rank-gold)}
+.genealogy-rank.is-zero .icon-star,.genealogy-member.state-frozen .genealogy-rank .icon-star{color:var(--lab-muted)}
 .cabinet .genealogy-library-icon.icon-star svg{stroke:none}
 .genealogy-member.state-frozen .genealogy-package{color:var(--lab-muted)}
 
