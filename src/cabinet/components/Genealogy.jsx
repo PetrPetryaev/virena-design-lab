@@ -2,6 +2,7 @@ import {flushSync} from 'react-dom';
 import React, {useEffect, useMemo, useRef, useState} from 'react';
 import {genealogyCells as cells, formatPoints, activityLabel, legLabel, outermost} from './genealogyData.js';
 import './genealogy.css';
+import breadcrumbChevron from '../../assets/navigation/alt-arrow-right-linear.svg?raw';
 import starIcon from '../../assets/tree-icons/star-bold.svg?raw';
 import frozenIcon from '../../assets/tree-icons/snowflake-linear.svg?raw';
 import ParticipantDetails from './ParticipantDetails.jsx';
@@ -96,7 +97,7 @@ export default function Genealogy({Shared, db, photo}) {
  const nextPath = `${outermost('L').path}L`;
  return <div className={`genealogy visual-tree ${compactView?'is-short':''}`}>
   <div className="genealogy-tools">
-   <div className="genealogy-location"><nav aria-label="Путь в дереве">{shortPath.map((c,i)=><React.Fragment key={c?.path??'ellipsis'}>{i>0&&<TreeArrow Shared={Shared}/>}{c?<button type="button" onClick={()=>open(c.path)} aria-current={c.path===rootPath?'location':undefined} aria-label={c.login}>{c.path?c.login:'Моя ячейка'}</button>:<span>…</span>}</React.Fragment>)}</nav><span aria-live="polite">Уровень {rootPath.length}</span></div>
+   <div className="genealogy-location"><nav aria-label="Путь в дереве">{shortPath.map((c,i)=><React.Fragment key={c?.path??'ellipsis'}>{i>0&&<span className="genealogy-breadcrumb-chevron" aria-hidden="true" dangerouslySetInnerHTML={{__html:breadcrumbChevron.replace('stroke="black"','stroke="currentColor"')}}/>}{c?<button type="button" onClick={()=>open(c.path)} aria-current={c.path===rootPath?'location':undefined} aria-label={c.login}>{c.path?c.login:'Моя ячейка'}</button>:<span>…</span>}</React.Fragment>)}</nav><span aria-live="polite">Уровень {rootPath.length}</span></div>
 
    <div className="genealogy-search" onBlur={e=>{if(!e.currentTarget.contains(e.relatedTarget))setSearchOpen(false);}} onFocus={()=>setSearchOpen(true)} onKeyDown={e=>{if(e.key==='Escape'){e.currentTarget.querySelector('input')?.focus();setSearchOpen(false);}if(e.key==='ArrowDown'&&e.target.tagName==='INPUT'){e.preventDefault();e.currentTarget.querySelector('.genealogy-result')?.focus();}}}>
     <label className="store-search"><span className="store-search-symbol" aria-hidden="true"><Shared.Icon name="Serach"/></span><input type="search" aria-label="Поиск по структуре" placeholder="Найти участника" value={query} onChange={e=>{setQuery(e.target.value);setSearchOpen(true);}}/></label>

@@ -129,3 +129,5 @@
 .cabinet .genealogy .genealogy-library-icon svg{width:18px;height:18px}
 .genealogy-rank{line-height:18px}
 .genealogy-rank>span:not(.genealogy-library-icon){display:flex;align-items:center;justify-content:center;height:18px;line-height:18px;font-variant-numeric:lining-nums tabular-nums}
+
+.genealogy-breadcrumb-chevron{display:inline-flex;flex:0 0 24px;width:24px;height:24px;color:var(--lab-muted)}.cabinet .genealogy-breadcrumb-chevron svg{display:block;width:24px;height:24px;fill:none}
