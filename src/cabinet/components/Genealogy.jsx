@@ -55,15 +55,20 @@ export default function Genealogy({Shared, db, photo}) {
  },[]);
  const open = async path => {
   if(locked.current||path===rootPath||!cells.some(c=>c.path===path))return;
-  const direction=path.length<rootPath.length?1:-1;
+  const ascending=rootPath.startsWith(path),descending=path.startsWith(rootPath);
+  let shared=0;while(shared<Math.min(path.length,rootPath.length)&&path[shared]===rootPath[shared])shared++;
+  const branch=ascending?rootPath[path.length]:path[shared];
+  // Camera follows the chosen branch; the old canvas moves in the opposite direction.
+  const travelX=(branch==='L'?-16:16)*(ascending?-1:1);
+  const travelY=ascending?-28:descending?28:0;
   const update=()=>{setRootPath(path);setSearchOpen(false);setQuery('');};
   if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){update();requestAnimationFrame(()=>rootButton.current?.querySelector('button')?.focus({preventScroll:true}));return;}
   locked.current=true;setBusy(true);
   try{
-   const leave=scene.current.animate([{opacity:1,transform:'translateY(0)'},{opacity:0,transform:`translateY(${direction*28}px)`}],{duration:160,easing:'ease-in',fill:'forwards'});
+   const leave=scene.current.animate([{opacity:1,transform:'translate(0, 0)'},{opacity:0,transform:`translate(${-travelX}px, ${-travelY}px)`}],{duration:160,easing:'ease-in',fill:'forwards'});
    animations.current=[leave];await leave.finished;if(!alive.current)return;
    flushSync(update);leave.cancel();
-   const enter=scene.current.animate([{opacity:0,transform:`translateY(${-direction*28}px)`},{opacity:1,transform:'translateY(0)'}],{duration:240,easing:'cubic-bezier(.16,1,.3,1)',fill:'both'});
+   const enter=scene.current.animate([{opacity:0,transform:`translate(${travelX}px, ${travelY}px)`},{opacity:1,transform:'translate(0, 0)'}],{duration:240,easing:'cubic-bezier(.16,1,.3,1)',fill:'both'});
    animations.current=[enter];await enter.finished;enter.cancel();
    rootButton.current?.querySelector('button')?.focus({preventScroll:true});
   }catch(error){if(error.name!=='AbortError')throw error;}

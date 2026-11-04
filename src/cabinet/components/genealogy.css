@@ -107,6 +107,6 @@
 .genealogy-more,.genealogy-ancestor-more{display:inline-flex;align-items:center;justify-content:center;gap:8px}
 .genealogy-location nav{gap:4px}
 .genealogy-node>.genealogy-card-state,.node-compact>.genealogy-card-state{display:block;position:absolute;top:calc(100% + 8px);left:0;right:0;text-align:center;color:var(--lab-muted);font-size:11px;line-height:16px;pointer-events:none}
-.genealogy-node:has(>.genealogy-card-state)>.genealogy-more{top:calc(100% + 48px)}
-.genealogy-root:has(.genealogy-card-state)+.genealogy-level{padding-top:40px}
-.genealogy-board-space:has(.has-hidden-levels>.genealogy-card-state){padding-bottom:104px}
+.genealogy-node>.genealogy-more{top:calc(100% + 48px)}
+.genealogy .genealogy-level{padding-top:40px}
+.genealogy-board-space{padding-bottom:104px}
