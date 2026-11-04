@@ -16,7 +16,7 @@ import './overview-refinements.css';
 // Explicit demo fixture; prices/deadline follow TES-341 and the 02.11 architecture.
 export const newcomerDemo={name:'Александра Соколова',id:'VR-100024',days:7,activationWindowDays:7,deadline:'10.11.2026',activityPrice:120};
 export const profileInitials=newcomerDemo.name.trim().split(/\s+/).slice(0,2).map(part=>part[0]).join('').toLocaleUpperCase('ru');
-export function OverviewCards({Shared,db,icon,navigate,profile='ready',sponsor='ready',retry=()=>{},only,surface,loading=false,member='newcomer'}){
+export function OverviewCards({Shared,db,icon,navigate,profile='ready',sponsor='ready',retry=()=>{},only,surface,loading=false,member='newcomer',photo=profilePhoto}){
  const model=memberStates[member]||memberStates.newcomer;
  const client=member==='client'||model.deactivated;
  const [details,setDetails]=useState(false);
@@ -28,7 +28,7 @@ export function OverviewCards({Shared,db,icon,navigate,profile='ready',sponsor='
  const state=(kind,title)=>kind==='loading'?<div className="overview-loading" role="status" aria-label={`Загрузка: ${title}`}><span/><span/><span/></div>:<div className="overview-error" role="status"><h3>Не удалось загрузить {title==='профиль'?'профиль':'спонсора'}</h3><p>Попробуйте ещё раз. Остальные разделы доступны.</p>{button('Повторить',()=>retry(title==='профиль'?'profile':'sponsor'))}</div>;
  const cards={
  profile:<IdentityCard kind="profile" label="Профиль участника" state={profile} fallback={state(profile,'профиль')} surface={surface}>
-  <div className="overview-person"><span className="overview-avatar" aria-hidden="true"><img className="overview-profile-photo" src={profilePhoto} alt=""/></span><div><span className="overview-eyebrow">Ваш профиль</span><h2>{newcomerDemo.name}</h2></div><div className="overview-profile-link"><span className="overview-copy-id"><Shared.Button group={db.components.find(c=>c.name==='Boris / Button')} choice={{Tone:'Soft',Size:'48'}} label={newcomerDemo.id} ariaLabel="Скопировать ID" onClick={copyId} iconContent={icon(copyStatus==='ID скопирован'?'Auth / Icon / Success':'copy')}/>{copyStatus&&createPortal(<div className="auth-toast" role="status">{copyStatus==='ID скопирован'&&<Shared.Icon name="Auth / Icon / Success"/>}{copyStatus}</div>,document.body)}</span>{button('Мой профиль',()=>navigate('profile'))}</div></div>
+  <div className="overview-person"><span className="overview-avatar" aria-hidden="true">{photo?<img className="overview-profile-photo" src={photo} alt=""/>:profileInitials}</span><div><span className="overview-eyebrow">Ваш профиль</span><h2>{newcomerDemo.name}</h2></div><div className="overview-profile-link"><span className="overview-copy-id"><Shared.Button group={db.components.find(c=>c.name==='Boris / Button')} choice={{Tone:'Soft',Size:'48'}} label={newcomerDemo.id} ariaLabel="Скопировать ID" onClick={copyId} iconContent={icon(copyStatus==='ID скопирован'?'Auth / Icon / Success':'copy')}/>{copyStatus&&createPortal(<div className="auth-toast" role="status">{copyStatus==='ID скопирован'&&<Shared.Icon name="Auth / Icon / Success"/>}{copyStatus}</div>,document.body)}</span>{button('Мой профиль',()=>navigate('profile'))}</div></div>
   <dl className="overview-profile-meta"><div><dt>{icon('Auth / Icon / Success')}Статус</dt><dd className={`overview-status-registered${model.locked?' is-frozen':''}`}><span className="overview-chip">{model.status}</span>{model.partner&&<span className="overview-status-term">{member==='frozen'?'с 02.11.2026':member==='grace'?'· осталось 2 дня':'до 03.11.2027'}</span>}</dd></div><div><dt>{icon('box')}Пакет</dt><dd className="overview-fact-empty">{model.package||'Без пакета'}</dd></div><div><dt>{icon('medal-ribbon-star')}Ранг</dt><dd className="overview-fact-empty">Пока нет</dd></div></dl>
 
  </IdentityCard>,
@@ -50,9 +50,9 @@ export function OverviewCards({Shared,db,icon,navigate,profile='ready',sponsor='
 
  return <>{cards.notice}<div className="overview-identity">{cards.profile}{cards.sponsor}</div><div className="overview-columns"><section className="overview-card overview-start" aria-label="Возможности участия"><div className="overview-options">{cards.package}{cards.product}{model.deactivated?<MediaCard loading={loading} title="Ваше партнёрство завершено" description="Покупки остаются доступны. По вопросам повторной регистрации обратитесь в поддержку." src={networking} surface="soft" action={button('Связаться с поддержкой',()=>navigate('support'))}/>:cards.partner}</div></section></div></>;
 }
-export default function Overview({Shared,db,icon,navigate,scenario='ready',member='newcomer'}){
+export default function Overview({Shared,db,icon,navigate,scenario='ready',member='newcomer',photo=profilePhoto}){
  const [profile,setProfile]=useState('loading'),[sponsor,setSponsor]=useState('loading');
  useEffect(()=>{setProfile('loading');setSponsor('loading');if(scenario==='loading')return;const t=setTimeout(()=>{setProfile(scenario==='profile-error'?'error':'ready');setSponsor(scenario==='sponsor-error'?'error':'ready');},550);return()=>clearTimeout(t);},[scenario]);
  const retry=kind=>kind==='profile'?setProfile('ready'):setSponsor('ready');
- return <div className="overview overview-comparison" data-layout="literal" aria-label={member==='client'?'Обзор клиента':member==='newcomer'?'Обзор нового пользователя':`Обзор: ${memberStates[member]?.label}`}><OverviewCards {...{Shared,db,icon,navigate,profile,sponsor,retry,member}} loading={profile==='loading'&&sponsor==='loading'}/></div>;
+ return <div className="overview overview-comparison" data-layout="literal" aria-label={member==='client'?'Обзор клиента':member==='newcomer'?'Обзор нового пользователя':`Обзор: ${memberStates[member]?.label}`}><OverviewCards {...{Shared,db,icon,navigate,profile,sponsor,retry,member,photo}} loading={profile==='loading'&&sponsor==='loading'}/></div>;
 }

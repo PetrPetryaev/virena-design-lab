@@ -1,0 +1,62 @@
+/* Alternate surface treatment; shared layout, controls and content stay intact. */
+#root>header .design-version-switch{--auth-panel:var(--lab-soft);--auth-ink:var(--lab-ink);flex-shrink:0;gap:4px;margin:0}
+#root>header .design-version-switch>button{padding:0 16px;margin:0;white-space:nowrap}
+#root>header{height:auto;min-height:72px;flex-wrap:wrap}
+#root>header>small{margin-left:auto}
+:root[data-design=soft]{--design-canvas:var(--lab-canvas);--design-card:var(--lab-surface)}
+[data-design=soft] .cabinet{--cab-canvas:var(--design-canvas);--cab-card:var(--design-card)}
+[data-design=soft] .overview-comparison :is(.overview-profile,.overview-sponsor,.overview-product,.overview-package,.overview-partner,.overview-notice,.overview-option,.partner-stat),
+[data-design=soft] :is(.partner-metric-strip,.partner-workspace .partner-business-grid,.cab-placeholder,.partnership-dialog){background:var(--design-card);border-color:transparent;box-shadow:none}
+[data-design=soft] .overview-comparison .overview-package .overview-art-package{box-shadow:none}
+/* Keep warning cues in icons/text, and preserve keyboard focus outlines. */
+[data-design=soft] .overview-comparison .overview-notice.is-attention:not(.card-loading){background:var(--design-card);border-color:transparent}
+[data-design=soft] .overview-comparison .card-loading{background:var(--lab-skeleton)}
+[data-design=soft] :is(.store-catalog,.store-product,.store-detail-art,.store-related-links a){background:var(--design-card);border-color:transparent;box-shadow:none}
+[data-design=soft] .store:not(.store-embedded){background:var(--design-canvas)}
+[data-design=soft] :is(.sample,.playground,.card-demo-stage){border-color:transparent;box-shadow:none}
+@media(max-width:720px){#root>header .design-version-switch{order:3;width:100%}}
+@media(min-width:721px) and (max-width:1600px){#root>header>small{display:none}#root>header>.fullscreen-toggle{margin-left:auto}}
+
+/* Gray canvas needs a distinct selected navigation surface and separate products. */
+[data-design=soft] .cabinet{--cab-nav-fill:var(--lab-surface);--cab-selected-hover:var(--lab-accent-soft);--cab-hover:var(--lab-hover)}
+[data-design=soft] .cab-nav-item[aria-current=page]{color:var(--lab-link);font-weight:500}
+[data-design=soft] .store .store-catalog{background:transparent;border:0;overflow:visible}
+[data-design=soft] .store-grid{gap:24px;margin:0}
+[data-design=soft] .store-product{border:0;border-radius:24px;margin:0;overflow:hidden}
+[data-design=soft] .store-toolbar .store-search{background:var(--design-card)}
+@media(max-width:720px){[data-design=soft] .store-grid{gap:16px}}
+
+/* Quiet navigation, icon wells and grouped profile facts. */
+[data-design=soft] .cabinet{--cab-selected-hover:var(--lab-hover)}
+[data-design=soft] .cab-nav-item[aria-current=page]{color:var(--lab-ink)}
+[data-design=soft] .cab-nav-item .demo-icon [style*="mask"]{background-color:currentColor!important}
+[data-design=soft] .overview-comparison :is(.overview-art-package,.overview-notice-icon,.overview-sponsor-icon,.overview-option-icon){background:var(--lab-soft);border:0;box-shadow:none}
+[data-design=soft] .overview-comparison .overview-package .overview-art-package,
+[data-design=soft] .overview-comparison .is-attention .overview-notice-icon{background:var(--lab-soft);box-shadow:none}
+[data-design=soft] .overview-comparison .overview-profile-meta{border:0;background:var(--lab-soft);padding:16px;border-radius:16px}
+[data-design=soft] .cabinet [data-ui=Button][data-tone=Outline]>.motion-surface{background-color:var(--lab-accent-soft)!important;box-shadow:none!important}
+[data-design=soft] .cabinet [data-ui=Button][data-tone=Outline]>.motion-surface>span{color:var(--lab-link)!important}
+[data-design=soft] .cabinet [data-ui=Button][data-tone=Outline]:is([data-state=Hover],[data-state=Pressed])>.motion-surface{background-color:var(--lab-accent-line)!important}
+[data-design=soft] .cabinet [data-ui=Button][data-tone=Outline]:focus-visible{outline:2px solid var(--lab-link);outline-offset:3px}
+[data-design=soft] .cabinet [data-ui=Button][data-tone=Outline] .motion-surface [style*="mask"]{background-color:var(--lab-link)!important}
+
+/* Header utilities stay neutral; profile facts use only a faint surface tint. */
+[data-design=soft] .cabinet .cab-top-actions [data-ui=Button][data-tone=Outline]>.motion-surface{background-color:var(--lab-soft)!important}
+[data-design=soft] .cabinet .cab-top-actions [data-ui=Button][data-tone=Outline]>.motion-surface>span{color:var(--lab-ink)!important}
+[data-design=soft] .cabinet .cab-top-actions [data-ui=Button][data-tone=Outline] .motion-surface [style*="mask"]{background-color:var(--lab-ink)!important}
+[data-design=soft] .cabinet .cab-top-actions [data-ui=Button][data-tone=Outline]:is([data-state=Hover],[data-state=Pressed])>.motion-surface{background-color:var(--lab-hover)!important}
+[data-design=soft] .overview-comparison .overview-profile-meta{background:color-mix(in srgb,var(--lab-soft) 40%,var(--lab-surface))}
+
+/* Original direction: all overview cards use the white surface. */
+[data-design=original] .cabinet .overview-comparison{--cab-card:var(--lab-surface)}
+[data-design=original] .cabinet .overview-comparison :is(.overview-card,.overview-option,.overview-notice,.partner-stat,.partner-metric-strip,.partner-business-grid):not(.card-loading){background:var(--lab-surface)}
+
+/* One consistent 1px edge, without an extra hover shadow. */
+[data-design=original] .cabinet .overview-comparison :is(.overview-profile,.overview-sponsor,.overview-product,.overview-partner,.overview-package,.overview-notice):not(.card-loading){border:0;box-shadow:inset 0 0 0 1px var(--lab-line)}
+
+/* Original direction: neutral filled secondary actions across the cabinet. */
+[data-design=original] .cabinet [data-ui=Button][data-tone=Outline]>.motion-surface{background-color:var(--lab-soft)!important;box-shadow:none!important}
+[data-design=original] .cabinet [data-ui=Button][data-tone=Outline]>.motion-surface>span{color:var(--lab-ink)!important}
+[data-design=original] .cabinet [data-ui=Button][data-tone=Outline] .motion-surface [style*="mask"]{background-color:var(--lab-ink)!important}
+[data-design=original] .cabinet [data-ui=Button][data-tone=Outline]:is([data-state=Hover],[data-state=Pressed])>.motion-surface{background-color:var(--lab-hover)!important}
+[data-design=original] .cabinet [data-ui=Button][data-tone=Outline]:focus-visible{outline:2px solid var(--lab-link);outline-offset:3px}

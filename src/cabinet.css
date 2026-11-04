@@ -217,3 +217,7 @@
 
 .cab-avatar{overflow:hidden}
 .cab-avatar>img{display:block;width:100%;height:100%;object-fit:cover;border-radius:50%}
+.cab-avatar-initials{display:flex;align-items:center;justify-content:center;width:100%;height:100%;border-radius:50%;background:var(--lab-accent-soft);color:var(--lab-link);font:600 16px/1 Inter,sans-serif}
+.cab-profile-menu button{display:flex;align-items:center;gap:12px;padding:12px;border-radius:8px;min-height:44px;color:var(--lab-ink)}
+.cab-profile-menu button>.cab-solar-icon,.cab-profile-menu button>svg{width:24px;height:24px;flex:0 0 24px;color:var(--lab-ink)}
+.cab-profile-menu button>svg{fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}

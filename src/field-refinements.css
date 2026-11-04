@@ -1,0 +1,18 @@
+/* Shared field contract: deliberate clear actions, readable readonly and 20px inset. */
+:root{--field-inset:20px;--field-readonly-bg:color-mix(in srgb,var(--lab-soft) 38%,var(--lab-surface));--field-readonly-line:var(--lab-line);--field-icon-size:20px}
+[data-ui=Field][data-readonly=true] .real-field{background:var(--field-readonly-bg)!important;box-shadow:inset 0 0 0 1px var(--field-readonly-line)!important}
+[data-ui=Field][data-readonly=true] input{color:var(--lab-muted);cursor:text}
+[data-ui=Field][data-readonly=true] .country{opacity:1;cursor:default}
+[data-ui=Field][data-readonly=true] .country .demo-icon{display:none}
+.field-leading-icon{display:inline-block;flex:0 0 var(--field-icon-size);width:var(--field-icon-size);height:var(--field-icon-size);background:var(--lab-muted);mask-position:center;mask-size:contain;mask-repeat:no-repeat}
+.option-menu [role=option]{display:flex;align-items:center;gap:12px}
+.readonly-hint{position:relative;display:flex;flex:none}
+.readonly-lock>span{display:block;width:var(--field-icon-size);height:var(--field-icon-size);background:var(--lab-muted);mask-position:center;mask-size:contain;mask-repeat:no-repeat}
+.readonly-hint [role=tooltip]{position:absolute;right:0;bottom:calc(100% + 8px);z-index:80;width:max-content;max-width:230px;padding:8px 12px;border-radius:8px;background:var(--lab-ink);color:var(--lab-surface);font:400 12px/18px Inter,sans-serif;box-shadow:none}
+[data-ui=Button][data-tone=DangerSoft]>.motion-surface{background:var(--lab-error-surface)!important;box-shadow:none!important}
+[data-ui=Button][data-tone=DangerSoft]>.motion-surface>span{color:var(--lab-error)!important}
+[data-ui=Button][data-tone=DangerSoft]:is([data-state=Hover],[data-state=Pressed])>.motion-surface{background:color-mix(in srgb,var(--lab-error) 12%,var(--lab-error-surface))!important}
+[data-ui=Button][data-tone=DangerSoft][data-state=Disabled]{opacity:.5}
+
+.virena-date:not(:focus-within) .virena-date-clear{visibility:hidden;pointer-events:none}
+.password-rules{margin-top:8px!important}
