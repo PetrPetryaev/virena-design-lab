@@ -90,3 +90,6 @@
 .genealogy-up-action{display:flex;align-items:center;gap:8px;flex:none;font-size:11px}.genealogy-up-action>span{font-size:18px}
 .genealogy-rank.is-zero{color:var(--lab-muted);background:color-mix(in srgb,var(--lab-soft) 55%,transparent)}
 .genealogy-rank.is-zero svg{opacity:.5}
+.genealogy-ancestor{width:320px;padding:12px 16px;gap:12px;text-align:left}
+.genealogy-parent-person{gap:10px;justify-content:flex-start;text-align:left}
+.genealogy-parent-person>span:last-child{align-items:flex-start;text-align:left}
