@@ -2,9 +2,12 @@ import {flushSync} from 'react-dom';
 import React, {useEffect, useMemo, useRef, useState} from 'react';
 import {genealogyCells as cells, formatPoints, activityLabel, legLabel, outermost} from './genealogyData.js';
 import './genealogy.css';
+import starIcon from '../../assets/tree-icons/star-bold.svg?raw';
+import frozenIcon from '../../assets/tree-icons/snowflake-linear.svg?raw';
 import ParticipantDetails from './ParticipantDetails.jsx';
 
 // Product components: the snapshot has no binary-tree node or connector family.
+function TreeLibraryIcon({kind}){return <span className={`genealogy-library-icon icon-${kind}`} aria-hidden="true" dangerouslySetInnerHTML={{__html:(kind==='star'?starIcon:frozenIcon).replaceAll('"black"','"currentColor"')}}/>;}
 function TreeArrow({direction='right',Shared}){return <span className={`genealogy-arrow arrow-${direction}`} aria-hidden="true"><Shared.Icon name="Auth / Icon / Back"/></span>;}
 function Avatar({cell,photo}){const name=cell.personal?cell.name:'';return <span className="genealogy-avatar" aria-hidden="true">{photo?(typeof photo==='string'?<img src={photo} alt=""/>:<span className="genealogy-photo" style={{backgroundImage:`url(${photo.src})`,backgroundSize:photo.size,backgroundPosition:photo.position}}/>):name?name.split(' ').map(n=>n[0]).slice(0,2).join(''):cell.login.slice(0,2).toUpperCase()}</span>;}
 function MemberCard({cell, compact, onOpen, root, onDetails, Shared, db, boundary, photo}) {
@@ -22,11 +25,11 @@ function MemberCard({cell, compact, onOpen, root, onDetails, Shared, db, boundar
    <Avatar cell={cell} photo={photo}/>
    <span className="genealogy-identity"><strong title={visibleName||cell.login}>{visibleName||cell.login}</strong><span title={visibleName?cell.login:'Участник структуры'}>{visibleName?cell.login:'Участник структуры'}</span></span>
   </span>
-  <span className="genealogy-card-meta"><span className={`genealogy-package package-${packageTone}`}>{cell.pack || (cell.state === 'client' ? 'Клиент' : 'Без пакета')}</span>{cell.path===''&&<span className="genealogy-you">Вы</span>}<span className={`genealogy-rank ${cell.rank===0?'is-zero':''}`} aria-label={`Ранг: ${cell.rank} из 9`}><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2.5 2.9 5.9 6.5.9-4.7 4.6 1.1 6.5-5.8-3.1-5.8 3.1 1.1-6.5-4.7-4.6 6.5-.9Z"/></svg><span>{cell.rank}</span></span></span>
+  <span className="genealogy-card-meta"><span className={`genealogy-package package-${packageTone}`}>{cell.pack || (cell.state === 'client' ? 'Клиент' : 'Без пакета')}</span>{cell.path===''&&<span className="genealogy-you">Вы</span>}<span className={`genealogy-rank ${cell.rank===0?'is-zero':''}`} aria-label={`Ранг: ${cell.rank} из 9`}><TreeLibraryIcon kind="star"/><span>{cell.rank}</span></span></span>
   <span className="genealogy-metrics">{['Левая нога','Правая нога'].map((label,i)=><span className="genealogy-leg-stat" key={label}><span className="genealogy-leg-label">{label}</span><b>{formatPoints(cell.points[i])}</b><span className="genealogy-stat-people">Участников: <strong>{cell.counts[i]}</strong></span></span>)}</span>
 
 
- </button>{cell.state!=='partner'&&<span className={`genealogy-card-state state-${cell.state}`}>{activityLabel(cell)}</span>}{boundary&&extraLevels>0&&<button type="button" className={`genealogy-more ${boundary}`} onClick={onOpen} aria-label={`Открыть следующие ${extraLevels} уровня под ${cell.login}`}>Ещё {extraLevels} ур. <TreeArrow Shared={Shared} direction="down"/></button>}<span className="genealogy-info"><Shared.Button group={db.components.find(c=>c.name==='Boris / Icon button')} choice={{Tone:'Ghost',Size:'40'}} ariaLabel={`Подробная информация: ${cell.login}`} iconContent={<Shared.Icon name="Auth / Icon / Info"/>} onClick={()=>onDetails(cell)}/></span></div>;
+ </button>{cell.state!=='partner'&&<span className={`genealogy-card-state state-${cell.state}`}>{activityLabel(cell)}{cell.state==='frozen'&&<TreeLibraryIcon kind="frozen"/>}</span>}{boundary&&extraLevels>0&&<button type="button" className={`genealogy-more ${boundary}`} onClick={onOpen} aria-label={`Открыть следующие ${extraLevels} уровня под ${cell.login}`}>Ещё {extraLevels} ур. <TreeArrow Shared={Shared} direction="down"/></button>}<span className="genealogy-info"><Shared.Button group={db.components.find(c=>c.name==='Boris / Icon button')} choice={{Tone:'Ghost',Size:'40'}} ariaLabel={`Подробная информация: ${cell.login}`} iconContent={<Shared.Icon name="Auth / Icon / Info"/>} onClick={()=>onDetails(cell)}/></span></div>;
 }
 
 export default function Genealogy({Shared, db, photo}) {

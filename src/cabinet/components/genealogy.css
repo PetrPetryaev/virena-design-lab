@@ -51,8 +51,8 @@
 .genealogy-card-state{font-size:10px;color:var(--lab-muted)}.genealogy-card-state.state-grace{color:var(--lab-link)}
 .genealogy .node-compact>.genealogy-member{justify-content:center;gap:8px;min-height:112px}.node-compact .genealogy-metrics,.node-compact .genealogy-rank,.node-compact .genealogy-card-state{display:none}
 .genealogy-vacant{width:100%;max-width:var(--tree-card-width);min-height:112px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:12px;border-radius:28px;background:color-mix(in srgb,var(--lab-surface) 45%,transparent);box-shadow:inset 0 0 0 1px var(--lab-line);color:var(--lab-muted);font-size:12px;text-align:center}.genealogy-vacant strong{color:var(--lab-ink);font-weight:500}
-.genealogy-root.has-ancestors:before,.genealogy-root.has-ancestors:after,.has-hidden-levels:before,.has-hidden-levels:after{content:'';position:absolute;inset:8px 8px -4px;background:color-mix(in srgb,var(--lab-surface) 45%,var(--lab-line));border-radius:28px;z-index:-1}
-.has-hidden-levels:after{inset:16px 16px -8px;background:color-mix(in srgb,var(--lab-surface) 65%,var(--lab-line));z-index:-2}
+.genealogy-root.has-ancestors:before,.genealogy-root.has-ancestors:after,.has-hidden-levels:before,.has-hidden-levels:after{content:'';position:absolute;inset:8px 8px -4px;background:var(--lab-line-strong);border-radius:28px;z-index:-1}
+.has-hidden-levels:after{inset:16px 16px -8px;background:var(--lab-line);z-index:-2}
 .genealogy-root.has-ancestors:before{inset:-4px 8px 8px}.genealogy-root.has-ancestors:after{inset:-8px 16px 16px;z-index:-2}
 .genealogy-more{position:absolute;top:calc(100% + 24px);left:50%;transform:translateX(-50%);height:36px;padding:8px 16px;border:0;border-radius:24px;background:var(--lab-surface);color:var(--lab-muted);font:12px/1.4 Inter,sans-serif;white-space:nowrap;cursor:pointer}
 .genealogy-more:before{content:'';position:absolute;bottom:calc(100% + 4px);left:50%;height:8px;border-left:1px solid var(--tree-connector)}
@@ -114,3 +114,18 @@
 /* Back is the existing 24px arrow master; rotate the whole icon, not its glyph. */
 .genealogy-arrow.arrow-right{transform:rotate(180deg)}.genealogy-arrow.arrow-up{transform:rotate(90deg)}.genealogy-arrow.arrow-down{transform:rotate(-90deg)}
 .genealogy-node:not(:has(>.genealogy-card-state))>.genealogy-more:before{height:32px}
+.genealogy-member.state-frozen .genealogy-identity strong,
+.genealogy-member.state-frozen .genealogy-leg-stat>b,
+.genealogy-member.state-frozen .genealogy-stat-people strong,
+.genealogy-member.state-frozen .genealogy-rank{color:var(--lab-muted)}
+.genealogy-node>.genealogy-card-state{display:flex;align-items:center;justify-content:center;gap:8px;min-height:24px}
+.genealogy-library-icon{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;flex:0 0 24px}
+.cabinet .genealogy-library-icon svg{display:block;width:24px;height:24px}
+.cabinet .genealogy-library-icon.icon-star svg{stroke:none}
+.genealogy-member.state-frozen .genealogy-package{color:var(--lab-muted)}
+
+.genealogy-root.has-ancestors:after{background:var(--lab-line)}
+.genealogy .genealogy-library-icon{width:18px;height:18px;flex-basis:18px}
+.cabinet .genealogy .genealogy-library-icon svg{width:18px;height:18px}
+.genealogy-rank{line-height:18px}
+.genealogy-rank>span:not(.genealogy-library-icon){display:flex;align-items:center;justify-content:center;height:18px;line-height:18px;font-variant-numeric:lining-nums tabular-nums}
