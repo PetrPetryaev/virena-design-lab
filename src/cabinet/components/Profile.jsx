@@ -32,7 +32,7 @@ function ProfileField({Shared,db,label,value,onChange,type='Text',placeholder=''
 function ProfileSelect({Shared,db,label,value,onChange,items,error,leadingIcon,optionIcon,help}){
  return <div className="profile-field"><label className="profile-field-label">{label}</label><Shared.Select group={db.components.find(c=>c.name==='Auth / Select')} embedded label={label} value={value||''} onChange={onChange} items={items} placeholder="Выберите" error={error} leadingIcon={leadingIcon} optionIcon={optionIcon}/>{help&&<small className="profile-help">{help}</small>}</div>;
 }
-function ProfileButton({Shared,db,label,onClick,tone='Outline',disabled=false,size='56',iconContent}){
+function ProfileButton({Shared,db,label,onClick,tone='Outline',disabled=false,size='48',iconContent}){
  return <Shared.Button group={db.components.find(c=>c.name==='Boris / Button')} choice={{Tone:tone,Size:size}} label={label} onClick={onClick} disabled={disabled} {...(iconContent?{iconContent}: {})}/>;
 }
 function ProfileIconButton({Shared,db,icon,onClick,label}){return <Shared.Button group={db.components.find(c=>c.name==='Boris / Icon button')} choice={{Tone:'Ghost',Size:'40'}} label={label} ariaLabel={label} iconContent={icon} onClick={onClick}/>;}

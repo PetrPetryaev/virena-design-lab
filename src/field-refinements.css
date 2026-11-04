@@ -3,7 +3,8 @@
 [data-ui=Field][data-readonly=true] .real-field{background:var(--field-readonly-bg)!important;box-shadow:inset 0 0 0 1px var(--field-readonly-line)!important}
 [data-ui=Field][data-readonly=true] input{color:var(--lab-muted);cursor:text}
 [data-ui=Field][data-readonly=true] .country{opacity:1;cursor:default}
-[data-ui=Field][data-readonly=true] .country .demo-icon{display:none}
+[data-ui=Field][data-readonly=true] .country .demo-icon{display:inline-flex;opacity:.35}
+[data-ui=Field][data-readonly=true] .country:hover{background:transparent}
 .field-leading-icon{display:inline-block;flex:0 0 var(--field-icon-size);width:var(--field-icon-size);height:var(--field-icon-size);background:var(--lab-muted);mask-position:center;mask-size:contain;mask-repeat:no-repeat}
 .option-menu [role=option]{display:flex;align-items:center;gap:12px}
 .readonly-hint{position:relative;display:flex;flex:none}
