@@ -2,11 +2,11 @@ import {flushSync} from 'react-dom';
 import React, {useEffect, useMemo, useRef, useState} from 'react';
 import {genealogyCells as cells, formatPoints, activityLabel, legLabel, outermost} from './genealogyData.js';
 import './genealogy.css';
-import arrowIcon from '../../assets/navigation/alt-arrow-right-linear.svg';
+import arrowIcon from '../../assets/navigation/alt-arrow-right-linear.svg?raw';
 import ParticipantDetails from './ParticipantDetails.jsx';
 
 // Product components: the snapshot has no binary-tree node or connector family.
-function TreeArrow({direction='right'}){return <span className={`genealogy-arrow arrow-${direction}`} aria-hidden="true" style={{maskImage:`url(${arrowIcon})`,WebkitMaskImage:`url(${arrowIcon})`}}/>;}
+function TreeArrow({direction='right'}){return <span className={`genealogy-arrow arrow-${direction}`} aria-hidden="true" dangerouslySetInnerHTML={{__html:arrowIcon.replace('stroke="black"','stroke="currentColor"')}}/>;}
 function Avatar({cell,photo}){const name=cell.personal?cell.name:'';return <span className="genealogy-avatar" aria-hidden="true">{photo?(typeof photo==='string'?<img src={photo} alt=""/>:<span className="genealogy-photo" style={{backgroundImage:`url(${photo.src})`,backgroundSize:photo.size,backgroundPosition:photo.position}}/>):name?name.split(' ').map(n=>n[0]).slice(0,2).join(''):cell.login.slice(0,2).toUpperCase()}</span>;}
 function MemberCard({cell, compact, onOpen, root, onDetails, Shared, db, boundary, photo}) {
  const timer=useRef(null), held=useRef(false), start=useRef(null);
@@ -55,20 +55,15 @@ export default function Genealogy({Shared, db, photo}) {
  },[]);
  const open = async path => {
   if(locked.current||path===rootPath||!cells.some(c=>c.path===path))return;
-  const ascending=rootPath.startsWith(path),descending=path.startsWith(rootPath);
-  let shared=0;while(shared<Math.min(path.length,rootPath.length)&&path[shared]===rootPath[shared])shared++;
-  const branch=ascending?rootPath[path.length]:path[shared];
-  // Camera follows the chosen branch; the old canvas moves in the opposite direction.
-  const travelX=(branch==='L'?-16:16)*(ascending?-1:1);
-  const travelY=ascending?-28:descending?28:0;
+  const travelY=path.length<rootPath.length?-28:28;
   const update=()=>{setRootPath(path);setSearchOpen(false);setQuery('');};
   if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){update();requestAnimationFrame(()=>rootButton.current?.querySelector('button')?.focus({preventScroll:true}));return;}
   locked.current=true;setBusy(true);
   try{
-   const leave=scene.current.animate([{opacity:1,transform:'translate(0, 0)'},{opacity:0,transform:`translate(${-travelX}px, ${-travelY}px)`}],{duration:160,easing:'ease-in',fill:'forwards'});
+   const leave=scene.current.animate([{opacity:1,transform:'translate(0, 0)'},{opacity:0,transform:`translateY(${-travelY}px)`}],{duration:160,easing:'ease-in',fill:'forwards'});
    animations.current=[leave];await leave.finished;if(!alive.current)return;
    flushSync(update);leave.cancel();
-   const enter=scene.current.animate([{opacity:0,transform:`translate(${travelX}px, ${travelY}px)`},{opacity:1,transform:'translate(0, 0)'}],{duration:240,easing:'cubic-bezier(.16,1,.3,1)',fill:'both'});
+   const enter=scene.current.animate([{opacity:0,transform:`translateY(${travelY}px)`},{opacity:1,transform:'translate(0, 0)'}],{duration:240,easing:'cubic-bezier(.16,1,.3,1)',fill:'both'});
    animations.current=[enter];await enter.finished;enter.cancel();
    rootButton.current?.querySelector('button')?.focus({preventScroll:true});
   }catch(error){if(error.name!=='AbortError')throw error;}
