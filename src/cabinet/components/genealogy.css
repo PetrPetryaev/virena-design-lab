@@ -101,3 +101,12 @@
 .genealogy-up-action{position:absolute;right:8px;top:16px;width:40px;height:40px;display:flex;justify-content:center;align-items:center}
 .cabinet .genealogy-up-action svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.6}
 @media(max-height:680px){.genealogy-ancestor{padding:12px 16px;min-height:64px}.genealogy-up-action{top:12px}}
+.cabinet .genealogy-rank svg,.cabinet .genealogy-up-action svg{width:24px;height:24px}
+.genealogy-arrow{display:inline-block;width:24px;height:24px;flex:0 0 24px;background:var(--lab-ink);mask-size:24px 24px;mask-position:center;mask-repeat:no-repeat;-webkit-mask-size:24px 24px;-webkit-mask-position:center;-webkit-mask-repeat:no-repeat}
+.genealogy-arrow.arrow-up{transform:rotate(-90deg)}.genealogy-arrow.arrow-down{transform:rotate(90deg)}
+.genealogy-more,.genealogy-ancestor-more{display:inline-flex;align-items:center;justify-content:center;gap:8px}
+.genealogy-location nav{gap:4px}
+.genealogy-node>.genealogy-card-state,.node-compact>.genealogy-card-state{display:block;position:absolute;top:calc(100% + 8px);left:0;right:0;text-align:center;color:var(--lab-muted);font-size:11px;line-height:16px;pointer-events:none}
+.genealogy-node:has(>.genealogy-card-state)>.genealogy-more{top:calc(100% + 48px)}
+.genealogy-root:has(.genealogy-card-state)+.genealogy-level{padding-top:40px}
+.genealogy-board-space:has(.has-hidden-levels>.genealogy-card-state){padding-bottom:104px}

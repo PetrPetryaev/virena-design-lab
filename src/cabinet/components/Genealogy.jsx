@@ -2,9 +2,11 @@ import {flushSync} from 'react-dom';
 import React, {useEffect, useMemo, useRef, useState} from 'react';
 import {genealogyCells as cells, formatPoints, activityLabel, legLabel, outermost} from './genealogyData.js';
 import './genealogy.css';
+import arrowIcon from '../../assets/navigation/alt-arrow-right-linear.svg';
 import ParticipantDetails from './ParticipantDetails.jsx';
 
 // Product components: the snapshot has no binary-tree node or connector family.
+function TreeArrow({direction='right'}){return <span className={`genealogy-arrow arrow-${direction}`} aria-hidden="true" style={{maskImage:`url(${arrowIcon})`,WebkitMaskImage:`url(${arrowIcon})`}}/>;}
 function Avatar({cell,photo}){const name=cell.personal?cell.name:'';return <span className="genealogy-avatar" aria-hidden="true">{photo?(typeof photo==='string'?<img src={photo} alt=""/>:<span className="genealogy-photo" style={{backgroundImage:`url(${photo.src})`,backgroundSize:photo.size,backgroundPosition:photo.position}}/>):name?name.split(' ').map(n=>n[0]).slice(0,2).join(''):cell.login.slice(0,2).toUpperCase()}</span>;}
 function MemberCard({cell, compact, onOpen, root, onDetails, Shared, db, boundary, photo}) {
  const timer=useRef(null), held=useRef(false), start=useRef(null);
@@ -16,16 +18,16 @@ function MemberCard({cell, compact, onOpen, root, onDetails, Shared, db, boundar
  const extraLevels=below.length?Math.max(...below.map(c=>c.path.length-cell.path.length)):0;
  const visibleName = cell.personal ? cell.name : '';
  const packageTone=({'ВИП':'vip','Супер ВИП':'super','Профи':'pro','Стандарт':'standard'})[cell.pack]||'basic';
- return <div className={`genealogy-node ${boundary&&extraLevels>0?'has-hidden-levels':''} ${compact?'node-compact':''} ${cell.path===''?'is-own':''}`}><button type="button" className={`genealogy-member ${compact ? 'is-compact' : ''} state-${cell.state}`} onClick={e=>{if(held.current){held.current=false;e.preventDefault();return;}onOpen();}} onContextMenu={e=>{e.preventDefault();cancel();onDetails(cell);}} onPointerDown={pointerDown} onPointerMove={pointerMove} onPointerUp={cancel} onPointerCancel={cancel} disabled={root && !cell.path} aria-label={`${root ? (cell.path?'Выше от':'Ваша ячейка') : 'Открыть ветку'} ${cell.login}`} data-login={cell.login}>
+ return <div className={`genealogy-node ${boundary&&extraLevels>0?'has-hidden-levels':''} ${compact?'node-compact':''} ${cell.path===''?'is-own':''}`}><button type="button" className={`genealogy-member ${compact ? 'is-compact' : ''} state-${cell.state}`} onClick={e=>{if(held.current){held.current=false;e.preventDefault();return;}if(root)onDetails(cell);else onOpen();}} onContextMenu={e=>{e.preventDefault();cancel();onDetails(cell);}} onPointerDown={pointerDown} onPointerMove={pointerMove} onPointerUp={cancel} onPointerCancel={cancel} aria-label={`${root ? 'Информация об участнике' : 'Открыть ветку'} ${cell.login}`} data-login={cell.login}>
   <span className="genealogy-member-head">
    <Avatar cell={cell} photo={photo}/>
    <span className="genealogy-identity"><strong title={visibleName||cell.login}>{visibleName||cell.login}</strong><span title={visibleName?cell.login:'Участник структуры'}>{visibleName?cell.login:'Участник структуры'}</span></span>
   </span>
   <span className="genealogy-card-meta"><span className={`genealogy-package package-${packageTone}`}>{cell.pack || (cell.state === 'client' ? 'Клиент' : 'Без пакета')}</span>{cell.path===''&&<span className="genealogy-you">Вы</span>}<span className={`genealogy-rank ${cell.rank===0?'is-zero':''}`} aria-label={`Ранг: ${cell.rank} из 9`}><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2.5 2.9 5.9 6.5.9-4.7 4.6 1.1 6.5-5.8-3.1-5.8 3.1 1.1-6.5-4.7-4.6 6.5-.9Z"/></svg><span>{cell.rank}</span></span></span>
   <span className="genealogy-metrics">{['Левая нога','Правая нога'].map((label,i)=><span className="genealogy-leg-stat" key={label}><span className="genealogy-leg-label">{label}</span><b>{formatPoints(cell.points[i])}</b><span className="genealogy-stat-people">Участников: <strong>{cell.counts[i]}</strong></span></span>)}</span>
-  {cell.state!=='partner'&&<span className={`genealogy-card-state state-${cell.state}`}>{activityLabel(cell)}</span>}
 
- </button>{boundary&&extraLevels>0&&<button type="button" className={`genealogy-more ${boundary}`} onClick={onOpen} aria-label={`Открыть следующие ${extraLevels} уровня под ${cell.login}`}>Ещё {extraLevels} ур. ↓</button>}<span className="genealogy-info"><Shared.Button group={db.components.find(c=>c.name==='Boris / Icon button')} choice={{Tone:'Ghost',Size:'40'}} ariaLabel={`Подробная информация: ${cell.login}`} iconContent={<Shared.Icon name="Auth / Icon / Info"/>} onClick={()=>onDetails(cell)}/></span></div>;
+
+ </button>{cell.state!=='partner'&&<span className={`genealogy-card-state state-${cell.state}`}>{activityLabel(cell)}</span>}{boundary&&extraLevels>0&&<button type="button" className={`genealogy-more ${boundary}`} onClick={onOpen} aria-label={`Открыть следующие ${extraLevels} уровня под ${cell.login}`}>Ещё {extraLevels} ур. <TreeArrow direction="down"/></button>}<span className="genealogy-info"><Shared.Button group={db.components.find(c=>c.name==='Boris / Icon button')} choice={{Tone:'Ghost',Size:'40'}} ariaLabel={`Подробная информация: ${cell.login}`} iconContent={<Shared.Icon name="Auth / Icon / Info"/>} onClick={()=>onDetails(cell)}/></span></div>;
 }
 
 export default function Genealogy({Shared, db, photo}) {
@@ -92,7 +94,7 @@ export default function Genealogy({Shared, db, photo}) {
  const nextPath = `${outermost('L').path}L`;
  return <div className={`genealogy visual-tree ${compactView?'is-short':''}`}>
   <div className="genealogy-tools">
-   <div className="genealogy-location"><nav aria-label="Путь в дереве">{shortPath.map((c,i)=><React.Fragment key={c?.path??'ellipsis'}>{i>0&&<span aria-hidden="true">›</span>}{c?<button type="button" onClick={()=>open(c.path)} aria-current={c.path===rootPath?'location':undefined} aria-label={c.login}>{c.path?c.login:'Моя ячейка'}</button>:<span>…</span>}</React.Fragment>)}</nav><span aria-live="polite">Уровень {rootPath.length}</span></div>
+   <div className="genealogy-location"><nav aria-label="Путь в дереве">{shortPath.map((c,i)=><React.Fragment key={c?.path??'ellipsis'}>{i>0&&<TreeArrow/>}{c?<button type="button" onClick={()=>open(c.path)} aria-current={c.path===rootPath?'location':undefined} aria-label={c.login}>{c.path?c.login:'Моя ячейка'}</button>:<span>…</span>}</React.Fragment>)}</nav><span aria-live="polite">Уровень {rootPath.length}</span></div>
 
    <div className="genealogy-search" onBlur={e=>{if(!e.currentTarget.contains(e.relatedTarget))setSearchOpen(false);}} onFocus={()=>setSearchOpen(true)} onKeyDown={e=>{if(e.key==='Escape'){e.currentTarget.querySelector('input')?.focus();setSearchOpen(false);}if(e.key==='ArrowDown'&&e.target.tagName==='INPUT'){e.preventDefault();e.currentTarget.querySelector('.genealogy-result')?.focus();}}}>
     <label className="store-search"><span className="store-search-symbol" aria-hidden="true"><Shared.Icon name="Serach"/></span><input type="search" aria-label="Поиск по структуре" placeholder="Найти участника" value={query} onChange={e=>{setQuery(e.target.value);setSearchOpen(true);}}/></label>
@@ -105,8 +107,8 @@ export default function Genealogy({Shared, db, photo}) {
    <div className="genealogy-board-space"><div ref={scene} className="genealogy-canvas" aria-busy={busy} inert={busy||undefined}>
     <svg className="genealogy-links" aria-hidden="true">{links.map((d,i)=><path key={i} d={d}/>)}</svg>
     <div className="genealogy-ancestry">
-     {rootPath.length>1&&<button type="button" className="genealogy-ancestor-more" onClick={()=>open('')}>↑ Ещё {rootPath.length-1} {rootPath.length===2?'уровень':'уровня'} выше · к вашей ячейке</button>}
-     {rootPath?<button type="button" className="genealogy-ancestor" aria-label={`Выше: ${path.at(-2).login}`} onClick={()=>open(rootPath.slice(0,-1))}><span className="genealogy-parent-person"><Avatar cell={parent} photo={parent.path===''?photo:parent.personal?parent.photo:null}/><span><strong title={parent.personal?parent.name:parent.login}>{parent.personal?parent.name:parent.login}</strong>{parent.personal&&<small>{parent.login}</small>}</span></span><span className="genealogy-up-action" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 19V5m-6 6 6-6 6 6"/></svg></span></button>:<span className="genealogy-boundary">Ваша ячейка · начало доступной структуры</span>}
+     {rootPath.length>1&&<button type="button" className="genealogy-ancestor-more" onClick={()=>open('')}><TreeArrow direction="up"/>Ещё {rootPath.length-1} {rootPath.length===2?'уровень':'уровня'} выше · к вашей ячейке</button>}
+     {rootPath?<button type="button" className="genealogy-ancestor" aria-label={`Выше: ${path.at(-2).login}`} onClick={()=>open(rootPath.slice(0,-1))}><span className="genealogy-parent-person"><Avatar cell={parent} photo={parent.path===''?photo:parent.personal?parent.photo:null}/><span><strong title={parent.personal?parent.name:parent.login}>{parent.personal?parent.name:parent.login}</strong>{parent.personal&&<small>{parent.login}</small>}</span></span><span className="genealogy-up-action" aria-hidden="true"><TreeArrow direction="up"/></span></button>:<span className="genealogy-boundary">Ваша ячейка · начало доступной структуры</span>}
     </div>
     <div className={`genealogy-root ${rootPath?'has-ancestors':''}`} ref={rootButton}><MemberCard Shared={Shared} db={db} onDetails={setSelected} cell={current} compact={compactRoot} photo={current.path===''?photo:current.personal?current.photo:null} root onOpen={()=>rootPath && open(rootPath.slice(0,-1))}/></div>
     {(compactView?[1]:[1,2]).map(level=><div key={level} className={`genealogy-level level-${level}`} style={{'--tree-columns':2**level}}>{Array.from({length:2**level},(_,i)=>{
