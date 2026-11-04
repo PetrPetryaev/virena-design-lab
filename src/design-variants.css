@@ -60,3 +60,6 @@
 [data-design=original] .cabinet [data-ui=Button][data-tone=Outline] .motion-surface [style*="mask"]{background-color:var(--lab-ink)!important}
 [data-design=original] .cabinet [data-ui=Button][data-tone=Outline]:is([data-state=Hover],[data-state=Pressed])>.motion-surface{background-color:var(--lab-hover)!important}
 [data-design=original] .cabinet [data-ui=Button][data-tone=Outline]:focus-visible{outline:2px solid var(--lab-link);outline-offset:3px}
+
+/* Current design: empty sections sit directly on the page canvas. */
+[data-design=original] .cab-placeholder{background:transparent}

@@ -1,0 +1,4 @@
+/* Vector silhouettes traced from the Figma sheet; semantic ink adapts to both themes. */
+.cab-empty-art{--empty-art-size:192px;position:relative;flex:none;width:var(--empty-art-size);max-width:100%;height:var(--empty-art-size);margin-bottom:24px}
+.cab-empty-art::before{content:"";position:absolute;inset:12px;border-radius:50%;background:color-mix(in srgb,var(--lab-soft) 40%,var(--lab-surface))}
+.cab-empty-art-ink{opacity:1;position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:block;background:var(--lab-ink);mask-repeat:no-repeat;mask-size:100% 100%;mask-position:center}

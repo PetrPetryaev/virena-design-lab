@@ -22,7 +22,7 @@
 .cab-sidebar-bottom{margin-top:auto;padding-top:24px}
 .cab-collapse{color:var(--lab-muted)}
 .cab-body{flex:1;min-width:0;display:flex;flex-direction:column}
-.cabinet .cab-header{height:88px;min-height:88px;padding:0 32px;gap:16px;background:transparent;border:0;display:flex;align-items:center;position:relative;z-index:5}
+.cabinet .cab-header{height:88px;min-height:88px;padding:0 32px;gap:16px;background:transparent;border:0;display:flex;align-items:center;position:relative;z-index:20}
 .cab-greeting{font-size:15px}
 .cab-top-actions{display:flex;align-items:center;gap:12px;margin-left:auto;position:relative}
 .cab-icon-button{display:flex;align-items:center;justify-content:center;width:40px;height:40px;padding:8px;border:0;border-radius:50%;background:transparent}
