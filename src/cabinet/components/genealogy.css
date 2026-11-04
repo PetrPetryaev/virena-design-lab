@@ -110,3 +110,7 @@
 .genealogy-node>.genealogy-more{top:calc(100% + 48px)}
 .genealogy .genealogy-level{padding-top:40px}
 .genealogy-board-space{padding-bottom:104px}
+
+/* Back is the existing 24px arrow master; rotate the whole icon, not its glyph. */
+.genealogy-arrow.arrow-right{transform:rotate(180deg)}.genealogy-arrow.arrow-up{transform:rotate(90deg)}.genealogy-arrow.arrow-down{transform:rotate(-90deg)}
+.genealogy-node:not(:has(>.genealogy-card-state))>.genealogy-more:before{height:32px}
