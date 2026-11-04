@@ -1,3 +1,4 @@
+import {flushSync} from 'react-dom';
 import React, {useEffect, useMemo, useRef, useState} from 'react';
 import {genealogyCells as cells, dataAsOf, formatPoints, activityLabel, legLabel, outermost} from './genealogyData.js';
 import './genealogy.css';
@@ -14,7 +15,7 @@ function MemberCard({cell, compact, onOpen, root, onDetails, Shared, db, boundar
  const extraLevels=below.length?Math.max(...below.map(c=>c.path.length-cell.path.length)):0;
  const visibleName = cell.personal ? cell.name : '';
  const mark = !cell.path ? 'Вы' : cell.personal ? 'Лично приглашённый' : '';
- return <div className="genealogy-node"><button type="button" className={`genealogy-member ${compact ? 'is-compact' : ''} state-${cell.state}`} onClick={e=>{if(held.current){held.current=false;e.preventDefault();return;}onOpen();}} onContextMenu={e=>{e.preventDefault();cancel();onDetails(cell);}} onPointerDown={pointerDown} onPointerMove={pointerMove} onPointerUp={cancel} onPointerCancel={cancel} disabled={root && !cell.path} aria-label={`${root ? (cell.path?'Выше от':'Ваша ячейка') : 'Открыть ветку'} ${cell.login}`} data-login={cell.login}>
+ return <div className={`genealogy-node ${boundary&&extraLevels>0?'has-hidden-levels':''}`}><button type="button" className={`genealogy-member ${compact ? 'is-compact' : ''} state-${cell.state}`} onClick={e=>{if(held.current){held.current=false;e.preventDefault();return;}onOpen();}} onContextMenu={e=>{e.preventDefault();cancel();onDetails(cell);}} onPointerDown={pointerDown} onPointerMove={pointerMove} onPointerUp={cancel} onPointerCancel={cancel} disabled={root && !cell.path} aria-label={`${root ? (cell.path?'Выше от':'Ваша ячейка') : 'Открыть ветку'} ${cell.login}`} data-login={cell.login}>
   <span className="genealogy-member-head">
    <span className="genealogy-avatar" aria-hidden="true">{photo?(typeof photo==='string'?<img src={photo} alt=""/>:<span className="genealogy-photo" style={{backgroundImage:`url(${photo.src})`,backgroundSize:photo.size,backgroundPosition:photo.position}}/>):visibleName ? visibleName.split(' ').map(n=>n[0]).slice(0,2).join('') : cell.login.slice(0,2).toUpperCase()}</span>
    <span className="genealogy-identity"><strong title={cell.login}>{cell.login}</strong>{visibleName && <span title={visibleName}>{visibleName}</span>}</span>
@@ -30,7 +31,11 @@ function MemberCard({cell, compact, onOpen, root, onDetails, Shared, db, boundar
 export default function Genealogy({Shared, db, photo}) {
  const [rootPath, setRootPath] = useState('');
  const [selected,setSelected]=useState(null);
- const [transition,setTransition]=useState({id:0,direction:'down'});
+ const [busy,setBusy]=useState(false);
+ const [compactView,setCompactView]=useState(()=>window.innerHeight<820);
+ const scene=useRef(null),locked=useRef(false),alive=useRef(true),animations=useRef([]);
+ const [links,setLinks]=useState([]);
+ useEffect(()=>{const resize=()=>setCompactView(window.innerHeight<820);window.addEventListener('resize',resize);alive.current=true;return()=>{alive.current=false;window.removeEventListener('resize',resize);animations.current.forEach(a=>a.cancel());};},[]);
  const [query, setQuery] = useState('');
  const [searchOpen, setSearchOpen] = useState(false);
  const canvas = useRef(null);
@@ -42,12 +47,36 @@ export default function Genealogy({Shared, db, photo}) {
   const observer=new ResizeObserver(center);observer.observe(viewport);center();
   return ()=>observer.disconnect();
  },[]);
- const open = path => {
-  if (!cells.some(c=>c.path === path)) return;
-  if(path!==rootPath)setTransition(t=>({id:t.id+1,direction:path.length<rootPath.length?'up':'down'}));
-  setRootPath(path); setSearchOpen(false); setQuery('');
-  requestAnimationFrame(()=>{if(canvas.current)canvas.current.scrollLeft=(canvas.current.scrollWidth-canvas.current.clientWidth)/2; rootButton.current?.querySelector('button')?.focus({preventScroll:true}); canvas.current?.closest('.genealogy')?.scrollIntoView({block:'start',behavior:'instant'});});
+ const open = async path => {
+  if(locked.current||path===rootPath||!cells.some(c=>c.path===path))return;
+  const direction=path.length<rootPath.length?1:-1;
+  const update=()=>{setRootPath(path);setSearchOpen(false);setQuery('');};
+  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){update();requestAnimationFrame(()=>rootButton.current?.querySelector('button')?.focus({preventScroll:true}));return;}
+  locked.current=true;setBusy(true);
+  try{
+   const leave=scene.current.animate([{opacity:1,transform:'translateY(0)'},{opacity:0,transform:`translateY(${direction*28}px)`}],{duration:160,easing:'ease-in',fill:'forwards'});
+   animations.current=[leave];await leave.finished;if(!alive.current)return;
+   flushSync(update);leave.cancel();
+   const enter=scene.current.animate([{opacity:0,transform:`translateY(${-direction*28}px)`},{opacity:1,transform:'translateY(0)'}],{duration:240,easing:'cubic-bezier(.16,1,.3,1)',fill:'both'});
+   animations.current=[enter];await enter.finished;enter.cancel();
+   rootButton.current?.querySelector('button')?.focus({preventScroll:true});
+  }catch(error){if(error.name!=='AbortError')throw error;}
+  finally{locked.current=false;if(alive.current)setBusy(false);}
  };
+ useEffect(()=>{
+  const measure=()=>{
+   const el=scene.current;if(!el)return;const box=el.getBoundingClientRect();const paths=[];
+   const root=el.querySelector('.genealogy-root .genealogy-member');
+   el.querySelectorAll('.genealogy-slot.has-parent').forEach(slot=>{
+    const path=slot.dataset.treePath;const target=slot.querySelector('.genealogy-member,.genealogy-vacant');
+    const parentPath=path.slice(0,-1);const parent=parentPath===rootPath?root:el.querySelector(`[data-tree-path="${parentPath}"] .genealogy-member`);
+    if(!parent||!target)return;const a=parent.getBoundingClientRect(),b=target.getBoundingClientRect();
+    const left=path.endsWith('L'),x=(left?a.left-4:a.right+4)-box.left,y=a.top+a.height*.52-box.top;
+    const endX=b.left+b.width/2-box.left,endY=b.top-box.top-4;const sign=left?-1:1;const radius=Math.min(24,Math.abs(endX-x),Math.max(0,endY-y));
+    paths.push(`M ${x} ${y} H ${endX-sign*radius} Q ${endX} ${y} ${endX} ${y+radius} V ${endY}`);
+   });setLinks(paths);
+  };const observer=new ResizeObserver(measure);observer.observe(scene.current);measure();return()=>observer.disconnect();
+ },[rootPath,compactView]);
  const results = useMemo(()=>{
   const q=query.trim().toLocaleLowerCase('ru');
   return q.length<3 ? [] : cells.filter(c=>`${c.login} ${c.personal ? c.name : ''}`.toLocaleLowerCase('ru').includes(q)).slice(0,10);
@@ -56,7 +85,7 @@ export default function Genealogy({Shared, db, photo}) {
  const path = Array.from({length:rootPath.length+1},(_,i)=>cells.find(c=>c.path===rootPath.slice(0,i))).filter(Boolean);
  const shortPath = path.length>4 ? [path[0],null,...path.slice(-2)] : path;
  const nextPath = `${outermost('L').path}L`;
- return <div className="genealogy">
+ return <div className={`genealogy visual-tree ${compactView?'is-short':''}`}>
   <div className="genealogy-tools">
 
    <div className="genealogy-search" onBlur={e=>{if(!e.currentTarget.contains(e.relatedTarget))setSearchOpen(false);}} onFocus={()=>setSearchOpen(true)} onKeyDown={e=>{if(e.key==='Escape'){e.currentTarget.querySelector('input')?.focus();setSearchOpen(false);}if(e.key==='ArrowDown'&&e.target.tagName==='INPUT'){e.preventDefault();e.currentTarget.querySelector('.genealogy-result')?.focus();}}}>
@@ -71,19 +100,20 @@ export default function Genealogy({Shared, db, photo}) {
 
   <p className="genealogy-scroll-hint">Проведите по дереву в сторону, чтобы увидеть соседние ячейки</p>
   <div className="genealogy-viewport" ref={canvas} tabIndex={0} role="region" aria-label="Бинарное дерево, прокручиваемая область">
-   <div key={transition.id} className={`genealogy-canvas transition-${transition.direction}`}>
+   <div ref={scene} className="genealogy-canvas" aria-busy={busy} inert={busy||undefined}>
+    <svg className="genealogy-links" aria-hidden="true">{links.map((d,i)=><path key={i} d={d}/>)}</svg>
     <div className="genealogy-ancestry">
      {rootPath.length>1&&<button type="button" className="genealogy-ancestor-more" onClick={()=>open('')}>↑ Ещё {rootPath.length-1} {rootPath.length===2?'уровень':'уровня'} выше · к вашей ячейке</button>}
      {rootPath?<button type="button" className="genealogy-ancestor" aria-label={`Выше: ${path.at(-2).login}`} onClick={()=>open(rootPath.slice(0,-1))}><span>↑ На уровень выше</span><strong>{path.at(-2).login}</strong></button>:<span className="genealogy-boundary">Ваша ячейка · начало доступной структуры</span>}
     </div>
-    <div className="genealogy-root" ref={rootButton}><MemberCard Shared={Shared} db={db} onDetails={setSelected} cell={current} photo={current.path===''?photo:current.personal?current.photo:null} root onOpen={()=>rootPath && open(rootPath.slice(0,-1))}/></div>
-    {[1,2].map(level=><div key={level} className={`genealogy-level level-${level}`} style={{'--tree-columns':2**level}}>{Array.from({length:2**level},(_,i)=>{
+    <div className={`genealogy-root ${rootPath?'has-ancestors':''}`} ref={rootButton}><MemberCard Shared={Shared} db={db} onDetails={setSelected} cell={current} compact={compactView} photo={current.path===''?photo:current.personal?current.photo:null} root onOpen={()=>rootPath && open(rootPath.slice(0,-1))}/></div>
+    {(compactView?[1]:[1,2]).map(level=><div key={level} className={`genealogy-level level-${level}`} style={{'--tree-columns':2**level}}>{Array.from({length:2**level},(_,i)=>{
      const relative=i.toString(2).padStart(level,'0').replaceAll('0','L').replaceAll('1','R');
      const fullPath=rootPath+relative;
      const c=cells.find(c=>c.path===fullPath);
      const parent=cells.some(c=>c.path===fullPath.slice(0,-1));
      return <div key={relative} className={`genealogy-slot leg-${relative[0]==='L'?'left':'right'} ${parent?'has-parent':''}`} data-tree-path={fullPath}>
-      {c?<MemberCard Shared={Shared} db={db} onDetails={setSelected} cell={c} photo={c.personal?c.photo:null} boundary={level===2?'boundary-all':null} compact={level===2} onOpen={()=>open(c.path)}/>:<div className="genealogy-vacant" title="Свободная позиция"><span>Свободная позиция</span>{fullPath===nextPath&&<strong>Сюда встанет следующий</strong>}</div>}
+      {c?<MemberCard Shared={Shared} db={db} onDetails={setSelected} cell={c} photo={c.personal?c.photo:null} boundary={level===(compactView?1:2)?'boundary-all':null} compact={level===2} onOpen={()=>open(c.path)}/>:<div className="genealogy-vacant" title="Свободная позиция"><span>Свободная позиция</span>{fullPath===nextPath&&<strong>Сюда встанет следующий</strong>}</div>}
      </div>;
     })}</div>)}
    </div>
