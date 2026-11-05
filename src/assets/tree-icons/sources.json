@@ -13,6 +13,23 @@
       "name": "snowflake-linear",
       "width": 24,
       "height": 24
+    },
+    {
+      "id": "135:87624",
+      "name": "sort-from-top-to-bottom-linear",
+      "width": 24,
+      "height": 24
+    },
+    {
+      "id": "135:87739",
+      "name": "sort-from-bottom-to-top-linear",
+      "width": 24,
+      "height": 24
+    },
+    {
+      "id": "136:93080",
+      "name": "undo-left-round-linear",
+      "asset": "return-to-list.svg"
     }
   ]
 }

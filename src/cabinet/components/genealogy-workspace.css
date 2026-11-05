@@ -61,3 +61,147 @@
 @media(max-width:480px){.tree-comparison-head>span{flex-direction:column;align-items:flex-start}.tree-comparison-head>span:last-child{align-items:flex-end}.tree-notice .overview-notice{padding:var(--tree-lg)}.tree-notice .overview-notice>button{width:100%;min-width:0!important}}
 
 .tree-workspace[data-member=frozen] .tree-comparison-row strong{color:var(--lab-muted)}
+/* Owner-only controls travel with the own node. */
+.tree-dashboard{grid-template-columns:minmax(0,1fr)}
+.tree-owner-placement{margin-top:var(--tree-control);padding:var(--tree-lg);border-radius:var(--tree-xl);background:var(--lab-surface);display:flex;flex-direction:column;gap:var(--tree-md);text-align:center}
+.tree-owner-placement .tree-side-buttons{flex-wrap:nowrap;justify-content:center}
+.tree-owner-placement .tree-side-buttons>button{flex:1;min-width:0!important}
+.tree-owner-placement .motion-surface{min-width:0!important;padding-inline:var(--tree-md)!important}
+.genealogy-vacant.is-forecast-highlight{background:var(--lab-accent-soft);color:var(--lab-link);outline:var(--tree-focus) solid var(--lab-link);outline-offset:var(--tree-xs)}
+.tree-workspace>.visual-tree{min-height:560px}
+/* The same IdentityCard shells and typography as Overview, with tree-specific data. */
+.tree-profile-dashboard{grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:var(--tree-xl)}
+.tree-profile-dashboard .overview-identity-content{display:flex;flex-direction:column;gap:var(--tree-xl);height:100%}
+.tree-profile-dashboard .overview-person h2{font-size:var(--overview-value);font-weight:500;line-height:1.3}
+.tree-profile-dashboard .overview-person{gap:var(--tree-lg)}
+.tree-profile-facts{display:flex;align-items:center;flex-wrap:wrap;gap:var(--tree-md);font-size:var(--tree-caption);color:var(--lab-muted)}
+.tree-profile-facts .overview-chip{padding:var(--tree-xs) var(--tree-sm)}
+.tree-profile-total{font-size:var(--tree-caption)!important}
+.tree-next-person{display:flex;flex-direction:column;gap:var(--tree-xs);padding-block:var(--tree-lg);box-shadow:inset 0 var(--tree-line) var(--lab-line),inset 0 calc(-1 * var(--tree-line)) var(--lab-line)}
+.tree-next-person strong{font-size:var(--tree-title);font-weight:500;overflow-wrap:anywhere}
+.tree-next-person>span:last-child{font-size:var(--tree-body);color:var(--lab-muted)}
+.tree-profile-dashboard .tree-placement-actions{margin-top:auto;flex-wrap:wrap}
+.tree-placement-icon .cab-solar-icon,.tree-placement-icon .demo-icon{width:var(--tree-xl);height:var(--tree-xl)}
+@media(max-width:1100px){.tree-profile-dashboard{grid-template-columns:1fr}}
+/* Compact workspace header: keep the tree as the main working area. */
+.tree-profile-dashboard{grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);align-items:start;gap:var(--tree-lg)}
+.tree-profile-dashboard .overview-profile,.tree-profile-dashboard .overview-sponsor{padding:var(--tree-lg)}
+.tree-profile-dashboard .overview-identity-content{gap:var(--tree-md)}
+.tree-profile-heading{display:flex;align-items:center;justify-content:space-between;gap:var(--tree-lg)}
+.tree-profile-dashboard .overview-person h2{font-size:var(--overview-title);margin:0;letter-spacing:normal}
+.tree-profile-dashboard .overview-person p{font-size:var(--tree-caption)}
+.tree-profile-dashboard .overview-person{gap:var(--tree-md)}
+.tree-total-metrics{display:flex;gap:var(--tree-lg);flex:none}
+.tree-total-metrics>div{display:flex;flex-direction:column;gap:var(--tree-xs)}
+.tree-total-metrics strong{font-size:var(--overview-value);line-height:1.2;font-weight:500;font-variant-numeric:tabular-nums}
+.tree-total-metrics span{font-size:var(--tree-caption);color:var(--lab-muted)}
+.tree-profile-dashboard .tree-comparison-table{gap:var(--tree-sm)}
+.tree-profile-dashboard .tree-comparison-divider{flex-direction:row;justify-content:center;gap:var(--tree-xs)}
+.tree-profile-dashboard .tree-comparison-head,.tree-profile-dashboard .tree-comparison-row{grid-template-columns:minmax(0,1fr) 96px minmax(0,1fr)}
+.tree-profile-dashboard .tree-comparison-row+.tree-comparison-row{padding-top:var(--tree-sm)}
+.tree-profile-dashboard .tree-owner-placement{margin:0;padding:var(--tree-md) 0 0;border-radius:0;box-shadow:inset 0 var(--tree-line) var(--lab-line);background:transparent;flex-direction:row;align-items:center;justify-content:space-between;text-align:left}
+.tree-profile-dashboard .tree-owner-placement h2{font-size:var(--tree-body)}
+.tree-profile-dashboard .tree-side-buttons{flex:none}
+.tree-profile-dashboard .tree-placement-actions{margin:0;gap:var(--tree-sm)}
+.tree-profile-dashboard .tree-forecast-note{font-size:var(--tree-caption);line-height:1.5}
+.tree-next-heading .overview-avatar{overflow:hidden;position:relative}
+.tree-next-heading .genealogy-photo{width:100%;height:100%;display:block}
+@media(max-width:1100px){.tree-profile-dashboard{grid-template-columns:1fr}.tree-profile-dashboard .overview-sponsor .overview-identity-content{display:grid;grid-template-columns:1fr auto;align-items:center}.tree-forecast-note{grid-column:1/-1}}
+@media(max-width:600px){.tree-profile-heading{flex-wrap:wrap}.tree-total-metrics{width:100%;gap:var(--tree-xl)}.tree-total-metrics>div{flex-direction:row;align-items:baseline;gap:var(--tree-sm)}.tree-profile-dashboard .overview-sponsor .overview-identity-content{display:flex}.tree-profile-dashboard .tree-owner-placement{flex-direction:column;align-items:stretch;gap:var(--tree-sm)}.tree-profile-dashboard .tree-comparison-head>span{flex-direction:row;align-items:center}.tree-profile-dashboard .tree-comparison-head>span:last-child{justify-content:flex-end}}
+/* Plain numeric branch pills replace the relative signal scales. */
+.tree-leg-pill{display:flex;align-items:center;justify-content:center;gap:var(--tree-xs);height:var(--tree-gap);padding:0 var(--tree-sm);border-radius:var(--tree-lg);background:var(--lab-surface);font:500 var(--tree-caption)/1.2 Inter,sans-serif;white-space:nowrap;font-variant-numeric:tabular-nums;box-shadow:inset 0 0 0 var(--tree-line) var(--lab-line)}
+.tree-leg-pill .is-larger,.tree-profile-dashboard .tree-comparison-row .is-larger strong{color:var(--lab-ink)}
+.tree-leg-pill .is-smaller,.tree-pill-divider{color:var(--lab-muted)}
+.tree-leg-pill small{font:inherit;color:var(--lab-muted)}
+.tree-workspace[data-member=frozen] .tree-comparison-row strong{color:var(--lab-muted)}
+.tree-leg-pill .is-larger{font-weight:600}.tree-leg-pill .is-smaller{font-weight:400}
+
+.tree-pill-people{display:inline-flex;align-items:center;gap:var(--tree-xs)}
+.tree-pill-person-icon{display:inline-flex;flex:none;width:var(--tree-body);height:var(--tree-body)}
+.cabinet .tree-pill-person-icon svg{display:block;width:100%;height:100%;fill:none}
+.cabinet .tree-pill-person-icon path{stroke:currentColor;stroke-width:1.5;fill:none}
+/* Upper cards use the tree-node visual language. Radio is a product control:
+   the current React snapshot exports no radio component. Native keyboard semantics. */
+.tree-profile-dashboard .overview-profile,.tree-profile-dashboard .overview-sponsor{box-shadow:none;border-radius:28px;background:var(--lab-surface)}
+.tree-member-meta{display:flex;align-items:center;flex-wrap:wrap;gap:var(--tree-sm);font-size:var(--tree-caption);color:var(--lab-muted)}
+.tree-member-meta .genealogy-package{padding:var(--tree-xs) var(--tree-sm);border-radius:var(--tree-sm)}
+.tree-summary-legs{position:relative;padding:var(--tree-lg);border-radius:var(--tree-lg)}
+.tree-summary-legs .genealogy-leg-stat:nth-child(2){padding-left:var(--tree-xl)}
+.tree-summary-legs .is-larger{color:var(--lab-ink)}.tree-summary-legs .is-smaller{color:var(--lab-muted)}
+.tree-summary-legs .genealogy-leg-stat>b{font-size:var(--tree-title);line-height:var(--tree-xl)}
+.tree-leg-divider-mark{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:flex;align-items:center;justify-content:center;width:var(--tree-xl);height:var(--tree-xl);background:var(--lab-surface);border-radius:50%;color:var(--lab-muted)}
+.tree-leg-divider-mark>span{display:flex;width:var(--tree-lg);height:var(--tree-lg)}
+.tree-leg-divider-mark .points-left{transform:rotate(180deg)}
+.cabinet .tree-leg-divider-mark svg{width:100%;height:100%;fill:none}
+.tree-placement-choice{border:0;padding:0;margin:0;min-width:0}
+.tree-placement-choice legend{font-size:var(--tree-body);font-weight:500;margin-bottom:var(--tree-sm)}
+.tree-placement-choice>div{display:flex;gap:var(--tree-xl);flex-wrap:wrap}
+.tree-placement-choice label{display:flex;align-items:center;gap:var(--tree-sm);font-size:var(--tree-body);min-height:var(--tree-gap);cursor:pointer}
+.tree-placement-choice input{width:var(--tree-lg);height:var(--tree-lg);margin:0;accent-color:var(--lab-link)}
+.tree-profile-dashboard .tree-placement-choice p{font-size:var(--tree-caption);margin-top:var(--tree-xs)}
+.tree-placement-choice:disabled{color:var(--lab-muted)}
+.tree-next-title{display:flex;align-items:center;justify-content:space-between;gap:var(--tree-sm)}
+.tree-next-title span{font-size:var(--tree-caption);color:var(--lab-muted)}
+.tree-next-heading{background:var(--lab-soft);padding:var(--tree-lg);border-radius:var(--tree-lg)}
+.tree-workspace[data-member=frozen] .tree-summary-legs b,.tree-workspace[data-member=frozen] .tree-summary-legs strong{color:var(--lab-muted)}
+.tree-summary-legs>.tree-leg-divider-mark{padding:0;border:0}
+/* Own node is the single structure summary; line controls only affect future invites. */
+.genealogy-root.is-own-root{width:520px}
+.genealogy-root.is-own-root .genealogy-node{max-width:none}
+.tree-own-totals{display:flex;gap:var(--tree-xl);font-size:var(--tree-caption);color:var(--lab-muted)}
+.tree-own-totals strong{font-size:var(--tree-title);font-weight:600;color:var(--lab-ink);margin-right:var(--tree-xs)}
+.tree-own-activity{font-size:var(--tree-caption);color:var(--lab-muted)}
+.tree-leg-strength-label{display:flex;align-items:center;gap:var(--tree-xs);font-size:var(--tree-caption);color:var(--lab-muted);margin-top:var(--tree-xs)}
+.tree-leg-strength-label.is-weaker{color:var(--lab-ink);font-weight:500}
+.tree-leg-strength-label>span{display:inline-flex;width:var(--tree-md);height:var(--tree-md)}
+.tree-leg-strength-label .points-left{transform:rotate(180deg)}
+.cabinet .tree-leg-strength-label svg{width:100%;height:100%;fill:none}
+.tree-line-choice{position:absolute;z-index:2;transform:translate(-50%,-50%);display:flex;flex-direction:column;gap:var(--tree-xs);padding:var(--tree-sm) var(--tree-md);border-radius:var(--tree-lg);background:var(--lab-surface);box-shadow:inset 0 0 0 var(--tree-line) var(--lab-line);font-size:var(--tree-caption);cursor:pointer;white-space:nowrap}
+.tree-line-choice>span:first-child{color:var(--lab-muted)}
+.tree-line-choice>span:last-child{display:flex;align-items:center;gap:var(--tree-sm);min-height:var(--tree-xl);font-size:var(--tree-body)}
+.tree-line-choice input{width:var(--tree-lg);height:var(--tree-lg);accent-color:var(--lab-link);margin:0}
+.tree-line-choice.is-selected{box-shadow:inset 0 0 0 var(--tree-line) var(--lab-link)}
+.tree-line-choice:has(input:disabled){color:var(--lab-muted);cursor:default}
+.tree-line-choice:has(input:focus-visible){outline:var(--tree-focus) solid var(--lab-link);outline-offset:var(--tree-xs)}
+.tree-workspace>.visual-tree{flex:1;min-height:560px;height:auto}
+.genealogy .is-own .genealogy-member.state-frozen .tree-own-totals strong{color:var(--lab-muted)}
+
+/* Blue marks the confirmed placement direction; strength remains neutral. */
+.genealogy-links path.is-placement-selected{stroke:var(--lab-link);stroke-width:3}
+.tree-line-choice.is-selected>span:last-child{color:var(--lab-link);font-weight:500}
+.tree-leg-strength-label{white-space:nowrap}
+
+/* Main own-cell card: compact profile, placement controls inside the card. */
+.genealogy .own-tree-card{display:flex;flex-direction:column;gap:var(--tree-md);padding:var(--tree-lg);border-radius:var(--tree-xl);cursor:default;min-height:0;text-align:left}
+.genealogy .own-tree-card:hover{background:var(--lab-surface);box-shadow:none}
+.own-card-header{display:flex;align-items:center;gap:var(--tree-md);min-width:0}.own-card-header .preview-control{flex:none}
+.own-card-meta{display:flex;align-items:center;gap:var(--tree-sm)}
+.own-card-summary{display:flex;align-items:center;justify-content:space-between;gap:var(--tree-md);padding-bottom:var(--tree-md);border-bottom:var(--tree-line) solid var(--lab-line);flex-wrap:wrap}
+.own-card-summary .tree-own-totals{gap:var(--tree-lg)}.own-card-status{font-size:var(--tree-caption);color:var(--lab-muted)}
+.own-card-placement{padding:0;margin:0;border:0;min-width:0}.own-card-placement legend{font-size:var(--tree-body);font-weight:600;color:var(--lab-ink);padding:0;margin-bottom:var(--tree-md)}
+.own-card-legs{display:grid;grid-template-columns:1fr 1fr;gap:var(--tree-sm)}
+.own-leg{padding:var(--tree-xs);display:flex;flex-direction:column;gap:var(--tree-sm);border:var(--tree-line) solid var(--lab-line);border-radius:var(--tree-lg);min-width:0;cursor:pointer}
+.own-leg.is-selected{border-color:var(--lab-link)}.own-leg:has(input:focus-visible){outline:var(--tree-focus) solid var(--lab-link);outline-offset:var(--tree-xs)}
+.own-leg-panel{background:linear-gradient(140deg,var(--lab-soft),var(--lab-line));border-radius:var(--tree-md);padding:var(--tree-md);display:flex;flex-direction:column;gap:var(--tree-sm)}
+.own-leg.is-selected .own-leg-panel{background:linear-gradient(135deg,color-mix(in srgb,var(--lab-link) 12%,var(--lab-surface)),color-mix(in srgb,var(--lab-link) 4%,var(--lab-surface)))}
+.own-leg-heading{display:flex;align-items:center;justify-content:space-between;gap:var(--tree-xs);font-size:var(--tree-caption);color:var(--lab-muted);min-height:var(--tree-xl)}
+.own-leg-hint{font-size:var(--tree-caption);color:var(--lab-success);background:color-mix(in srgb,var(--lab-success) 12%,var(--lab-surface));padding:var(--tree-xs);border-radius:var(--tree-sm);white-space:nowrap}
+.own-leg-points{font-size:var(--tree-title);font-weight:600;font-variant-numeric:tabular-nums;line-height:1.3}.own-leg-points small{font-size:var(--tree-body);font-weight:400;color:var(--lab-muted)}
+.own-leg-bottom{display:flex;align-items:center;justify-content:space-between;gap:var(--tree-sm);font-size:var(--tree-caption);color:var(--lab-muted)}
+.own-leg-people{display:flex;align-items:center;gap:var(--tree-xs);font-size:var(--tree-body);color:var(--lab-ink)}.own-leg-people b{font-weight:600}.cabinet .own-leg-people svg{width:var(--tree-lg);height:var(--tree-lg);fill:none;stroke:currentColor;stroke-width:1.5;stroke-linejoin:round;stroke-linecap:round}
+.own-leg-choice{display:flex;align-items:center;justify-content:center;gap:var(--tree-sm);padding:var(--tree-sm);min-height:var(--tree-control);border-radius:var(--tree-md);border:var(--tree-line) solid var(--lab-line);font-size:var(--tree-body);font-weight:500}
+.own-leg-choice input{width:var(--tree-lg);height:var(--tree-lg);margin:0;accent-color:var(--lab-link);flex:none}.own-leg.is-selected .own-leg-choice{background:var(--lab-accent-soft);border-color:var(--lab-link);color:var(--lab-link)}
+.own-leg.is-disabled{cursor:default;opacity:.65}
+
+.genealogy-board-space:has(.genealogy-root.is-own-root){min-width:1120px}
+
+/* Confirmation dialogs: clear outcome, compact body, right-aligned footer. */
+.tree-dialog-actions{justify-content:flex-end}
+.tree-confirm-dialog .participant-heading{align-items:flex-start;padding-bottom:var(--tree-xl)}
+.tree-confirm-dialog .participant-heading h2{max-width:22ch;margin:0}
+.tree-confirm-side{display:flex;align-items:center;justify-content:space-between;gap:var(--tree-lg);padding:var(--tree-lg);border-radius:var(--tree-lg);background:var(--lab-soft)}
+.tree-confirm-side>span,.tree-confirm-note{color:var(--lab-muted)}
+.tree-confirm-side strong{font-weight:600}
+.tree-confirm-dialog .participant-actions{padding:var(--tree-xl);gap:var(--tree-sm);box-shadow:none}
+.tree-confirm-dialog .participant-scroll{padding-bottom:0}
+@media(max-width:720px){.tree-dialog.tree-confirm-dialog{width:calc(100vw - var(--tree-gap));height:auto;max-height:calc(100dvh - var(--tree-gap));margin:auto;border-radius:var(--tree-xl)}.tree-confirm-dialog .participant-actions>button{width:auto;flex:none}.tree-confirm-dialog .participant-actions{padding:var(--tree-lg)}.tree-confirm-side{align-items:flex-start;flex-wrap:wrap}}

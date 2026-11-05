@@ -63,3 +63,8 @@
 
 /* Current design: empty sections sit directly on the page canvas. */
 [data-design=original] .cab-placeholder{background:transparent}
+/* Outline is a neutral outlined control in both treatments, including hover. */
+[data-design] .cabinet [data-ui=Button][data-tone=Outline]>.motion-surface{background-color:transparent!important;box-shadow:inset 0 0 0 1px var(--lab-line-strong)!important}
+[data-design] .cabinet [data-ui=Button][data-tone=Outline]>.motion-surface>span{color:var(--lab-ink)!important}
+[data-design] .cabinet [data-ui=Button][data-tone=Outline] .motion-surface [style*="mask"]{background-color:var(--lab-ink)!important}
+[data-design] .cabinet [data-ui=Button][data-tone=Outline]:is([data-state=Hover],[data-state=Pressed])>.motion-surface{background-color:var(--lab-hover)!important;box-shadow:inset 0 0 0 1px var(--lab-ink)!important}

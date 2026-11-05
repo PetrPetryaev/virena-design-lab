@@ -17,3 +17,9 @@
 
 .virena-date:not(:focus-within) .virena-date-clear{visibility:hidden;pointer-events:none}
 .password-rules{margin-top:8px!important}
+
+/* Semantic soft accent variant of the shared Button. */
+[data-ui=Button][data-tone=AccentSoft]>.motion-surface{background:var(--lab-accent-soft)!important;box-shadow:none!important}
+[data-ui=Button][data-tone=AccentSoft]>.motion-surface>span{color:var(--lab-link)!important}
+[data-ui=Button][data-tone=AccentSoft]:is([data-state=Hover],[data-state=Pressed])>.motion-surface{background:color-mix(in srgb,var(--lab-link) 12%,var(--lab-accent-soft))!important}
+[data-ui=Button][data-tone=AccentSoft][data-state=Disabled]{opacity:.5}

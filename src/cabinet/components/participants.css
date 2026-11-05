@@ -1,0 +1,107 @@
+/* Unified directory panel; shared Boris controls and genealogy semantic roles. */
+.participants{--participants-row-height:88px;--participants-divider:color-mix(in srgb,var(--lab-line) 65%,var(--lab-surface));gap:var(--tree-xl);flex:none}
+.participants-panel{background:var(--lab-surface);border-radius:var(--tree-xl);box-shadow:inset 0 0 0 var(--tree-line) var(--lab-line);overflow:hidden}
+
+.participants-columns,.participants-row{display:grid;grid-template-columns:minmax(200px,1.8fr) minmax(120px,1fr) minmax(156px,1.2fr) minmax(120px,1fr) 140px;gap:var(--tree-lg);align-items:center;padding-inline:var(--tree-gap)}
+.participants-columns{position:relative;min-height:calc(var(--tree-control) + var(--tree-xl));background:var(--lab-surface);color:var(--lab-ink);font-size:var(--tree-lg);font-weight:700}
+.participants-list{list-style:none;padding:0;margin:0}
+.participants-row{min-height:calc(var(--tree-control) + var(--tree-gap));padding-block:var(--tree-xl)}
+
+
+.participants-person{display:flex;gap:var(--tree-md);align-items:center;text-align:left;padding:0;border:0;background:none;color:var(--lab-ink);font:inherit;cursor:pointer;min-width:0}
+.participants-person>span:last-child{display:flex;flex-direction:column;gap:var(--tree-xs);min-width:0}
+.participants-person strong{font-size:var(--tree-body);line-height:1.5;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.participants-row small{font-size:var(--tree-caption);line-height:1.5;color:var(--lab-muted)}
+.participants-package,.participants-position,.participants-activity{display:flex;flex-direction:column;align-items:flex-start;gap:var(--tree-xs);font-size:var(--tree-body)}
+.participants-package-label{font-weight:500}
+.participants-package small{display:flex;align-items:center;gap:var(--tree-xs)}
+.participants-action{justify-self:end}.participants-action .demo-icon{display:flex;width:var(--tree-xl);height:var(--tree-xl)}
+.participants-count{padding:var(--tree-lg) var(--tree-xl);box-shadow:inset 0 var(--tree-line) var(--participants-divider);font-size:var(--tree-caption);color:var(--lab-muted)}
+.participants-empty{display:flex;align-items:center;flex-direction:column;gap:var(--tree-lg);padding:calc(var(--tree-gap) * 2) var(--tree-xl);text-align:center}
+.participants-empty h3{margin:0;font-size:var(--tree-title)}.participants-empty p{color:var(--lab-muted);font-size:var(--tree-body)}
+.participants-skeleton{width:100%;height:var(--tree-control);border-radius:var(--tree-md);background:var(--lab-soft)}
+@media(max-width:1250px){.participants-columns{display:none}.participants-row{grid-template-columns:minmax(0,1fr) minmax(0,1fr) auto}.participants-person{grid-column:1/3}.participants-action{grid-column:3;grid-row:1}.participants-package{grid-column:1;grid-row:2}.participants-activity{grid-column:2;grid-row:2}.participants-position{grid-column:3;grid-row:2}.participants-toolbar{align-items:stretch}.participants-search{flex:1;min-width:220px}}
+@media(max-width:600px){.participants{gap:var(--tree-lg)}.participants-panel{box-shadow:none;border-radius:0;background:none;overflow:visible}.participants-toolbar{padding:0 0 var(--tree-lg);gap:var(--tree-lg)}.participants-filters{width:100%;overflow:auto;gap:0}.participants-filters .motion-surface{padding-inline:var(--tree-md)!important}.participants-search{width:100%;flex:auto}.participants-list{display:flex;flex-direction:column;gap:var(--tree-md)}.participants-row{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:var(--tree-lg);padding:var(--tree-lg);background:var(--lab-surface);border-radius:var(--tree-xl);box-shadow:inset 0 0 0 var(--tree-line) var(--lab-line)}.participants-row+.participants-row{box-shadow:inset 0 0 0 var(--tree-line) var(--lab-line)}.participants-person{grid-column:1/-1;grid-row:1}.participants-person strong{white-space:normal}.participants-package{grid-column:1;grid-row:2}.participants-activity{grid-column:2;grid-row:2}.participants-position{grid-column:1;grid-row:3;font-size:var(--tree-caption);gap:0}.participants-action{grid-column:2;grid-row:3;align-self:end}.participants-count{box-shadow:none;padding:var(--tree-lg) 0}.participants-intro{max-width:34ch}.participants-action .motion-surface{padding-inline:var(--tree-sm)!important}}
+
+/* The catalogue toolbar is deliberately outside the white table panel. */
+.participants>.store-toolbar{background:transparent}
+.participants-filterbar{display:flex;align-items:center;gap:var(--tree-md);flex-wrap:wrap}
+.participants-filterbar>div{flex:0 1 220px;min-width:0}
+.participants-filterbar .select-demo,.participants-filterbar .real-field{width:100%!important;max-width:100%}
+.participants-filterbar .select-demo{margin:0}
+.participants-panel{border-radius:var(--tree-xl)}
+.participants-package .genealogy-rank{margin:0}
+.participants-activity>[data-ui=Status]{flex:none}
+@media(max-width:600px){.participants-filterbar{display:grid;grid-template-columns:1fr}.participants-filterbar>div{min-width:0}.participants-panel{border-radius:var(--tree-xl)}}
+/* Draw the outer contour above child surfaces, so rows cannot erase it. */
+.participants-panel{position:relative;isolation:isolate;box-shadow:none}
+.participants-panel::after{content:'';position:absolute;inset:0;border-radius:inherit;box-shadow:inset 0 0 0 var(--tree-line) var(--lab-line);pointer-events:none;z-index:2}
+/* Inset dividers and an independent rounded hover surface. */
+@media(min-width:601px){
+ .participants-row{position:relative;isolation:isolate;min-height:var(--participants-row-height);padding-block:var(--tree-lg)}
+ .participants-row::before{content:'';position:absolute;inset:0 var(--tree-md);border-radius:var(--tree-lg);background:transparent;z-index:-1;transition:background-color 140ms ease}
+ .participants-row:is(:hover,:focus-within)::before{background:color-mix(in srgb,var(--lab-soft) 60%,var(--lab-surface))}
+ .participants-columns::after,.participants-row+.participants-row::after{content:'';position:absolute;left:var(--tree-xl);right:var(--tree-xl);height:var(--tree-line);background:var(--participants-divider);pointer-events:none}
+ .participants-columns::after{bottom:0}.participants-row+.participants-row::after{top:0}
+ .participants-row:is(:hover,:focus-within)::after,
+ .participants-row:is(:hover,:focus-within)+.participants-row::after,
+ .participants-panel:has(.participants-row:first-child:is(:hover,:focus-within)) .participants-columns::after{opacity:0}
+ .participants-panel:has(.participants-row:last-child:is(:hover,:focus-within)) .participants-count{box-shadow:none}
+ .participants .participants-count{margin-inline:var(--tree-xl);padding-inline:var(--tree-sm)}
+}
+@media(prefers-reduced-motion:reduce){.participants-row::before{transition:none}}
+.toolbar-filter-popover .participants-filterbar{display:flex;flex-direction:column;align-items:stretch;gap:var(--tree-md)}
+.toolbar-filter-popover .participants-filterbar>div{flex:none;width:100%}
+@media(max-width:600px){.participants-panel::after{display:none}}
+/* Stretch the existing details button over the row; keep tree action above it. */
+.participants-row{position:relative;cursor:pointer}
+.participants-person::after{content:'';position:absolute;inset:0;z-index:1;border-radius:var(--tree-lg)}
+.participants-person:focus-visible{outline:none}
+.participants-person:focus-visible::after{outline:var(--tree-focus) solid var(--lab-link);outline-offset:calc(-1 * var(--tree-focus))}
+.participants-action{position:relative;z-index:2}
+/* Directory controls share the existing button, checkbox, select and icon adapters. */
+.participants-sort{display:flex;align-items:center;gap:var(--tree-sm);padding:0;border:0;background:none;font:inherit;color:inherit;text-align:left;cursor:pointer;white-space:nowrap}
+.participants-sort>span{display:flex;align-items:center;justify-content:center;width:var(--tree-xl);height:var(--tree-xl);flex:0 0 var(--tree-xl);opacity:.35;transform-origin:center}
+.participants-sort .demo-icon{display:flex;width:var(--tree-xl);height:var(--tree-xl);flex:none}
+.participants-sort>span.is-sorted{opacity:1}
+.participants-sort svg,.participants-filter-chip svg{width:100%;height:100%}
+.participants-filter-groups{max-height:50vh;overflow:auto;display:grid;gap:var(--tree-xl)}
+.participants-filter-groups fieldset{border:0;margin:0;padding:0;display:grid;gap:var(--tree-md)}
+.participants-filter-groups legend{font-size:var(--tree-body);font-weight:600;margin-bottom:var(--tree-md)}
+.participants-check{display:flex;align-items:center;gap:var(--tree-md);font-size:var(--tree-body);cursor:pointer;min-height:var(--tree-gap)}
+.participants-check>span{flex:1}
+.participants-applied{display:flex;align-items:center;flex-wrap:wrap;gap:var(--tree-sm);margin-top:calc(-1 * var(--tree-md))}
+.participants-filter-chip{display:flex;align-items:center;gap:var(--tree-sm);border:0;border-radius:var(--tree-xl);background:var(--lab-surface);color:var(--lab-ink);padding:var(--tree-sm) var(--tree-md);font:inherit;font-size:var(--tree-body);cursor:pointer}
+.participants-filter-chip>svg,.participants-filter-chip>[data-node]{width:var(--tree-lg);height:var(--tree-lg)}
+.participants-filter-chip:hover{background:var(--lab-hover)}
+.participants-pagination{display:flex;align-items:center;gap:var(--tree-xl);min-height:var(--participants-row-height);padding:var(--tree-lg) var(--tree-gap);position:relative;color:var(--lab-muted);font-size:var(--tree-body)}
+.participants-pagination::before{content:'';position:absolute;top:0;left:var(--tree-xl);right:var(--tree-xl);height:var(--tree-line);background:var(--participants-divider)}
+.participants-panel:has(.participants-row:last-child:is(:hover,:focus-within)) .participants-pagination::before{opacity:0}
+.participants-page-size{margin-left:auto;width:100px}.participants-page-size .select-demo{margin:0;width:100%!important}.participants-page-size .real-field{width:100%!important}
+.participants-pagination nav{display:flex;align-items:center;gap:var(--tree-sm)}
+.participants-next{display:flex;transform:rotate(180deg)}
+.participants-skeleton-person{display:flex;align-items:center;gap:var(--tree-md)}
+.participants-skeleton-person i{width:40px;height:40px;border-radius:50%;background:var(--lab-soft);flex:none}
+.participants-skeleton-person>span,.participants-skeleton-lines{display:grid;gap:var(--tree-sm);width:100%;max-width:160px}
+.participants-skeleton-lines b,.participants-skeleton-person b{height:var(--tree-md);border-radius:var(--tree-xs);background:var(--lab-soft);width:80%;display:block}
+.participants-skeleton-lines b:last-child,.participants-skeleton-person b:last-child{width:55%}
+.participants-skeleton-row{pointer-events:none}
+@media(max-width:600px){.participants-pagination{padding-inline:var(--tree-lg);gap:var(--tree-md);flex-wrap:wrap;background:var(--lab-surface);border-radius:var(--tree-xl);margin-top:var(--tree-md)}.participants-pagination::before{display:none}.participants-page-size{width:88px}.participants-pagination nav{margin-left:auto}.participants-applied{margin-top:0}.participants-skeleton-person{grid-column:1/-1}.participants-skeleton-row>.participants-skeleton-lines:last-child{display:none}}
+.participants-page-size{display:flex;align-items:center;gap:var(--tree-sm);width:160px}
+.participants-page-size .select-demo{width:100px!important;flex:none}
+.participants-page-size .option-menu{top:auto;bottom:calc(100% + var(--tree-sm))}
+.participants-page-size .real-field{--field-inset:16px}
+@media(max-width:600px){.participants-page-size{width:148px}.participants-pagination{column-gap:var(--tree-sm)}}
+
+.participants-filter-actions{display:flex;align-items:center;gap:var(--tree-sm);flex:none}
+@media(max-width:600px){.participants .catalog-toolbar-actions{flex-wrap:wrap;justify-content:flex-start}.participants .shared-catalog-toolbar .catalog-toolbar-actions .store-search{flex:1 0 100%;width:100%}}
+
+.participants-row{box-sizing:border-box}
+.participants-mobile-sort{display:none}
+.participants-empty .cab-empty-art{margin-bottom:0}
+.participants-empty>p{max-width:38ch;line-height:1.5}
+.participants-sort:disabled{cursor:default}
+@media(max-width:1250px){.participants-mobile-sort{display:block;max-width:360px;width:100%}.participants-mobile-sort .select-demo,.participants-mobile-sort .real-field{width:100%!important;margin:0}}
+@media(max-width:600px){.participants-mobile-sort{max-width:none}.participants-empty{background:var(--lab-surface);border-radius:var(--tree-xl)}}
+.participants-person small{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:100%}
+@media(max-width:600px){.participants-person small{white-space:normal;overflow-wrap:anywhere}}

@@ -1,0 +1,4 @@
+.toolbar-filters{position:relative;flex:none}
+.toolbar-filter-popover{position:absolute;top:calc(100% + 8px);right:0;width:320px;max-width:calc(100vw - 32px);padding:16px;background:var(--lab-surface);border-radius:16px;box-shadow:0 8px 32px color-mix(in srgb,var(--lab-ink) 12%,transparent),inset 0 0 0 1px var(--lab-line);z-index:20}
+.toolbar-filter-heading{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;color:var(--lab-ink);font-size:14px}
+@media(max-width:600px){.toolbar-filter-popover{left:0;right:auto}}

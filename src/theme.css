@@ -40,3 +40,6 @@ header .theme-control{position:relative;display:flex;align-items:center;justify-
 @media(min-width:721px) and (max-width:1200px){#root>header{height:auto;min-height:72px;flex-wrap:wrap;gap:16px;padding:16px 24px}#root>header small{display:none}#root>header>nav{display:flex;flex-wrap:wrap;gap:8px}}
 
 :root{--lab-primary:#1657ff;--lab-on-primary:#fff}
+/* Shared rank accent, approved brighter gold for tree and directory. */
+:root{--lab-rank-gold:#f5b400}
+:root[data-theme=dark]{--lab-rank-gold:#ffd04b}

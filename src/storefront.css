@@ -38,3 +38,9 @@
 /* Nutrition/digital image backgrounds meet the card edges. */
 .store-product.has-fullbleed-art{padding:0}.has-fullbleed-art .store-product-art{height:252px;margin:0 0 24px}.has-fullbleed-art .store-gallery-layer{border-radius:0}.has-fullbleed-art .store-product-bottom{padding:0 28px 28px}
 @media(max-width:480px){.has-fullbleed-art .store-product-art{height:244px}.has-fullbleed-art .store-product-bottom{padding:0 24px 24px}}
+/* Shared toolbar: optional filter actions stay immediately before search. */
+.shared-catalog-toolbar{grid-template-columns:minmax(0,1fr) auto}
+.catalog-toolbar-actions{display:flex;align-items:center;justify-content:flex-end;gap:12px;min-width:0}
+.shared-catalog-toolbar .catalog-toolbar-actions .store-search{width:248px;flex:0 1 248px}
+@media(max-width:1100px){.shared-catalog-toolbar{grid-template-columns:minmax(0,1fr)}.catalog-toolbar-actions{justify-self:end}}
+@media(max-width:600px){.catalog-toolbar-actions{width:100%;justify-self:stretch}.shared-catalog-toolbar .catalog-toolbar-actions .store-search{flex:1;min-width:0;width:auto}}
