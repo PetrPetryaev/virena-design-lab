@@ -1,12 +1,14 @@
+import useMotionDismiss from '../../ds/useMotionDismiss.js';
 import React,{useEffect,useRef} from 'react';
 import {activityLabel,formatPoints,legLabel,participantDetails,genealogyCells} from './genealogyData.js';
 import './participant-details.css';
+import {MemberRegistration,MemberTeam} from './MemberDirectoryFacts.jsx';
 import MemberAvatar from './MemberAvatar.jsx';
 import MemberRank from './MemberRank.jsx';
 import MemberStatus from './MemberStatus.jsx';
 
 export default function ParticipantDetails({cell,Shared,db,onClose,onNavigate,photo,cells=genealogyCells}){
- const ref=useRef(null),closeRef=useRef(onClose);closeRef.current=onClose;
+ const ref=useRef(null),closeRef=useRef(onClose);const dismiss=useMotionDismiss(ref,onClose);closeRef.current=dismiss;
  const person=participantDetails(cell);
  const sponsor=person.sponsor;
 // Active account is path "". Browsing a subtree never changes that boundary.
@@ -30,17 +32,17 @@ export default function ParticipantDetails({cell,Shared,db,onClose,onNavigate,ph
  },[]);
  const Button=({label,onClick,tone='Soft',disabled=false,icon})=><Shared.Button group={db.components.find(c=>c.name==='Boris / Button')} choice={{Tone:tone,Size:'48'}} label={label} onClick={onClick} disabled={disabled} iconContent={icon?<Shared.Icon name={icon}/>:undefined}/>;
  const go=path=>{onClose();onNavigate(path);};
- return <dialog ref={ref} className="participant-dialog" aria-labelledby="participant-title" onCancel={e=>{e.preventDefault();closeRef.current();}} onClick={e=>{if(e.target===e.currentTarget){const r=e.currentTarget.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)onClose();}}}>
-  <div className="participant-heading"><div className="participant-identity"><MemberAvatar cell={{...person,personal:person.personal||person.own}} photo={photo} Shared={Shared} size={48}/><div><p>Подробная информация</p><h2 id="participant-title">{person.name||person.login}</h2>{person.name&&<span>{person.login}</span>}</div></div><Shared.Button group={db.components.find(c=>c.name==='Boris / Icon button')} choice={{Tone:'Ghost',Size:'40'}} ariaLabel="Закрыть информацию об участнике" iconContent={<Shared.Icon name="Cross"/>} onClick={onClose}/></div>
+ return <dialog ref={ref} className="participant-dialog member-details-drawer" aria-labelledby="participant-title" onCancel={e=>{e.preventDefault();closeRef.current();}} onClick={e=>{if(e.target===e.currentTarget){const r=e.currentTarget.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)dismiss();}}}>
+  <div className="participant-heading"><div className="participant-identity"><MemberAvatar cell={{...person,personal:person.personal||person.own}} photo={photo} Shared={Shared} size={48}/><div><p>Подробная информация</p><h2 id="participant-title">{person.name||person.login}</h2>{person.name&&<span>{person.login}</span>}</div></div><Shared.Button group={db.components.find(c=>c.name==='Boris / Icon button')} choice={{Tone:'Ghost',Size:'40'}} ariaLabel="Закрыть информацию об участнике" iconContent={<Shared.Icon name="Cross"/>} onClick={dismiss}/></div>
   <div className="participant-scroll" tabIndex={0} role="region" aria-label="Сведения и контакты участника">
-   <div className="participant-badges"><MemberStatus state={person.state} Shared={Shared}/><span>{person.pack||'Без пакета'}</span>{person.own?<span>Вы</span>:person.personal?<span>Лично приглашённый</span>:null}</div>
+   <div className="participant-badges"><MemberStatus state={person.state} Shared={Shared}/>{person.new&&<Shared.Status tone="Info" label="Новый"/>}<span>{person.pack||'Без пакета'}</span>{person.own?<span>Вы</span>:person.personal?<span>Лично приглашённый</span>:null}</div>
    <p className="participant-activity">{activityLabel(person)}</p>
    <dl className="participant-facts">
     <div><dt>Ранг</dt><dd><MemberRank rank={person.rank}/></dd></div>
     <div><dt>Закрыто шагов</dt><dd>{person.steps}</dd></div>
     <div><dt>Спонсор</dt><dd>{sponsor.login}</dd></div>
     <div><dt>Место в структуре</dt><dd>{legLabel(person.path)}{person.path&&` · уровень ${person.path.length} от вас`}</dd></div>
-    <div><dt>Дата регистрации</dt><dd>{person.registeredAt}</dd></div>
+    <div><dt>Регистрация · вход</dt><dd><MemberRegistration cell={person}/></dd></div><div><dt>Команда и ВЗР</dt><dd><MemberTeam cell={person}/></dd></div>
     <div><dt>В структуре с</dt><dd>{person.placedAt}</dd></div>
     {person.location&&<div><dt>Страна и город</dt><dd>{person.location}</dd></div>}
    </dl>

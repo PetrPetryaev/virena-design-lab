@@ -1,0 +1,30 @@
+/* Shared feedback: transform and opacity only. */
+:root{--directory-enter:180ms;--directory-exit:120ms;--directory-ease:cubic-bezier(.16,1,.3,1)}
+@keyframes directory-enter{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+@keyframes directory-drawer{from{transform:translateX(24px)}to{transform:translateX(0)}}
+@keyframes directory-pulse{50%{opacity:.45}}
+:is(.participants,.invitations,.member-details-drawer,.inv-modal,.ds-action-popover) button:not(:disabled)>.motion-surface{transition:transform var(--directory-exit) ease-out}
+:is(.participants,.invitations,.member-details-drawer,.inv-modal,.ds-action-popover) button:not(:disabled):active>.motion-surface{transform:scale(.96)}
+.ds-table-body>.ds-table-row::before{background:color-mix(in srgb,var(--lab-soft) 60%,var(--lab-surface));opacity:0;transition:opacity var(--directory-exit) ease-out}
+.ds-table-body>.ds-table-row:is(:hover,:focus-within)::before{opacity:1}
+.ds-table-row::after{transition:opacity var(--directory-exit) ease-out}
+.member-details-drawer[open]{animation:directory-drawer 220ms var(--directory-ease)}
+.inv-modal[open],.toolbar-filter-popover,.participants .option-menu,.invitations .option-menu,.participants-empty,.inv-empty,.inv-active-filters>*,.participants-applied>*{animation:directory-enter var(--directory-enter) var(--directory-ease)}
+.invitations .auth-toast,.inv-dialog .auth-toast{animation:directory-enter var(--directory-enter) var(--directory-ease)}
+.ds-table-skeleton .ds-table-placeholder,.inv-skeleton{animation:directory-pulse 1200ms ease-in-out infinite}
+.ds-action-popover{opacity:0;transform:translateY(-4px);transition:opacity var(--directory-exit) ease-in,transform var(--directory-exit) ease-in,display var(--directory-exit) allow-discrete,overlay var(--directory-exit) allow-discrete}
+.ds-action-popover:popover-open{opacity:1;transform:translateY(0);transition-duration:var(--directory-enter)}
+@starting-style{.ds-action-popover:popover-open{opacity:0;transform:translateY(-4px)}}
+:is(.participants,.invitations) .expanding-search{transition:none}
+:is(.participants,.invitations) .expanding-search[data-open=true] .expanding-search-field{animation:directory-enter var(--directory-enter) var(--directory-ease)}
+@media(prefers-reduced-motion:reduce){
+ :is(.participants,.invitations,.member-details-drawer,.inv-modal,.ds-action-popover,.toolbar-filter-popover),:is(.participants,.invitations,.member-details-drawer,.inv-modal,.ds-action-popover,.toolbar-filter-popover) *,:is(.participants,.invitations) *::before,:is(.participants,.invitations) *::after{animation:none!important;transition:none!important}
+ :is(.participants,.invitations,.member-details-drawer,.inv-modal,.ds-action-popover) button:active>.motion-surface{transform:none}
+}
+
+/* Scrim has its own lifecycle, independent of the moving drawer. */
+@keyframes directory-scrim-in{from{opacity:0}to{opacity:1}}
+@keyframes directory-scrim-out{from{opacity:1}to{opacity:0}}
+.participant-dialog[open]::backdrop{animation:directory-scrim-in 180ms ease-out both}
+.participant-dialog[data-closing=true]::backdrop{animation:directory-scrim-out 120ms ease-in both}
+@media(prefers-reduced-motion:reduce){.participant-dialog[open]::backdrop{animation:none!important}}

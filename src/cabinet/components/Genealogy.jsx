@@ -1,3 +1,5 @@
+import MemberOwnBadge from './MemberOwnBadge.jsx';
+import MemberPackage from './MemberPackage.jsx';
 import {flushSync} from 'react-dom';
 import React, {useEffect, useMemo, useRef, useState} from 'react';
 import {genealogyCells as defaultCells, formatPoints, activityLabel, legLabel, outermost, dataAsOf} from './genealogyData.js';
@@ -17,7 +19,7 @@ function OwnMemberCard({cell,photo,Shared,db,onDetails,side,disabled,onChange}){
  const weak=cell.points.every(Number.isFinite)&&cell.points[0]!==cell.points[1]?(cell.points[0]<cell.points[1]?0:1):null;
  return <div className="genealogy-node is-own"><section className={`genealogy-member own-tree-card state-${cell.state}`} aria-label="Ваша ячейка">
   <div className="own-card-header"><Avatar Shared={Shared} cell={cell} photo={photo}/><div className="genealogy-identity"><strong>{cell.name||cell.login}</strong><span>{cell.login}</span></div><Shared.Button group={db.components.find(c=>c.name==='Boris / Icon button')} choice={{Tone:'Ghost',Size:'40'}} ariaLabel={`Подробная информация: ${cell.login}`} iconContent={<Shared.Icon name="Auth / Icon / Info"/>} onClick={()=>onDetails(cell)}/></div>
-  <div className="own-card-meta"><span className="genealogy-package package-vip">{cell.pack||'Без пакета'}</span><span className="genealogy-you">Вы</span><MemberRank rank={cell.rank}/></div>
+  <div className="own-card-meta"><MemberPackage pack={cell.pack}/><MemberOwnBadge/><MemberRank rank={cell.rank}/></div>
   <div className="own-card-summary"><div className="tree-own-totals"><span><strong>{cell.counts[0]+cell.counts[1]}</strong> участников</span><span><strong>{cell.steps}</strong> шагов</span></div><span className="own-card-status">{activityLabel(cell)}</span></div>
   <fieldset className="own-card-placement"><legend>Куда направлять новых приглашённых</legend><div className="own-card-legs">{['L','R'].map((leg,i)=>{const chosen=side===leg,parts=formatPoints(cell.points[i]).split(',');return <label key={leg} className={`own-leg ${chosen?'is-selected':''} ${disabled?'is-disabled':''}`}>
    <div className="own-leg-panel"><div className="own-leg-heading"><span>{i===0?'Левая нога':'Правая нога'}</span>{weak===i&&!disabled&&<span className="own-leg-hint">Нужно усилить</span>}</div><strong className="own-leg-points">{parts[0]}{parts[1]&&<small>,{parts[1]}</small>}</strong><div className="own-leg-bottom"><span>баллов</span><span className="own-leg-people" aria-label={`${cell.counts[i]} участников`}><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="7" r="3.5"/><path d="M4.5 18.7c0-3.1 3.4-5.2 7.5-5.2s7.5 2.1 7.5 5.2c0 1.2-.8 1.8-2 1.8h-11c-1.2 0-2-.6-2-1.8Z"/></svg><b>{cell.counts[i]}</b></span></div></div>
@@ -50,7 +52,7 @@ function MemberCard({cells,cell, compact, onOpen, root, onDetails, Shared, db, b
    <Avatar Shared={Shared} cell={cell} photo={photo}/>
    <span className="genealogy-identity"><strong title={visibleName||cell.login}>{visibleName||cell.login}</strong><span title={visibleName?cell.login:'Участник структуры'}>{visibleName?cell.login:'Участник структуры'}</span></span>
   </span>
-  <span className="genealogy-card-meta"><span className={`genealogy-package package-${packageTone}`}>{cell.pack || (cell.state === 'client' ? 'Клиент' : 'Без пакета')}</span>{cell.path===''&&<span className="genealogy-you">Вы</span>}<MemberRank rank={cell.rank}/></span>
+  <span className="genealogy-card-meta"><MemberPackage pack={cell.pack} empty={cell.state==='client'?'Клиент':'Без пакета'}/>{cell.path===''&&<MemberOwnBadge/>}<MemberRank rank={cell.rank}/></span>
   {cell.path===''&&<span className="tree-own-totals"><span><strong>{cell.counts[0]+cell.counts[1]}</strong> участников</span><span><strong>{cell.steps}</strong> шагов</span></span>}
   <span className="genealogy-metrics">{['Левая нога','Правая нога'].map((label,i)=><span className="genealogy-leg-stat" key={label}><span className="genealogy-leg-label">{label}</span><b>{formatPoints(cell.points[i])}</b>{cell.path===''&&cell.points.every(Number.isFinite)&&cell.points[0]!==cell.points[1]&&<span className={`tree-leg-strength-label ${cell.points[i]<cell.points[1-i]?'is-weaker':''}`}><span aria-hidden="true" className={i===0?'points-left':'points-right'} dangerouslySetInnerHTML={{__html:breadcrumbChevron.replace('stroke="black"','stroke="currentColor"')}}/>{cell.points[i]<cell.points[1-i]?'Слабее · усилить':'Сильнее'}</span>}<span className="genealogy-stat-people">Участников: <strong>{cell.counts[i]}</strong></span></span>)}</span>
 
@@ -59,7 +61,7 @@ function MemberCard({cells,cell, compact, onOpen, root, onDetails, Shared, db, b
 }
 
 export default function Genealogy({Shared, db, photo, cells=defaultCells, placementSide='L', navigation, placementDisabled=false, onPlacementChange,onReturnList}) {
- const [rootPath, setRootPath] = useState(()=>{const intent=new URLSearchParams(location.search).get('intent')||'',path=intent.startsWith('participant:')?intent.slice(12):'';return cells.some(c=>c.path===path)?path:'';});
+ const [rootPath, setRootPath] = useState(()=>{const intent=new URLSearchParams(location.search).get('intent')||'',path=intent.match(/^(participant|invitation):/)?intent.slice(intent.indexOf(':')+1):'';return cells.some(c=>c.path===path)?path:'';});
  const [viewSize,setViewSize]=useState('');
  const [highlight,setHighlight]=useState(null),completedNavigation=useRef(null),boardRef=useRef(null);
  const [selected,setSelected]=useState(null);

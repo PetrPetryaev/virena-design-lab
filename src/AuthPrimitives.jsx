@@ -7,13 +7,15 @@ export function SegmentedTabs({items,value,onChange,disabled=false,label,idPrefi
  function keyDown(e){
   if(!['ArrowLeft','ArrowRight','Home','End'].includes(e.key))return;
   e.preventDefault();
-  const index=items.findIndex(item=>item.value===value);
-  const next=items[e.key==='Home'?0:e.key==='End'?items.length-1:(index+(e.key==='ArrowRight'?1:items.length-1))%items.length].value;
+  const enabled=items.filter(item=>!item.disabled);
+  if(!enabled.length)return;
+  const index=enabled.findIndex(item=>item.value===value);
+  const next=enabled[e.key==='Home'?0:e.key==='End'?enabled.length-1:(index+(e.key==='ArrowRight'?1:enabled.length-1))%enabled.length].value;
   onChange(next);
   requestAnimationFrame(()=>document.getElementById(idPrefix+next)?.focus());
  }
  return <div className={'auth-flow-tabs '+className} role="tablist" aria-label={label} style={{gridTemplateColumns:`repeat(${items.length},minmax(0,1fr))`}}>
-  {items.map(item=><button key={item.value} id={idPrefix+item.value} type="button" role="tab" aria-selected={value===item.value} aria-controls={panelId} tabIndex={value===item.value?0:-1} disabled={disabled} onClick={()=>onChange(item.value)} onKeyDown={keyDown}>{item.label}{item.count!==undefined&&<span className="segmented-count">{item.count}</span>}</button>)}
+  {items.map(item=><button key={item.value} id={idPrefix+item.value} type="button" role="tab" aria-selected={value===item.value} aria-controls={panelId} tabIndex={value===item.value?0:-1} disabled={disabled||item.disabled} onClick={()=>onChange(item.value)} onKeyDown={keyDown}>{item.label}{item.count!==undefined&&<span className="segmented-count">{item.count}</span>}</button>)}
  </div>;
 }
 export function AuthTabs({value,onChange,disabled=false}){

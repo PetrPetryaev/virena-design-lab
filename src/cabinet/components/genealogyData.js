@@ -17,7 +17,7 @@ export const genealogyCells = [
  cell('LLLL', 'marina_k', 'Марина Крылова', 'partner', 'Профи', 0, 0, [0, 0], [0, 0], true),
 ];
 export const formatPoints = n => n === null ? '—' : n.toLocaleString('ru-RU', {minimumFractionDigits: 2, maximumFractionDigits: 2});
-export const activityLabel = c => ({partner: 'Активна до 02.03.2027', grace: 'Льготное окно до 12.11', frozen: 'Заморожен с 01.11.2026', client: 'Клиент', deactivated: 'Неактивна с 01.10.2026'})[c.state];
+export const activityLabel = c => c.deadline || ({partner: 'Активна до 02.03.2027', grace: 'Льготное окно до 12.11', frozen: 'Заморожен с 01.11.2026', client: 'Клиент', deactivated: 'Неактивна с 01.10.2026'})[c.state];
 export const legLabel = path => !path ? 'Ваша ячейка' : path[0] === 'L' ? 'Левая нога' : 'Правая нога';
 export function outermost(side,cells=genealogyCells) {return cells.filter(c => c.path && [...c.path].every(s => s === side)).sort((a,b) => b.path.length - a.path.length)[0]||cells[0];}
 
@@ -39,9 +39,9 @@ export function participantDetails(cell) {
  const canSeePersonal=own || canSeeContacts;
  return {
   ...cell, name:canSeePersonal?cell.name:'', personal:canSeeContacts, own,
-  sponsor, registeredAt:cell.state==='deactivated'?'14.09.2026':'14.10.2026', placedAt:cell.state==='deactivated'?'15.09.2026':'15.10.2026',
-  location:canSeePersonal?'Россия, Москва':null,
-  contacts:canSeeContacts?{email:`${cell.login}@example.com`,phone:null,messenger:null,language:'Русский',birthday:'02.10'}:null,
+  sponsor, registeredAt:cell.registered?new Date(cell.registered+'T12:00:00+03:00').toLocaleDateString('ru-RU',{timeZone:'Europe/Moscow'}):'—', placedAt:cell.placed||'—',
+  location:canSeePersonal?[cell.country||'Россия',cell.city||'Москва'].join(', '):null,
+  contacts:canSeeContacts?{email:cell.email||`${cell.login}@example.com`,phone:cell.phone||null,messenger:cell.messenger||null,language:cell.language||'Русский',birthday:cell.birthday||'02.10'}:null,
  };
 }
 

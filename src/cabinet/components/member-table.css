@@ -1,0 +1,10 @@
+.member-table-person{display:flex;align-items:center;gap:12px;min-width:0;width:100%;padding:0;border:0;background:transparent;text-align:left;font:inherit;color:inherit}
+.member-table-person::after{content:'';position:absolute;inset:0;z-index:1;border-radius:16px}
+.member-table-person:focus-visible{outline:none}.member-table-person:focus-visible::after{outline:2px solid var(--lab-link);outline-offset:-2px}
+.member-table-identity{display:flex;flex-direction:column;gap:4px;min-width:0;flex:1}.member-table-name{display:flex;align-items:center;gap:8px;min-width:0}.member-table-name strong{font-weight:600;min-width:0}.member-table-name [data-ui=Status]{flex:none}
+.member-table-person small{display:block}.ds-table-stack .genealogy-rank{margin:0}.ds-data-table [data-ui=Status]{white-space:nowrap}
+
+.ds-table-stack,.member-table-identity{height:48px;gap:4px}.ds-table-stack>:first-child,.member-table-name{height:24px;min-height:24px;display:flex;align-items:center;line-height:20px}.ds-table-stack>small,.member-table-identity>small{line-height:20px}.ds-table-stack .genealogy-rank{height:20px;line-height:20px}.member-table-name strong{line-height:20px}.member-table-name strong.ds-table-line{display:block}
+.ds-data-table [data-ui=Status]{height:24px!important;min-height:24px!important;box-sizing:border-box}
+
+.member-table-name .genealogy-you{flex:none}

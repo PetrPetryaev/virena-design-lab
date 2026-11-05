@@ -22,3 +22,7 @@
 .participant-scroll>.participant-facts{padding-top:var(--tree-sm)}
 .participant-contacts{box-shadow:inset 0 var(--tree-line) 0 color-mix(in srgb,var(--lab-line) 65%,var(--lab-surface))}
 .participant-actions{gap:var(--tree-md);box-shadow:inset 0 var(--tree-line) 0 color-mix(in srgb,var(--lab-line) 65%,var(--lab-surface))}
+
+/* Shared detail-panel placement for the directory, tree and personal invitations. */
+.member-details-drawer{--participant-width:640px;width:min(var(--participant-width),100vw);height:100dvh;max-height:100dvh;margin:0 0 0 auto;border-radius:var(--tree-xl) 0 0 var(--tree-xl)}
+@media(max-width:720px){.member-details-drawer{width:100%;height:100dvh;max-height:100dvh;margin:0;border-radius:0}}

@@ -2,7 +2,8 @@ import React,{useEffect,useRef,useState} from 'react';
 import Genealogy from './Genealogy.jsx';
 import GenealogyCardIdeas from './GenealogyCardIdeas.jsx';
 import GenealogyRegistration from './GenealogyRegistration.jsx';
-import {genealogyCells,outermost,formatPoints,activityLabel,dataAsOf} from './genealogyData.js';
+import {outermost,formatPoints,activityLabel,dataAsOf} from './genealogyData.js';
+import {directoryCells as genealogyCells} from './memberDirectory.js';
 import {BannerCard} from './Cards.jsx';
 import './genealogy-workspace.css';
 
@@ -37,7 +38,10 @@ export default function GenealogyWorkspace({Shared,db,photo,member='partner',sce
  useEffect(()=>{setRecovered(false);setModal(null);setOperationError('');setNavigation(null);},[scenario,member,activeCell]);
  useEffect(()=>()=>clearTimeout(timer.current),[]);
  const notify=text=>{setToast(text);clearTimeout(timer.current);timer.current=setTimeout(()=>setToast(''),3500);};
- const cells=fixture(member,scenario,activeCell),owner=cells[0],side=sides[activeCell]||(activeCell==='R'?'R':'L');
+ const cells=fixture(member,scenario,activeCell);
+ const invitationIntent=new URLSearchParams(location.search).get('intent')||'';
+ if(invitationIntent.startsWith('invitation:')&&session.invitationCell){const incoming=session.invitationCell;if(!cells.some(c=>c.path===incoming.path))cells.push(incoming);}
+ const owner=cells[0],side=sides[activeCell]||(activeCell==='R'?'R':'L');
  const pending=registered.filter(r=>r.owner===owner.login);
  const next=outermost(side,cells),slots=['L','R'].filter(s=>!cells.some(c=>c.path===s));
  const blocked=['newcomer','client','deactivated'].includes(member),frozen=member==='frozen';

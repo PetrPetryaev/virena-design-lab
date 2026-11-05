@@ -1,0 +1,3 @@
+.ds-action-dropdown{display:inline-flex}.ds-action-popover{position:fixed;inset:auto;margin:0;width:232px;max-width:calc(100vw - 16px);max-height:calc(100dvh - 16px);overflow:auto;padding:8px;border:1px solid var(--lab-line);border-radius:16px;background:var(--lab-surface);color:var(--lab-ink);box-shadow:0 8px 32px color-mix(in srgb,var(--lab-ink) 12%,transparent)}.ds-action-popover>div>button{width:100%;justify-content:flex-start!important}.ds-action-popover::backdrop{background:transparent}
+
+.ds-action-popover .motion-surface{width:100%!important;min-width:0!important;justify-content:flex-start!important;border-radius:8px!important;padding:0 12px!important}
