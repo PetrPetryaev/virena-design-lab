@@ -44,3 +44,7 @@
 .shared-catalog-toolbar .catalog-toolbar-actions .store-search{width:248px;flex:0 1 248px}
 @media(max-width:1100px){.shared-catalog-toolbar{grid-template-columns:minmax(0,1fr)}.catalog-toolbar-actions{justify-self:end}}
 @media(max-width:600px){.catalog-toolbar-actions{width:100%;justify-self:stretch}.shared-catalog-toolbar .catalog-toolbar-actions .store-search{flex:1;min-width:0;width:auto}}
+
+/* A diffuse tonal edge, not an outline: separates full-bleed artwork from the canvas. */
+.cabinet .store-product.has-fullbleed-art{box-shadow:0 2px 12px color-mix(in srgb,var(--lab-ink) 5%,transparent)}
+[data-theme=dark] .cabinet .store-product.has-fullbleed-art{box-shadow:0 2px 12px color-mix(in srgb,var(--lab-canvas) 60%,transparent)}

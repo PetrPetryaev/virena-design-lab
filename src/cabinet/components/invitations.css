@@ -29,9 +29,7 @@
 .inv-tabs .store-category-tabs{display:flex;width:max-content;max-width:none;white-space:nowrap}
 .inv-tabs .store-category-tabs>button{flex:none}
 .inv-tabs .store-category-tabs>button:disabled{opacity:.45;cursor:default}
-.invitations .catalog-toolbar-actions{gap:var(--tree-sm)}
 .inv-mobile-facts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--tree-lg);margin-top:var(--tree-lg);font-size:var(--tree-body)}.inv-mobile-facts>div{min-width:0;overflow-wrap:anywhere}.inv-mobile-facts .genealogy-rank{margin:var(--tree-xs) 0 0;display:flex}
-@media(max-width:600px){.invitations .catalog-toolbar-actions>.participants-filter-actions{flex-basis:100%;justify-content:flex-end}.invitations .catalog-toolbar-actions>.expanding-search[data-open=true]{width:calc(100% - 164px);flex:1;min-width:100px}}
 
 .inv-row-actions{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
 

@@ -15,8 +15,6 @@
 .ds-action-popover{opacity:0;transform:translateY(-4px);transition:opacity var(--directory-exit) ease-in,transform var(--directory-exit) ease-in,display var(--directory-exit) allow-discrete,overlay var(--directory-exit) allow-discrete}
 .ds-action-popover:popover-open{opacity:1;transform:translateY(0);transition-duration:var(--directory-enter)}
 @starting-style{.ds-action-popover:popover-open{opacity:0;transform:translateY(-4px)}}
-:is(.participants,.invitations) .expanding-search{transition:none}
-:is(.participants,.invitations) .expanding-search[data-open=true] .expanding-search-field{animation:directory-enter var(--directory-enter) var(--directory-ease)}
 @media(prefers-reduced-motion:reduce){
  :is(.participants,.invitations,.member-details-drawer,.inv-modal,.ds-action-popover,.toolbar-filter-popover),:is(.participants,.invitations,.member-details-drawer,.inv-modal,.ds-action-popover,.toolbar-filter-popover) *,:is(.participants,.invitations) *::before,:is(.participants,.invitations) *::after{animation:none!important;transition:none!important}
  :is(.participants,.invitations,.member-details-drawer,.inv-modal,.ds-action-popover) button:active>.motion-surface{transform:none}

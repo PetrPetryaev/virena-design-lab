@@ -1,0 +1,13 @@
+/* Shared action geometry. Screen-specific filters/tabs remain in their own slots. */
+.shared-catalog-toolbar .catalog-toolbar-actions{gap:8px;flex-wrap:wrap;justify-content:flex-end}
+.catalog-toolbar-filters{display:flex;align-items:center;gap:8px;flex:none}
+.catalog-toolbar-filters:empty{display:none}
+@media(max-width:600px){
+ .shared-catalog-toolbar .catalog-toolbar-actions{width:100%;justify-self:stretch}
+ .shared-catalog-toolbar .catalog-toolbar-actions>.expanding-search[data-open=true]{width:min(248px,100%)}
+ .shared-catalog-toolbar .catalog-toolbar-actions:has(>.expanding-search[data-open=true])>.catalog-toolbar-filters{flex-basis:100%;justify-content:flex-end}
+}
+.shared-catalog-toolbar button:not(:disabled)>.motion-surface{transition:transform 120ms ease-out}
+.shared-catalog-toolbar button:not(:disabled):active>.motion-surface{transform:scale(.96)}
+@media(max-width:600px){.shared-catalog-toolbar .catalog-toolbar-actions>.expanding-search[data-open=true]{flex:1 1 144px;max-width:248px;min-width:0}}
+@media(prefers-reduced-motion:reduce){.shared-catalog-toolbar button>.motion-surface{transition:none}.shared-catalog-toolbar button:active>.motion-surface{transform:none}}

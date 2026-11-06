@@ -1,3 +1,4 @@
+import CabinetDialog from './CabinetDialog.jsx';
 import React,{useEffect,useRef,useState} from 'react';
 import Genealogy from './Genealogy.jsx';
 import GenealogyCardIdeas from './GenealogyCardIdeas.jsx';
@@ -7,12 +8,8 @@ import {directoryCells as genealogyCells} from './memberDirectory.js';
 import {BannerCard} from './Cards.jsx';
 import './genealogy-workspace.css';
 
-export function TreeDialog({title,onClose,Shared,db,children,footer,compact=false}){
- const ref=useRef(null),close=useRef(onClose);close.current=onClose;
- useEffect(()=>{const d=ref.current,previous=document.activeElement;d.showModal();const trap=e=>{if(e.key!=='Tab')return;const els=[...d.querySelectorAll('button:not(:disabled),input:not(:disabled),select:not(:disabled),textarea:not(:disabled),[tabindex="0"]')].filter(el=>el.getClientRects().length);const first=els[0],last=els.at(-1);if(e.shiftKey&&document.activeElement===first){e.preventDefault();last?.focus();}else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first?.focus();}};d.addEventListener('keydown',trap);return()=>{d.removeEventListener('keydown',trap);d.close();if(previous?.isConnected)previous.focus({preventScroll:true});};},[]);
- return <dialog ref={ref} className={`participant-dialog tree-dialog${compact?' tree-confirm-dialog':''}`} aria-labelledby="tree-dialog-title" onCancel={e=>{e.preventDefault();close.current();}}>
-  <div className="participant-heading"><h2 id="tree-dialog-title">{title}</h2><Shared.Button group={db.components.find(c=>c.name==='Boris / Icon button')} choice={{Tone:'Ghost',Size:'40'}} ariaLabel="Закрыть окно" iconContent={<Shared.Icon name="Cross"/>} onClick={onClose}/></div><div className="participant-scroll">{children}</div>{footer&&<div className="participant-actions tree-dialog-actions">{footer}</div>}
- </dialog>;
+export function TreeDialog({compact=false,...props}){
+ return <CabinetDialog {...props} className={`tree-dialog${compact?' tree-confirm-dialog':''}`}/>;
 }
 
 // All scenarios below are fixtures. No registration requests or account mutations.

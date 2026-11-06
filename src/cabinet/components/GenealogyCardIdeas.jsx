@@ -1,3 +1,5 @@
+import peopleIcon from '../../assets/directory-icons/users-group-rounded-linear.svg';
+import dismissOnBackdrop from './dismissOnBackdrop.js';
 import React,{useEffect,useRef,useState} from 'react';
 import {formatPoints} from './genealogyData.js';
 import './genealogy-card-ideas.css';
@@ -52,11 +54,11 @@ const broadConcepts=[
  ['Без разделителя','Данные и радиокнопка на общей поверхности, без кнопочного подвала.','footer-explore-seamless'],
  ['Деловая таблица','Строгое выравнивание: направление слева, показатели справа.','footer-explore-table'],
 ];
-function Person(){return <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="7" r="3.5"/><path d="M4.5 18.7c0-3.1 3.4-5.2 7.5-5.2s7.5 2.1 7.5 5.2c0 1.2-.8 1.8-2 1.8h-11c-1.2 0-2-.6-2-1.8Z"/></svg>}
+function Person(){return <span aria-hidden="true" style={{display:'inline-block',width:24,height:24,backgroundColor:'currentColor',mask:`url(${peopleIcon}) center / contain no-repeat`}}/>;}
 function DSButton({Shared,db,label,onClick,tone='Outline',disabled=false}){return <Shared.Button group={db.components.find(c=>c.name==='Boris / Button')} choice={{Tone:tone,Size:'40'}} label={label} onClick={onClick} disabled={disabled}/>}
 function Confirm({pending,onClose,onConfirm,error,Shared,db}){
  const ref=useRef(null);useEffect(()=>{const d=ref.current,old=document.activeElement;d.showModal();return()=>{d.close();old?.focus({preventScroll:true});};},[]);
- return <dialog className="ci-dialog" ref={ref} aria-labelledby="ci-confirm-title" onCancel={e=>{e.preventDefault();onClose();}}><h2 id="ci-confirm-title">Новых приглашённых – {pending.side===0?'влево':'вправо'}?</h2><p>Настройка относится к вашей ячейке. Новый участник попадёт в выбранную ногу после первой оплаты. Существующие участники останутся на местах.</p>{error&&<p role="alert" className="ci-error">Не удалось сохранить. Прежняя сторона остаётся выбранной. Попробуйте ещё раз.</p>}<div className="ci-dialog-actions"><DSButton {...{Shared,db}} label="Отмена" onClick={onClose}/><DSButton {...{Shared,db}} label={error?'Повторить':'Подтвердить'} tone="Primary" onClick={onConfirm}/></div></dialog>
+ return <dialog className="ci-dialog" ref={ref} aria-labelledby="ci-confirm-title" onClick={e=>dismissOnBackdrop(e,onClose)} onCancel={e=>{e.preventDefault();onClose();}}><h2 id="ci-confirm-title">Новых приглашённых – {pending.side===0?'влево':'вправо'}?</h2><p>Настройка относится к вашей ячейке. Новый участник попадёт в выбранную ногу после первой оплаты. Существующие участники останутся на местах.</p>{error&&<p role="alert" className="ci-error">Не удалось сохранить. Прежняя сторона остаётся выбранной. Попробуйте ещё раз.</p>}<div className="ci-dialog-actions"><DSButton {...{Shared,db}} label="Отмена" onClick={onClose}/><DSButton {...{Shared,db}} label={error?'Повторить':'Подтвердить'} tone="Primary" onClick={onConfirm}/></div></dialog>
 }
 export default function GenealogyCardIdeas({Shared,db,photo}){
  const references=!new URLSearchParams(location.search).get('round')||new URLSearchParams(location.search).get('round')==='references';

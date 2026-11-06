@@ -171,3 +171,52 @@
  .overview-comparison .overview-person>div:not(.overview-profile-link){flex:1;min-width:180px}
  .overview-comparison .overview-person .overview-profile-link{margin-left:0}
 }
+
+/* Owner review 06.11: inset separators and rounded highlights within grouped white cards. */
+.overview-comparison .partner-dashboard :is(.partner-metric-strip,.partner-business-grid)>.partner-stat{
+ --overview-divider-v:0px;--overview-divider-h:0px;
+ position:relative;isolation:isolate;border:0;background:var(--lab-surface);
+}
+.overview-comparison .partner-dashboard :is(.partner-metric-strip,.partner-business-grid)>.partner-stat::before{
+ content:"";position:absolute;inset:var(--overview-hover-top,var(--ov-xs)) var(--overview-hover-right,var(--ov-xs)) var(--overview-hover-bottom,var(--ov-xs)) var(--overview-hover-left,var(--ov-xs));border-radius:var(--ov-sm);z-index:-1;pointer-events:none;
+ background:var(--lab-soft);opacity:0;transition:opacity .18s ease;
+}
+.overview-comparison .partner-dashboard :is(.partner-metric-strip,.partner-business-grid)>.partner-stat::after{
+ content:"";position:absolute;inset:0;pointer-events:none;z-index:-2;
+ background-image:linear-gradient(var(--lab-line),var(--lab-line)),linear-gradient(var(--lab-line),var(--lab-line));
+ background-repeat:no-repeat;background-position:right center,center bottom;
+ background-size:var(--overview-divider-v) calc(100% - 2 * var(--ov-md)),calc(100% - 2 * var(--ov-md)) var(--overview-divider-h);
+}
+.overview-comparison .partner-dashboard .partner-metric-strip>.partner-stat:where(:not(:last-child)){--overview-divider-v:1px}
+.overview-comparison .partner-dashboard .partner-business-grid>.partner-stat:where(:not(:last-child)){--overview-divider-h:1px}
+.overview-comparison .partner-dashboard :is(.partner-metric-strip,.partner-business-grid)>.partner-stat:is(:hover,:focus-within):not(.card-loading)::before{opacity:1}
+@media(max-width:1200px) and (min-width:701px){
+ .overview-comparison .partner-dashboard :is(.partner-metric-strip,.partner-business-grid)>.partner-stat{--overview-divider-v:0px;--overview-divider-h:0px}
+ .overview-comparison .partner-dashboard :is(.partner-metric-strip,.partner-business-grid)>.partner-stat:nth-child(odd){--overview-divider-v:1px}
+ .overview-comparison .partner-dashboard :is(.partner-metric-strip,.partner-business-grid)>.partner-stat:nth-child(-n+2){--overview-divider-h:1px}
+}
+@media(max-width:700px){
+ .overview-comparison .partner-dashboard .partner-metric-strip>.partner-stat{--overview-divider-v:0px}
+ .overview-comparison .partner-dashboard .partner-metric-strip>.partner-stat:not(:last-child){--overview-divider-h:1px}
+}
+@media(prefers-reduced-motion:reduce){.overview-comparison .partner-dashboard .partner-stat::before{transition:none}}
+
+/* Highlight reaches the internal boundary and paints over its divider; outer inset stays 8px. */
+.overview-comparison .partner-dashboard :is(.partner-metric-strip,.partner-business-grid)>.partner-stat{--overview-overlap:-1px}
+.overview-comparison .partner-dashboard :is(.partner-metric-strip,.partner-business-grid)>.partner-stat:is(:hover,:focus-within):not(.card-loading){z-index:1}
+@media(min-width:1201px){
+ .overview-comparison .partner-dashboard .partner-metric-strip>.partner-stat:not(:first-child){--overview-hover-left:var(--overview-overlap)}
+ .overview-comparison .partner-dashboard .partner-metric-strip>.partner-stat:not(:last-child){--overview-hover-right:var(--overview-overlap)}
+ .overview-comparison .partner-dashboard .partner-business-grid>.partner-stat:not(:first-child){--overview-hover-top:var(--overview-overlap)}
+ .overview-comparison .partner-dashboard .partner-business-grid>.partner-stat:not(:last-child){--overview-hover-bottom:var(--overview-overlap)}
+}
+@media(min-width:701px) and (max-width:1200px){
+ .overview-comparison .partner-dashboard :is(.partner-metric-strip,.partner-business-grid)>.partner-stat:nth-child(odd){--overview-hover-right:var(--overview-overlap)}
+ .overview-comparison .partner-dashboard :is(.partner-metric-strip,.partner-business-grid)>.partner-stat:nth-child(even){--overview-hover-left:var(--overview-overlap)}
+ .overview-comparison .partner-dashboard :is(.partner-metric-strip,.partner-business-grid)>.partner-stat:nth-child(-n+2){--overview-hover-bottom:var(--overview-overlap)}
+ .overview-comparison .partner-dashboard :is(.partner-metric-strip,.partner-business-grid)>.partner-stat:nth-child(n+3){--overview-hover-top:var(--overview-overlap)}
+}
+@media(max-width:700px){
+ .overview-comparison .partner-dashboard :is(.partner-metric-strip,.partner-business-grid)>.partner-stat:not(:first-child){--overview-hover-top:var(--overview-overlap)}
+ .overview-comparison .partner-dashboard :is(.partner-metric-strip,.partner-business-grid)>.partner-stat:not(:last-child){--overview-hover-bottom:var(--overview-overlap)}
+}

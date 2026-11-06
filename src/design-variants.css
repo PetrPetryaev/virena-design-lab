@@ -34,17 +34,8 @@
 [data-design=soft] .overview-comparison .overview-package .overview-art-package,
 [data-design=soft] .overview-comparison .is-attention .overview-notice-icon{background:var(--lab-soft);box-shadow:none}
 [data-design=soft] .overview-comparison .overview-profile-meta{border:0;background:var(--lab-soft);padding:16px;border-radius:16px}
-[data-design=soft] .cabinet [data-ui=Button][data-tone=Outline]>.motion-surface{background-color:var(--lab-accent-soft)!important;box-shadow:none!important}
-[data-design=soft] .cabinet [data-ui=Button][data-tone=Outline]>.motion-surface>span{color:var(--lab-link)!important}
-[data-design=soft] .cabinet [data-ui=Button][data-tone=Outline]:is([data-state=Hover],[data-state=Pressed])>.motion-surface{background-color:var(--lab-accent-line)!important}
-[data-design=soft] .cabinet [data-ui=Button][data-tone=Outline]:focus-visible{outline:2px solid var(--lab-link);outline-offset:3px}
-[data-design=soft] .cabinet [data-ui=Button][data-tone=Outline] .motion-surface [style*="mask"]{background-color:var(--lab-link)!important}
 
 /* Header utilities stay neutral; profile facts use only a faint surface tint. */
-[data-design=soft] .cabinet .cab-top-actions [data-ui=Button][data-tone=Outline]>.motion-surface{background-color:var(--lab-soft)!important}
-[data-design=soft] .cabinet .cab-top-actions [data-ui=Button][data-tone=Outline]>.motion-surface>span{color:var(--lab-ink)!important}
-[data-design=soft] .cabinet .cab-top-actions [data-ui=Button][data-tone=Outline] .motion-surface [style*="mask"]{background-color:var(--lab-ink)!important}
-[data-design=soft] .cabinet .cab-top-actions [data-ui=Button][data-tone=Outline]:is([data-state=Hover],[data-state=Pressed])>.motion-surface{background-color:var(--lab-hover)!important}
 [data-design=soft] .overview-comparison .overview-profile-meta{background:color-mix(in srgb,var(--lab-soft) 40%,var(--lab-surface))}
 
 /* Original direction: all overview cards use the white surface. */
@@ -54,20 +45,6 @@
 /* One consistent 1px edge, without an extra hover shadow. */
 [data-design=original] .cabinet .overview-comparison :is(.overview-profile,.overview-sponsor,.overview-product,.overview-partner,.overview-package,.overview-notice):not(.card-loading){border:0;box-shadow:inset 0 0 0 1px var(--lab-line)}
 
-/* Original direction: neutral filled secondary actions across the cabinet. */
-[data-design=original] .cabinet [data-ui=Button][data-tone=Outline]>.motion-surface{background-color:var(--lab-soft)!important;box-shadow:none!important}
-[data-design=original] .cabinet [data-ui=Button][data-tone=Outline]>.motion-surface>span{color:var(--lab-ink)!important}
-[data-design=original] .cabinet [data-ui=Button][data-tone=Outline] .motion-surface [style*="mask"]{background-color:var(--lab-ink)!important}
-[data-design=original] .cabinet [data-ui=Button][data-tone=Outline]:is([data-state=Hover],[data-state=Pressed])>.motion-surface{background-color:var(--lab-hover)!important}
-[data-design=original] .cabinet [data-ui=Button][data-tone=Outline]:focus-visible{outline:2px solid var(--lab-link);outline-offset:3px}
 
 /* Current design: empty sections sit directly on the page canvas. */
 [data-design=original] .cab-placeholder{background:transparent}
-/* Outline is a neutral outlined control in both treatments, including hover. */
-[data-design] .cabinet [data-ui=Button][data-tone=Outline]>.motion-surface{background-color:transparent!important;box-shadow:inset 0 0 0 1px var(--lab-line-strong)!important}
-[data-design] .cabinet [data-ui=Button][data-tone=Outline]>.motion-surface>span{color:var(--lab-ink)!important}
-[data-design] .cabinet [data-ui=Button][data-tone=Outline] .motion-surface [style*="mask"]{background-color:var(--lab-ink)!important}
-[data-design] .cabinet [data-ui=Button][data-tone=Outline]:is([data-state=Hover],[data-state=Pressed])>.motion-surface{background-color:var(--lab-hover)!important;box-shadow:inset 0 0 0 1px var(--lab-ink)!important}
-
-/* Soft header controls need contrast against the grey canvas, not a white-card surface. */
-[data-design=soft] .cab-top-actions [data-ui=Button][data-tone=Soft]{--cab-header-button-bg:color-mix(in srgb,var(--lab-selected) 55%,var(--lab-canvas));--snapshot-soft:var(--cab-header-button-bg)}

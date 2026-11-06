@@ -29,7 +29,9 @@ export default function FinanceIncome({Shared,db,income,total,comparison,kind,pe
  const dataKey=JSON.stringify(income.map(r=>[r.source,r.amount,r.index]));
  const data=useMemo(()=>income.filter(r=>r.amount>0).map(r=>({...r,fill:`var(--finance-source-${r.index})`})),[dataKey]);
  const share=r=>gross>0&&r.amount>0?Math.round(r.amount/gross*100)+'%':'—';
- const trend=<span className={'fv-trend '+(comparison!==null&&comparison>=0?'is-up':'is-down')}><Shared.Icon name={comparison!==null&&comparison>=0?'graph-up-linear':'graph-down-linear'}/><strong>{comparison===null?'—':Math.abs(comparison)+'%'}</strong><small>к прошлому периоду</small></span>;
+ const trendTone=comparison===null||comparison===0?'':comparison>0?'is-up':'is-down';
+ const comparisonLabel=comparison===null?'Нет данных для сравнения':comparison===0?'Без изменений':`${comparison>0?'+':'−'}${Math.abs(comparison)}%`;
+ const trend=<span className={'fv-trend '+trendTone} style={!trendTone?{color:'var(--lab-muted)'}:undefined}>{trendTone&&<Shared.Icon name={comparison>0?'graph-up-linear':'graph-down-linear'}/>}<strong>{comparisonLabel}</strong>{comparison!==null&&<small>к прошлому периоду</small>}</span>;
  const formatted=euro(total),comma=formatted.lastIndexOf(','),major=comma>=0?formatted.slice(0,comma):formatted,minor=comma>=0?formatted.slice(comma):'';
  const dateLabel=kind==='month'?new Date(period.from+'T00:00:00Z').toLocaleDateString('ru-RU',{month:'long',timeZone:'UTC'})+(period.from.slice(0,4)===AS_OF.slice(0,4)?'':` ${period.from.slice(2,4)}г.`):kind==='week'?`${period.from.slice(8,10)}.${period.from.slice(5,7)}${period.from.slice(0,4)===AS_OF.slice(0,4)?'':'.'+period.from.slice(2,4)} – ${period.to.slice(8,10)}.${period.to.slice(5,7)}${period.to.slice(0,4)===AS_OF.slice(0,4)?'':'.'+period.to.slice(2,4)}`:period.label;
  const dateChevron=<span className="finance-date-chevron" aria-hidden="true" dangerouslySetInnerHTML={{__html:chevron.replaceAll('black','currentColor')}}/>;
@@ -39,7 +41,7 @@ export default function FinanceIncome({Shared,db,income,total,comparison,kind,pe
  {loading?<div className="finance-skeleton" aria-label="Загрузка начислений"><span/><span/><span/></div>:<>
  {designVariant>0&&<div className="fv-income-summary"><span>Начислено · {period.label}</span><strong>{euro(total)}</strong>{trend}</div>}
  {!designVariant?<>
- <div className={"finance-income-value"+(income.every(r=>!r.count)?" is-zero":"")}><div className="finance-income-value-top"><RollingMoney value={total}/>{periodControl}</div>{comparison!==null&&<div className="finance-income-change"><span className={comparison>=0?'finance-positive':'finance-negative'}>{comparison>=0?'+':'−'}{Math.abs(comparison)}%</span><small>к прошлому периоду</small></div>}</div>
+ <div className={"finance-income-value"+(income.every(r=>!r.count)?" is-zero":"")}><div className="finance-income-value-top"><RollingMoney value={total}/>{kind!=='all'&&periodControl}</div>{comparison!==null&&<div className="finance-income-change"><span className={comparison===0?'finance-muted':comparison>0?'finance-positive':'finance-negative'}>{comparisonLabel}</span><small>к прошлому периоду</small></div>}</div>
 
  <div className="finance-stacked-bar" role="group" aria-label={'Начисления по источникам: '+euro(total)}>{data.length?data.map(r=><button key={r.source} type="button" style={{flexGrow:r.amount,background:r.fill}} className={(hover&&hover!==r.source?'is-muted ':'')+(hover===r.source?'is-highlighted':'')} aria-label={`${r.source}: ${euro(r.amount)}, ${share(r)}`} title={`${r.source}: ${euro(r.amount)} · ${share(r)}`} onMouseEnter={()=>setHover(r.source)} onMouseLeave={()=>setHover(null)} onFocus={()=>setFocused(r.source)} onBlur={()=>setFocused(null)} onClick={()=>onSource(r.source)}/>):<span className="finance-stacked-empty" aria-label="Нет начислений за период"/>}</div>
  {income.some(r=>r.amount<0)&&<p className="finance-caption">Полоса показывает положительные суммы по источникам. Итог учитывает отрицательные корректировки.</p>}
@@ -47,7 +49,7 @@ export default function FinanceIncome({Shared,db,income,total,comparison,kind,pe
  {active&&<ChartInteraction.Provider value={{hover,onHover:setHover,onSource,share}}><ResponsiveContainer width="100%" height="100%"><PieChart accessibilityLayer={false}>
  {data.length?<Pie data={data} dataKey="amount" nameKey="source" cx="50%" cy="50%" innerRadius="84%" outerRadius="94%" startAngle={90} endAngle={-270} paddingAngle={data.length>1?2:0} cornerRadius={3} stroke="none" isAnimationActive={!reduced} animationBegin={0} animationDuration={400} animationEasing="cubic-bezier(0.16,1,0.3,1)" shape={incomeSectorShape}/>:<Pie data={[{amount:1,fill:'var(--lab-line)'}]} dataKey="amount" innerRadius="84%" outerRadius="94%" stroke="none" isAnimationActive={false}/>}
  </PieChart></ResponsiveContainer></ChartInteraction.Provider>}
- <div className="finance-ring-center"><span className="finance-ring-label">{designVariant===8?<Shared.Icon name="calendar-date-linear"/>:'Начислено'}</span><strong className="finance-ring-amount">{major}<small>{minor}</small></strong><span className="finance-ring-period">{period.label}</span>{comparison!==null&&<span className={'finance-ring-comparison '+(comparison>=0?'finance-positive':'finance-negative')}>{designVariant?trend:<>{comparison>0?'+':''}{comparison}% к прошлому периоду</>}</span>}</div>
+ <div className="finance-ring-center"><span className="finance-ring-label">{designVariant===8?<Shared.Icon name="calendar-date-linear"/>:'Начислено'}</span><strong className="finance-ring-amount">{major}<small>{minor}</small></strong><span className="finance-ring-period">{period.label}</span>{comparison!==null&&<span className={'finance-ring-comparison '+(comparison===0?'finance-muted':comparison>0?'finance-positive':'finance-negative')}>{designVariant?trend:<>{comparisonLabel} к прошлому периоду</>}</span>}</div>
  </div></>}
 
  {designVariant>0&&periodControl}
@@ -57,7 +59,7 @@ export default function FinanceIncome({Shared,db,income,total,comparison,kind,pe
  {key:'amount',label:'Сумма и доля',width:'minmax(0,1fr)',render:r=><div className={"finance-source-amount"+(!r.count?" is-zero":"")+(hover===r.source?" is-active":"")}><button type="button" className="finance-row-trigger" aria-label={`Операции: ${r.source}`} onClick={e=>{e.stopPropagation();onSource(r.source);}}>{euro(r.amount)}</button><small>{share(r)}</small></div>}
  ]} onRowClick={r=>onSource(r.source)}/>
  </div>
- {!designVariant&&onUpgrade&&<div className="finance-income-upgrade"><div><span className="finance-caption">Больше возможностей</span><h3>Перейдите на Профи</h3><p>С одной покупки засчитывается до 1 100 € вместо 693 €.</p><Button Shared={Shared} db={db} label="Повысить пакет" size="40" tone="Soft" onClick={onUpgrade}/></div><span className="finance-upgrade-symbol" aria-hidden="true"><Shared.Icon name="box-linear"/></span></div>}
+ {!designVariant&&onUpgrade&&<div className="finance-income-upgrade"><div><span className="finance-caption">Больше возможностей</span><h3>Перейдите на Профи</h3><p>С одной покупки засчитывается до 1 100 € вместо 693 €.</p><Button Shared={Shared} db={db} label="Посмотреть апгрейд" size="40" tone="Soft" onClick={onUpgrade}/></div><span className="finance-upgrade-symbol" aria-hidden="true"><Shared.Icon name="box-linear"/></span></div>}
  </>}
  </Card>;
 }
