@@ -118,7 +118,7 @@ function Catalog({group,isIcons}){
 }
 function VariantGrid({group,iconGrid=false}){const related=group.name==='Auth / Select'?['Auth / Select option','Auth / Select menu']:group.name==='Boris / Avatar'?['Boris / Avatar stack','Boris / Meeting avatars']:[];if(related.length)group={...group,variants:[...group.variants,...db.components.filter(c=>related.includes(c.name)).flatMap(c=>c.variants)]};return <div className={'grid'+(iconGrid?' icon-grid':'')}>{group.variants.map(v=><section key={v.id}><a title={displayName(v.name)} href={`https://www.figma.com/design/${db.fileKey}?node-id=${v.id.replace(':','-')}`} target="_blank" rel="noreferrer">{iconGrid?v.name.split(' / ').at(-1):displayName(v.name)}</a>{group.name==='Иллюстрации'?<div className="art-preview"><div style={{width:v.w,height:v.h,transform:'scale('+Math.min(1,120/v.w,80/v.h)+')',transformOrigin:'center'}}><Node node={v} root/></div></div>:<Demo group={group} variant={v}/>}<small>{Math.round(v.w)} × {Math.round(v.h)}</small></section>)}</div>;}
 function App(){useLocale();
- const [design,setDesign]=useState(()=>{try{return localStorage.getItem('virena-design')==='soft'?'soft':'original';}catch{return 'original';}});
+ const [design,setDesign]=useState(()=>{try{return localStorage.getItem('virena-design')==='original'?'original':'soft';}catch{return 'soft';}});
  useEffect(()=>{document.documentElement.dataset.design=design;try{localStorage.setItem('virena-design',design);}catch{}},[design]);
  const [settingsTarget,setSettingsTarget]=useState(null);
  const [systemDark,setSystemDark]=useState(()=>matchMedia('(prefers-color-scheme: dark)').matches);
