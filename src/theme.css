@@ -49,8 +49,8 @@ header .theme-control{position:relative;display:flex;align-items:center;justify-
 :root[data-theme=dark]{--lab-warning-surface:#352b18;--lab-warning:#e5c179}
 
 /* Shared action surfaces, used by the live button in every screen and catalog. */
-:root{--button-soft:var(--lab-soft);--button-soft-hover:var(--lab-hover);--button-soft-pressed:var(--lab-selected);--button-on-surface:#e6e6e6;--button-on-surface-hover:#dcdcdc;--button-on-surface-pressed:#d2d2d2}
-:root[data-theme=dark]{--button-on-surface:#363c47;--button-on-surface-hover:#414a58;--button-on-surface-pressed:#4c5869}
+:root{--button-soft:#eaeaea;--button-soft-hover:#e0e0e0;--button-soft-pressed:#d6d6d6;--button-on-surface:#ededed;--button-on-surface-hover:#e3e3e3;--button-on-surface-pressed:#d9d9d9}
+:root[data-theme=dark]{--button-soft:var(--lab-soft);--button-soft-hover:var(--lab-hover);--button-soft-pressed:var(--lab-selected);--button-on-surface:#363c47;--button-on-surface-hover:#414a58;--button-on-surface-pressed:#4c5869}
 
 /* White card/dialog surfaces opt into the stronger secondary action fill. */
 :is([data-surface=white],.profile-card,.participant-dialog,.profile-dialog,.store-product,.partnership-dialog,.cab-placeholder){--button-soft:var(--button-on-surface);--button-soft-hover:var(--button-on-surface-hover);--button-soft-pressed:var(--button-on-surface-pressed)}

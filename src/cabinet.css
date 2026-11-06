@@ -1,7 +1,7 @@
 .cabinet{--cab-canvas:#efefef;--cab-nav-ink:#526ed3;--cab-nav-fill:#e7ecf9;--cab-sidebar:256px;--cab-gap:24px;--cab-radius:24px;display:flex;height:var(--cabinet-height,calc(100dvh - 72px));min-height:360px;background:var(--cab-canvas);color:var(--lab-ink);overflow:hidden}
 [data-theme=dark] .cabinet{--cab-canvas:#111318;--cab-nav-ink:#a5baff;--cab-nav-fill:#23345c}
 .cabinet button:focus-visible{outline:2px solid var(--lab-link);outline-offset:2px}
-.cabinet svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.cabinet svg:not([data-asset-image]){width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
 .cabinet .demo-icon{width:24px;height:24px;flex:0 0 24px}
 .cab-sidebar{width:var(--cab-sidebar);display:flex;flex-direction:column;background:transparent;padding:32px 24px 20px;border:0;overflow:auto}
 .cab-brand{display:flex;flex-direction:column;gap:8px;margin-bottom:28px;flex-shrink:0}

@@ -77,6 +77,24 @@
     {
       "id": "135:54878",
       "name": "alt-arrow-right-linear"
+    },
+    {
+      "id": "135:60150",
+      "name": "cart-large-2-linear",
+      "exported": "2026-11-06",
+      "via": "Sync Bridge"
+    },
+    {
+      "id": "135:60923",
+      "name": "chat-round-dots-linear",
+      "via": "Sync Bridge",
+      "exported": "2026-11-06"
+    },
+    {
+      "id": "135:75832",
+      "name": "logout-2-linear",
+      "via": "Sync Bridge",
+      "exported": "2026-11-06"
     }
   ],
   "supplementalSources": {

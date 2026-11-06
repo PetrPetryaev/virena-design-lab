@@ -20,7 +20,7 @@ const demoGallery={};
  const rows=ids.length,src=[deviceSheet,nutritionSheet,digitalSheet][sheet],cellHeight=1024/rows;
  demoGallery[id]=[0,1].map(col=>({src,fullBleed:sheet>0,x:col*512+32,y:row*cellHeight+(sheet===1?26:8),w:448,h:cellHeight-(sheet===1?48:sheet===2&&row===2?56:16)}));
 }));
-export function AssetImage({asset,...props}){const clipId=useId().replaceAll(':','');return typeof asset==='string'?<img src={asset} {...props}/>:<svg {...props} role="img" viewBox={`${asset.x} ${asset.y} ${asset.w} ${asset.h}`} preserveAspectRatio={asset.fullBleed?"xMidYMid slice":"xMidYMid meet"} aria-label={props.alt}><defs><clipPath id={clipId}><rect x={asset.x} y={asset.y} width={asset.w} height={asset.h}/></clipPath></defs><image href={asset.src} width="1024" height="1024" clipPath={`url(#${clipId})`} onLoad={props.onLoad}/></svg>;}
+export function AssetImage({asset,...props}){const clipId=useId().replaceAll(':','');return typeof asset==='string'?<img src={asset} {...props}/>:<svg {...props} data-asset-image="true" role="img" viewBox={`${asset.x} ${asset.y} ${asset.w} ${asset.h}`} preserveAspectRatio={asset.fullBleed?"xMidYMid slice":"xMidYMid meet"} aria-label={props.alt}><defs><clipPath id={clipId}><rect x={asset.x} y={asset.y} width={asset.w} height={asset.h}/></clipPath></defs><image href={asset.src} width="1024" height="1024" clipPath={`url(#${clipId})`} onLoad={props.onLoad}/></svg>;}
 
 const categories=[['all','Все продукты'],['devices','Приборы'],['nutrition','Питание'],['online','Онлайн-продукты']];
 const demoPrices={expert:690,balance:290,beauty:240,water:180,'mini-balance':190,'deep-sleep':220,'bio-life':49,'more-life':59,'neuro-life':69,pulse:39,training:29,'a-scan':19};
