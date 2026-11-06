@@ -84,3 +84,9 @@
 /* The segmented control keeps its well visible on both canvas treatments. */
 [data-design=soft] .shared-catalog-toolbar{--segmented-track:var(--lab-surface);--segmented-active:var(--lab-soft)}
 [data-design=soft] .shared-catalog-toolbar .auth-flow-tabs>button[aria-selected=true]{box-shadow:none}
+
+/* Linked brand images preserve their existing header/promo dimensions and theme ink. */
+.auth-home{display:block;width:max-content;line-height:0}
+.auth-home>img{display:block;height:auto}
+.auth-promo>.auth-home>img{filter:brightness(0) invert(1);width:160px}
+[data-theme=dark] .auth-top>.auth-home>img{filter:brightness(0) invert(1)}

@@ -8,7 +8,7 @@
 .store-ds-arrow{display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;width:16px;height:16px}.store-ds-arrow svg{display:block;width:16px;height:16px}
 .store-product-art{position:relative;overflow:hidden}.store-gallery-layer{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;opacity:0;pointer-events:none;transition:opacity 320ms cubic-bezier(.22,1,.36,1)}.store-gallery-layer[data-visible=true]{opacity:1}
 .store-generated{border-radius:12px;background:white}.store-gallery-bars{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);display:flex;gap:4px;padding:0;opacity:0;pointer-events:none;transition:opacity 240ms ease}.store-gallery-bars i{width:16px;height:2px;flex:0 0 16px;border-radius:2px;background:var(--lab-line);transition:background-color 240ms ease}.store-gallery-bars i[data-active=true]{background:var(--lab-ink)}.store-product:hover .store-gallery-bars,.store-product:focus-visible .store-gallery-bars{opacity:1}
-.store-expert-gallery{display:flex;flex-direction:column;gap:16px;min-width:0}.store-detail-generated{position:relative;padding:0;background:white;overflow:hidden}.store-detail-generated img{border-radius:24px}.store-thumbnails{display:flex;gap:12px}.store-thumbnails button{flex:1;min-width:0;max-width:112px;aspect-ratio:4/3;padding:4px;background:white;border:1px solid var(--lab-line);border-radius:12px;overflow:hidden}.store-thumbnails button[aria-pressed=true]{border-color:var(--lab-link);box-shadow:0 0 0 1px var(--lab-link)}.store-thumbnails img{width:100%;height:100%;object-fit:contain;border-radius:8px}.store-embedded .store-detail{align-items:start}.store-related-links a{align-items:center}
+.store-expert-gallery{display:flex;flex-direction:column;gap:var(--profile-px-16);min-width:0}.store-detail-generated{position:relative;padding:0;background:white;overflow:hidden}.store-detail-generated img{border-radius:var(--profile-px-24)}.store-thumbnails{display:flex;gap:var(--profile-px-12)}.store-thumbnails button{flex:1;min-width:0;max-width:112px;aspect-ratio:4/3;padding:var(--profile-px-4);background:white;border:var(--profile-px-1) solid var(--lab-line);border-radius:var(--profile-px-12);overflow:hidden}.store-thumbnails button[aria-pressed=true]{border-color:var(--lab-link);box-shadow:0 0 0 var(--profile-px-1) var(--lab-link)}.store-thumbnails img{width:100%;height:100%;object-fit:contain;border-radius:var(--profile-px-8)}.store-embedded .store-detail{align-items:start}.store-related-links a{align-items:center}
 @media(min-width:801px) and (max-width:1400px){.store-embedded .store-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.store-embedded .store-toolbar{flex-wrap:wrap}}
 @media(max-width:1000px){.store-embedded .store-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.store-embedded .store-product-bottom{align-items:start;flex-direction:column}.store-embedded .store-detail{grid-template-columns:1fr}}
 @media(max-width:480px){.store-embedded .store-grid{grid-template-columns:1fr}.store-embedded .store-product-bottom{flex-direction:row;align-items:end}}
@@ -48,3 +48,49 @@
 /* A diffuse tonal edge, not an outline: separates full-bleed artwork from the canvas. */
 .cabinet .store-product.has-fullbleed-art{box-shadow:0 2px 12px color-mix(in srgb,var(--lab-ink) 5%,transparent)}
 [data-theme=dark] .cabinet .store-product.has-fullbleed-art{box-shadow:0 2px 12px color-mix(in srgb,var(--lab-canvas) 60%,transparent)}
+
+.store-purchase-actions{display:flex;flex-wrap:wrap;gap:calc(var(--cab-gap) / 3)}
+
+.store-back{display:flex;margin-bottom:var(--cab-gap)}
+.store-purchase-area.profile{margin:0;max-width:none}
+.store-purchase-area .store-purchase-actions{display:flex;align-items:center;flex-wrap:wrap;gap:var(--profile-px-12)}
+.store-related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(var(--profile-px-160),1fr));gap:var(--profile-px-16)}
+.store-related .store-product-compact{padding:var(--profile-px-16);border-radius:var(--profile-px-16);min-width:0}
+.store-related .store-product-compact .store-product-art{height:var(--profile-px-140);margin:0 0 var(--profile-px-12);border-radius:var(--profile-px-12)}
+.store-related .store-product-compact .store-product-bottom{display:flex;flex-direction:column;align-items:start;gap:var(--profile-px-12);padding:0}
+.store-related .store-product-compact .store-eyebrow{display:none}
+.store-related .store-product-compact h2{font-size:var(--profile-px-16);line-height:var(--profile-px-24);margin:0}
+.store-related .store-product-compact .store-card-action{align-self:stretch}
+.store-related .store-product-compact .store-card-action>[data-ui=Button],.store-related .store-product-compact .store-card-action .motion-surface{width:100%!important}
+@media(max-width:600px){.store-related-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--profile-px-12)}.store-related .store-product-compact{padding:var(--profile-px-12)}.store-related .store-product-compact .store-product-art{height:var(--profile-px-120)}.store-purchase-area .store-purchase-actions{gap:var(--profile-px-8)}.store-purchase-area .store-purchase-actions>.quantity-control{flex:none}.store-purchase-area .store-purchase-actions>[data-ui=Button]:not(:last-child){flex:1}.store-purchase-area .store-purchase-actions>[data-ui=Button]>.motion-surface{padding-inline:var(--profile-px-12)!important}}
+
+/* Product gallery controls reuse the navigation Solar chevron and DS icon button. */
+.store-related>h2{margin-bottom:var(--profile-px-24)}
+.store-expert-gallery.profile{margin:0;max-width:none}
+.store-gallery-controls{position:absolute;inset:0;display:flex;align-items:center;justify-content:space-between;padding:var(--profile-px-16);pointer-events:none;opacity:0;transition:opacity .16s ease}
+.store-gallery-controls>[data-ui=Button]{pointer-events:auto}
+.store-detail-generated:hover .store-gallery-controls,.store-detail-generated:focus-within .store-gallery-controls{opacity:1}
+.store-gallery-arrow{display:flex;width:var(--profile-px-24);height:var(--profile-px-24)}
+.store-gallery-arrow svg{width:100%;height:100%}.store-gallery-arrow.is-prev{transform:rotate(180deg)}
+.store-gallery-status{position:absolute;width:var(--profile-px-1);height:var(--profile-px-1);overflow:hidden;clip-path:inset(50%)}
+@media(hover:none),(pointer:coarse){.store-gallery-controls{opacity:1}}
+@media(prefers-reduced-motion:reduce){.store-gallery-controls{transition:none}}
+
+/* Stable purchase area: quantity/removal row, then one full-width primary action. */
+.store-purchase-area .store-purchase-actions{display:grid;grid-template-columns:minmax(0,1fr) var(--profile-px-48);gap:var(--profile-px-12);align-items:center}
+.store-purchase-area .quantity-control{justify-self:start;grid-column:1;grid-row:1}
+.store-purchase-remove{grid-column:2;grid-row:1;width:var(--profile-px-48);height:var(--profile-px-48);display:block}
+.store-purchase-main{grid-column:1/-1;grid-row:2;min-width:0}
+.store-purchase-main>[data-ui=Button],.store-purchase-main>[data-ui=Button]>.motion-surface{width:100%;max-width:100%}
+.store-purchase-area button:not(:disabled)>.motion-surface{transition:transform var(--directory-exit) ease-out}
+.store-purchase-area button:not(:disabled):active>.motion-surface{transform:scale(.96)}
+.store-purchase-area[data-in-cart=true] .store-purchase-main{animation:directory-enter var(--directory-enter) var(--directory-ease)}
+@media(prefers-reduced-motion:reduce){.store-purchase-area *{animation:none!important;transition:none!important}.store-purchase-area button:active>.motion-surface{transform:none}}
+
+/* Wide product columns align the primary action with the quantity control. */
+.store-purchase-area{container-type:inline-size}
+@container(min-width:400px){
+ .store-purchase-area .store-purchase-actions{grid-template-columns:auto minmax(0,1fr) var(--profile-px-48)}
+ .store-purchase-main{grid-column:2;grid-row:1}
+ .store-purchase-remove{grid-column:3}
+}

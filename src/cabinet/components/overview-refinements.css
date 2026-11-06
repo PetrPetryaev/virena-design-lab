@@ -220,3 +220,43 @@
  .overview-comparison .partner-dashboard :is(.partner-metric-strip,.partner-business-grid)>.partner-stat:not(:first-child){--overview-hover-top:var(--overview-overlap)}
  .overview-comparison .partner-dashboard :is(.partner-metric-strip,.partner-business-grid)>.partner-stat:not(:last-child){--overview-hover-bottom:var(--overview-overlap)}
 }
+
+/* Member overview: stacked horizontal media cards, matching the newcomer composition. */
+.overview-comparison .partner-workspace .partner-media-grid{grid-template-columns:minmax(0,1fr);gap:var(--ov-md)}
+.overview-comparison .partner-workspace .overview-option{
+ display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:center;
+ min-height:0;padding:var(--ov-md) var(--ov-lg);gap:var(--ov-md);
+}
+.overview-comparison .partner-workspace .overview-option .overview-art{
+ grid-column:2;grid-row:1;position:relative;inset:auto;width:100%;height:220px;
+ min-height:0;aspect-ratio:auto;margin:0;align-self:center;
+}
+.overview-comparison .partner-workspace .overview-option .overview-art img{
+ inset:0;width:100%;height:100%;object-fit:contain;
+}
+.overview-comparison .partner-workspace :is(.overview-product-content,.overview-partner-content){
+ grid-column:1;grid-row:1;min-width:0;gap:var(--ov-md);
+}
+@media(max-width:600px){
+ .overview-comparison .partner-workspace .overview-option{grid-template-columns:minmax(0,1fr);padding:var(--ov-md)}
+ .overview-comparison .partner-workspace .overview-option .overview-art{grid-column:1;grid-row:2;height:180px}
+}
+
+/* Fill the media area using the source images' transparent margins. */
+.overview-comparison .partner-workspace .overview-option .overview-art img{
+ inset:-10%;width:120%;height:120%;max-width:none;padding:0;object-fit:contain;
+}
+
+/* The right panel alone sizes the desktop row; media cannot inflate its height. */
+@media(min-width:1201px){
+ .overview-comparison .partner-workspace{align-items:stretch}
+ .overview-comparison .partner-workspace .partner-media-grid{contain:size;min-height:0;grid-template-rows:repeat(2,minmax(0,1fr))}
+ .overview-comparison .partner-workspace .partner-media-grid>.overview-option{align-self:stretch;height:auto;min-height:0;grid-template-rows:minmax(0,1fr);box-sizing:border-box}
+ .overview-comparison .partner-workspace .overview-option .overview-art{height:100%;min-height:0}
+ .overview-comparison .partner-workspace .overview-partner .overview-art img{inset:0;width:100%;height:100%}
+}
+
+/* Decorative timer keeps its container size, outside the generic 24px icon rule. */
+.cabinet .overview-notice-icon>svg.overview-time-ring{width:100%;height:100%;stroke-width:1.5}
+.overview-comparison .partner-workspace .overview-product .overview-art img{inset:-5%;width:110%;height:110%}
+.overview-comparison .partner-workspace .overview-partner .overview-art img{inset:0;width:100%;height:100%}

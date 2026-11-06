@@ -227,3 +227,5 @@
 .cabinet .cab-nav-filled svg{stroke:none;stroke-width:0}
 
 
+
+.cab-cart-trigger{position:relative}.cab-cart-count{position:absolute;top:0;right:0;min-width:calc(var(--cab-gap) * .75);height:calc(var(--cab-gap) * .75);padding-inline:calc(var(--cab-gap) / 6);border-radius:var(--cab-gap);background:var(--lab-primary);color:var(--lab-on-primary);font-size:calc(var(--cab-gap) / 2);line-height:1.5;text-align:center;pointer-events:none;font-variant-numeric:tabular-nums}

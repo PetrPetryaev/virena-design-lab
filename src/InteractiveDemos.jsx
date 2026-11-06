@@ -129,7 +129,7 @@ export function createDemos({db,Node,css,text,ink}){
    {search&&searchSuggestions&&value&&!disabled&&focused&&!picked&&<div className="search-results">{loading?<p>Поиск…</p>:scenario==='error'?<p role="alert">Не удалось загрузить. <button type="button" onClick={()=>setScenario('normal')}>Повторить</button></p>:scenario==='empty'||!candidates.length?<p>{t("Ничего не найдено")}</p>:candidates.map(name=><button type="button" key={name} onMouseDown={e=>e.preventDefault()} onClick={()=>{setPicked(name);setValue(name);}}>{name}</button>)}</div>}
   </div></DemoShell>;
  }
- function SelectDemo({group,embedded=false,value:controlledValue,onChange,source,label=t('Выбор страны'),placeholder=t('Выберите страну'),items=countries.map(c=>c.name),error:externalError,clearable=false,leadingIcon,optionIcon,searchable=true}){useLocale();
+ function SelectDemo({group,embedded=false,value:controlledValue,onChange,source,label=t('Выбор страны'),placeholder=t('Выберите страну'),items=countries.map(c=>c.name),error:externalError,clearable=false,leadingIcon,optionIcon,searchable=items.length>8}){useLocale();
   const [open,setOpen]=useState(group.name==='Auth / Select menu'),[query,setQuery]=useState(''),[localValue,setLocalValue]=useState(''),[localDisabled,setDisabled]=useState(false),[error,setError]=useState(false),[active,setActive]=useState(-1);
   const value=controlledValue??localValue,disabled=source?.props?.State?.value==='Disabled'||localDisabled;
   const root=useRef(null),input=useRef(null),menu=useRef(null),listId=useId();
@@ -138,10 +138,10 @@ export function createDemos({db,Node,css,text,ink}){
   function close(){setOpen(false);setQuery('');setActive(-1);}
   function choose(v){setValue(v);close();setError(false);input.current?.focus();}
   useEffect(()=>{const fn=e=>{if(!root.current?.contains(e.target))close();};document.addEventListener('pointerdown',fn);return()=>document.removeEventListener('pointerdown',fn);},[]);
-  // Native popovers escape a dialog's scroll clipping while staying in its top layer.
+  // Shared menus escape scroll clipping and flip above the field near the viewport edge.
   useLayoutEffect(()=>{
    const el=menu.current,field=root.current?.querySelector('.real-field');
-   if(!open||!el||!field||!root.current.closest('dialog'))return;
+   if(!open||!el||!field)return;
    el.setAttribute('popover','manual');
    const position=()=>{
     const r=field.getBoundingClientRect(),gap=8,edge=8;
@@ -163,7 +163,7 @@ export function createDemos({db,Node,css,text,ink}){
    {clearable&&(value||query)&&<button type="button" className="field-tool field-clear" disabled={disabled} tabIndex={-1} aria-label={t("Очистить выбор")} onMouseDown={e=>e.preventDefault()} onClick={()=>{setValue('');setQuery('');setOpen(true);input.current?.focus();}}><Icon name="Cross" muted/></button>}
    <button type="button" className="field-tool" disabled={disabled} aria-label={open?t('Закрыть список'):t('Открыть список')} onMouseDown={e=>e.preventDefault()} onClick={()=>{if(open)close();else setOpen(true);input.current?.focus();}}><Icon name="Auth / Icon / Chevron"/></button>
    </div>{showError&&<p className="field-error" role="alert">{externalError||t("Выберите значение")}</p>}
-   {open&&<div ref={menu} className="option-menu"><div role="listbox" id={listId}>{options.length?options.map((v,i)=><button type="button" id={listId+'-'+i} role="option" aria-selected={v===value} className={i===active?'highlight':''} key={v} onMouseEnter={()=>setActive(i)} onMouseDown={e=>e.preventDefault()} onClick={()=>choose(v)}>{optionIcon?.(v)}{t(v)}</button>):<p>{t("Ничего не найдено")}</p>}</div></div>}
+   {open&&<div ref={menu} className="option-menu"><div role="listbox" id={listId}>{options.length?options.map((v,i)=><button type="button" id={listId+'-'+i} role="option" tabIndex={-1} aria-selected={v===value} className={i===active?'highlight':''} key={v} onMouseEnter={()=>setActive(i)} onMouseDown={e=>e.preventDefault()} onClick={()=>choose(v)}>{optionIcon?.(v)}{t(v)}</button>):<p>{t("Ничего не найдено")}</p>}</div></div>}
   </div></DemoShell>;
  }
  function TooltipDemo(){const [show,setShow]=useState(false);return <Frame><div className="tooltip-demo" onMouseEnter={()=>setShow(true)} onMouseLeave={()=>setShow(false)}><Action aria-describedby={show?'sample-tip':undefined} onFocus={()=>setShow(true)} onBlur={()=>setShow(false)} onKeyDown={e=>{if(e.key==='Escape')setShow(false);}}>Наведи или нажми Tab</Action>{show&&<div id="sample-tip" role="tooltip"><Node node={variant('Boris / Tooltip')} root/></div>}</div></Frame>;}

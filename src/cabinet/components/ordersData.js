@@ -54,7 +54,7 @@ export function periodOrders(orders,period='all',range={}){
 }
 export function filterOrders(orders,{query='',status='all'}={}){
  const needle=query.trim().toLocaleLowerCase('ru-RU');
- return orders.filter(o=>(status==='all'||(status==='refund'?o.status!=='paid':o.status==='paid'))&&(!needle||[o.id,...o.items.map(i=>i.name)].join(' ').toLocaleLowerCase('ru-RU').includes(needle)));
+ return orders.filter(o=>(status==='all'||(status==='refund'?['partial','returned'].includes(o.status):o.status===status))&&(!needle||[o.id,...o.items.map(i=>i.name)].join(' ').toLocaleLowerCase('ru-RU').includes(needle)));
 }
-export function summarizeOrders(orders){return orders.reduce((s,o)=>{const t=orderTotals(o);return {count:s.count+(o.items.some(i=>!i.returnedAt)?1:0),goodsCents:s.goodsCents+t.netGoodsCents,bv:s.bv+t.netBV};},{count:0,goodsCents:0,bv:0});}
+export function summarizeOrders(orders){return orders.filter(o=>!o.demo).reduce((s,o)=>{const t=orderTotals(o);return {count:s.count+(o.items.some(i=>!i.returnedAt)?1:0),goodsCents:s.goodsCents+t.netGoodsCents,bv:s.bv+t.netBV};},{count:0,goodsCents:0,bv:0});}
 export const orderDate=iso=>new Date(iso).toLocaleString('ru-RU',{timeZone:'Europe/Moscow',day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'})+' МСК';
