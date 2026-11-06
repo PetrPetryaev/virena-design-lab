@@ -1,3 +1,4 @@
+import {formatMoney} from '../../numberFormat.js';
 import {genealogyCells} from './genealogyData.js';
 // Fixed API-shaped demo snapshot, 05.11.2026. Not a marketing-plan calculation engine.
 export const invitationAsOf='05.11.2026, 14:05 МСК';
@@ -17,11 +18,11 @@ export const invitationFixtures=[
 ];
 export const funnel=[['all','Все'],['attention','Требуют внимания'],['registered','Ждут оплаты'],['client','Клиенты'],['no-package','Без пакета'],['package','С пакетом'],['grace','Льготное окно'],['frozen','Заморожены'],['deactivated','Неактивны']];
 export const inFunnel=(c,key)=>key==='all'||(!c.own&&(key==='attention'?c.attention.length>0:key==='no-package'?c.state==='partner'&&!c.pack:key==='package'?c.state==='partner'&&!!c.pack:c.state===key));
-export const money=n=>n.toLocaleString('ru-RU',{minimumFractionDigits:2,maximumFractionDigits:2})+' €';
+export const money=formatMoney;
 export const date=s=>s?new Date(s+'T12:00:00+03:00').toLocaleDateString('ru-RU',{timeZone:'Europe/Moscow'}):'—';
 export const reminderReason=c=>c.attention.find(x=>[1,2,4,5].includes(x));
 export const sortOptions={urgency:'По срочности',name:'По имени: А–Я',state:'По этапу',pack:'По пакету и рангу',deadline:'Ближайший срок',invited:'Больше приглашённых',vzr:'Больше ВЗР',registered:'Сначала новые',login:'Давно не входили'};
-export function sortInvitations(list,key='urgency',direction=1){return [...list].sort((a,b)=>direction*(key==='name'?a.name.localeCompare(b.name,'ru'):key==='state'?Object.keys(invitationStates).indexOf(a.state)-Object.keys(invitationStates).indexOf(b.state):key==='pack'?(packs.indexOf(a.pack)-packs.indexOf(b.pack)||b.rank-a.rank):key==='deadline'?a.deadlineOrder-b.deadlineOrder:key==='invited'?b.invited-a.invited:key==='vzr'?b.vzr-a.vzr:key==='login'?b.loginDays-a.loginDays:key==='registered'?b.registered.localeCompare(a.registered):(a.own?99:a.attention[0]||99)-(b.own?99:b.attention[0]||99)||((a.attention.length&&!a.own&&b.attention.length&&!b.own)?a.deadlineOrder-b.deadlineOrder:0)||b.registered.localeCompare(a.registered)));}
+export function sortInvitations(list,key='urgency',direction=1){return [...list].sort((a,b)=>direction*(key==='name'?a.name.localeCompare(b.name,'ru'):key==='state'?Object.keys(invitationStates).indexOf(a.state)-Object.keys(invitationStates).indexOf(b.state):key==='pack'?(packs.indexOf(a.pack)-packs.indexOf(b.pack)||b.rank-a.rank):key==='deadline'?a.deadlineOrder-b.deadlineOrder:key==='invited'?b.invited-a.invited:key==='vzr'?b.vzr-a.vzr:key==='login'?b.loginDays-a.loginDays:key==='registered'?b.registered.localeCompare(a.registered):(a.own||!a.attention.length?2:a.attention.some(x=>[1,2,3,4,5].includes(x))?0:1)-(b.own||!b.attention.length?2:b.attention.some(x=>[1,2,3,4,5].includes(x))?0:1)||a.deadlineOrder-b.deadlineOrder||b.registered.localeCompare(a.registered)));}
 export function initialInvitationView(){let preferences={};try{preferences=JSON.parse(localStorage.getItem('virena-invitations-prefs')||'{}');}catch{}return {query:'',funnel:'all',filters:{},page:1,pageSize:[10,25,50,100].includes(preferences.pageSize)?preferences.pageSize:25,sort:Object.hasOwn(sortOptions,preferences.sort)?preferences.sort:'urgency',direction:preferences.direction===-1?-1:1};}
 
 // Owner response fields supplied by the API in production; fixed for this snapshot.

@@ -42,3 +42,6 @@
 .inv-page-size .real-field{width:100%!important;--field-inset:16px}
 .inv-page-size .option-menu{top:auto;bottom:calc(100% + var(--tree-sm))}
 .inv-pagination>nav{display:flex;gap:var(--tree-sm);flex:none}
+
+/* Specificity keeps modal sizing stable regardless of shared CSS import order. */
+.participant-dialog.inv-modal{height:fit-content}

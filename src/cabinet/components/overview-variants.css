@@ -166,3 +166,9 @@
 .overview-client-actions .overview-partner{grid-column:2;grid-row:1}
 @media(max-width:1200px){.overview-client-actions .overview-partner{grid-column:1;grid-row:2}}
 .overview-comparison>.overview-package{grid-row:auto;grid-column:auto}
+
+/* Same inset double contour as the finance balance; only the Overview identity. */
+.cabinet .overview-framed-profile .overview-profile{position:relative;isolation:isolate;background:color-mix(in srgb,var(--lab-soft) 65%,var(--lab-surface));border-radius:calc(var(--ov-md) + var(--ov-xs));box-shadow:inset 0 0 0 1px var(--lab-line)}
+.cabinet .overview-framed-profile .overview-profile:before{content:"";position:absolute;inset:var(--ov-xs);z-index:-1;pointer-events:none;border-radius:var(--ov-md);background:linear-gradient(130deg,var(--lab-surface),color-mix(in srgb,var(--lab-soft) 65%,var(--lab-surface)));box-shadow:inset 0 0 0 1px var(--lab-surface)}
+
+.cabinet .overview-framed-profile .overview-profile-meta{background:color-mix(in srgb,var(--lab-ink) 2%,color-mix(in srgb,var(--lab-soft) 40%,var(--lab-surface)))}

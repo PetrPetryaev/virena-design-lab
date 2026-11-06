@@ -146,7 +146,7 @@
 .tree-workspace[data-member=frozen] .tree-summary-legs b,.tree-workspace[data-member=frozen] .tree-summary-legs strong{color:var(--lab-muted)}
 .tree-summary-legs>.tree-leg-divider-mark{padding:0;border:0}
 /* Own node is the single structure summary; line controls only affect future invites. */
-.genealogy-root.is-own-root{width:520px}
+.genealogy-root.is-own-root{width:440px}
 .genealogy-root.is-own-root .genealogy-node{max-width:none}
 .tree-own-totals{display:flex;gap:var(--tree-xl);font-size:var(--tree-caption);color:var(--lab-muted)}
 .tree-own-totals strong{font-size:var(--tree-title);font-weight:600;color:var(--lab-ink);margin-right:var(--tree-xs)}
@@ -180,18 +180,23 @@
 .own-card-summary .tree-own-totals{gap:var(--tree-lg)}.own-card-status{font-size:var(--tree-caption);color:var(--lab-muted)}
 .own-card-placement{padding:0;margin:0;border:0;min-width:0}.own-card-placement legend{font-size:var(--tree-body);font-weight:600;color:var(--lab-ink);padding:0;margin-bottom:var(--tree-md)}
 .own-card-legs{display:grid;grid-template-columns:1fr 1fr;gap:var(--tree-sm)}
-.own-leg{padding:var(--tree-xs);display:flex;flex-direction:column;gap:var(--tree-sm);border:var(--tree-line) solid var(--lab-line);border-radius:var(--tree-lg);min-width:0;cursor:pointer}
-.own-leg.is-selected{border-color:var(--lab-link)}.own-leg:has(input:focus-visible){outline:var(--tree-focus) solid var(--lab-link);outline-offset:var(--tree-xs)}
-.own-leg-panel{background:linear-gradient(140deg,var(--lab-soft),var(--lab-line));border-radius:var(--tree-md);padding:var(--tree-md);display:flex;flex-direction:column;gap:var(--tree-sm)}
-.own-leg.is-selected .own-leg-panel{background:linear-gradient(135deg,color-mix(in srgb,var(--lab-link) 12%,var(--lab-surface)),color-mix(in srgb,var(--lab-link) 4%,var(--lab-surface)))}
-.own-leg-heading{display:flex;align-items:center;justify-content:space-between;gap:var(--tree-xs);font-size:var(--tree-caption);color:var(--lab-muted);min-height:var(--tree-xl)}
-.own-leg-hint{font-size:var(--tree-caption);color:var(--lab-success);background:color-mix(in srgb,var(--lab-success) 12%,var(--lab-surface));padding:var(--tree-xs);border-radius:var(--tree-sm);white-space:nowrap}
-.own-leg-points{font-size:var(--tree-title);font-weight:600;font-variant-numeric:tabular-nums;line-height:1.3}.own-leg-points small{font-size:var(--tree-body);font-weight:400;color:var(--lab-muted)}
-.own-leg-bottom{display:flex;align-items:center;justify-content:space-between;gap:var(--tree-sm);font-size:var(--tree-caption);color:var(--lab-muted)}
-.own-leg-people{display:flex;align-items:center;gap:var(--tree-xs);font-size:var(--tree-body);color:var(--lab-ink)}.own-leg-people b{font-weight:600}.cabinet .own-leg-people svg{width:var(--tree-lg);height:var(--tree-lg);fill:none;stroke:currentColor;stroke-width:1.5;stroke-linejoin:round;stroke-linecap:round}
-.own-leg-choice{display:flex;align-items:center;justify-content:center;gap:var(--tree-sm);padding:var(--tree-sm);min-height:var(--tree-control);border-radius:var(--tree-md);border:var(--tree-line) solid var(--lab-line);font-size:var(--tree-body);font-weight:500}
-.own-leg-choice input{width:var(--tree-lg);height:var(--tree-lg);margin:0;accent-color:var(--lab-link);flex:none}.own-leg.is-selected .own-leg-choice{background:var(--lab-accent-soft);border-color:var(--lab-link);color:var(--lab-link)}
+.own-card-placement legend>span{color:var(--lab-link)}
+.own-card-legs{gap:var(--tree-lg);padding-top:var(--tree-sm)}
+.own-leg{position:relative;display:flex;flex-direction:column;gap:var(--tree-sm);min-width:0;cursor:pointer}
+.own-leg-radio{position:absolute;opacity:0;width:var(--tree-line);height:var(--tree-line);margin:0}
+.own-leg-panel{position:relative;display:flex;flex-direction:column;align-items:center;gap:var(--tree-xs);padding:var(--tree-sm);background:var(--lab-soft);border:var(--tree-line) solid var(--lab-line);border-radius:var(--tree-xl);box-shadow:0 0 0 var(--tree-xs) var(--lab-surface),0 0 0 calc(var(--tree-xs) + var(--tree-line)) var(--lab-line)}
+.own-leg.is-selected .own-leg-panel{box-shadow:0 0 0 var(--tree-xs) var(--lab-surface),0 0 0 calc(var(--tree-xs) + var(--tree-focus) + var(--tree-line)) var(--lab-link)}
+.own-leg:has(input:focus-visible) .own-leg-panel{outline:var(--tree-focus) solid var(--lab-ink);outline-offset:calc(var(--tree-sm) + var(--tree-xs))}
+.own-leg-heading{display:flex;align-items:center;justify-content:center;min-height:var(--tree-xl)}
+.own-leg-hint{font-size:var(--tree-caption);color:var(--lab-success);background:color-mix(in srgb,var(--lab-success) 12%,var(--lab-surface));padding:var(--tree-xs) var(--tree-sm);border-radius:var(--tree-md);white-space:nowrap}
+.own-leg-points{font-size:var(--tree-xl);font-weight:600;font-variant-numeric:tabular-nums;line-height:1.3;white-space:nowrap}.own-leg-points small{font-size:var(--tree-lg);font-weight:400;color:var(--lab-muted)}
+.own-leg-people{display:flex;align-items:center;justify-content:center;gap:var(--tree-xs);font-size:var(--tree-lg);color:var(--lab-ink)}.own-leg-people b{font-weight:500}.cabinet .own-leg-people .demo-icon,.cabinet .own-leg-people svg{width:var(--tree-lg)!important;height:var(--tree-lg)!important}
+.own-leg-choice{display:flex;align-items:center;justify-content:center;min-height:var(--tree-xl);font-size:var(--tree-body);font-weight:600;color:var(--lab-muted)}.own-leg.is-selected .own-leg-choice{color:var(--lab-link)}
+.own-leg-check{position:absolute;right:calc(-1 * var(--tree-xs));top:calc(-1 * var(--tree-xs));display:grid;place-items:center;width:var(--tree-xl);height:var(--tree-xl);border-radius:var(--tree-sm);background:var(--lab-link);box-shadow:0 0 0 var(--tree-xs) var(--lab-surface)}
+/* Reuse the existing DS checkbox vector 27:41275; no new drawn icon. */
+.own-leg-check>span{width:var(--tree-md);height:var(--tree-sm);background:white;mask-size:contain;mask-repeat:no-repeat;mask-position:center}
 .own-leg.is-disabled{cursor:default;opacity:.65}
+
 
 .genealogy-board-space:has(.genealogy-root.is-own-root){min-width:1120px}
 

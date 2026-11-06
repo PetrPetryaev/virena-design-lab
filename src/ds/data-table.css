@@ -20,3 +20,7 @@
 @media(prefers-reduced-motion:reduce){.ds-data-table *{transition:none!important}}
 
 .ds-sort-indicator{display:flex;opacity:0;color:var(--lab-muted);transition:opacity 120ms ease}.ds-sort-indicator.is-active{opacity:1;color:var(--lab-ink)}.ds-table-sort:is(:hover,:focus-visible) .ds-sort-indicator{opacity:1}
+
+/* Optional records layout: finance and other non-person tables. Directory defaults stay intact. */
+.ds-table-expansion{padding:var(--table-gap) var(--table-inset);background:var(--lab-soft);font-size:var(--table-font)}
+@container(max-width:1010px){.ds-table-records .ds-table-body>.ds-table-row{grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--table-gap)}.ds-table-records .ds-table-row>[role=cell]{grid-column:auto;grid-row:auto}.ds-table-records .ds-table-row>[role=cell]::before{content:attr(data-label);display:block;font-size:var(--table-caption);color:var(--lab-muted);margin-bottom:calc(var(--table-gap) / 4)}.ds-table-records .ds-table-row>[data-column=basis],.ds-table-records .ds-table-row>[data-column=kind]{grid-column:1/-1}.ds-table-records .ds-table-line{white-space:normal;overflow-wrap:anywhere}}

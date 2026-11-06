@@ -1,3 +1,4 @@
+import {formatPrice} from './numberFormat.js';
 import React,{useState,useEffect,useRef,useId} from 'react';
 import deviceSheet from './assets/catalog-demo/sheet-0.jpg';
 import nutritionSheet from './assets/catalog-demo/sheet-1.jpg';
@@ -23,7 +24,7 @@ function AssetImage({asset,...props}){const clipId=useId().replaceAll(':','');re
 
 const categories=[['all','Все продукты'],['devices','Приборы'],['nutrition','Питание'],['online','Онлайн-продукты']];
 const demoPrices={expert:690,balance:290,beauty:240,water:180,'mini-balance':190,'deep-sleep':220,'bio-life':49,'more-life':59,'neuro-life':69,pulse:39,training:29,'a-scan':19};
-const priceLabel=product=>new Intl.NumberFormat('ru-RU',{style:'currency',currency:'EUR',maximumFractionDigits:0}).format(product.price);
+const priceLabel=product=>formatPrice(product.price);
 export const products=[
  ['expert','Expert','devices','Стационарный прибор для подбора программы'],
  ['balance','Balance','devices','Приборы Virena'],['beauty','Beauty','devices','Приборы Virena'],['water','Water','devices','Приборы Virena'],['mini-balance','Mini Balance','devices','Приборы Virena'],['deep-sleep','Deep Sleep','devices','Приборы Virena'],

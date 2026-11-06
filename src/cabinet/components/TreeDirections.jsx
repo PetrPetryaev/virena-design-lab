@@ -1,3 +1,4 @@
+import {formatValue} from '../../numberFormat.js';
 import React,{useState,useRef,useEffect} from 'react';
 import {flushSync} from 'react-dom';
 import {genealogyCells} from './genealogyData.js';
@@ -35,7 +36,7 @@ export default function TreeDirections({photo}){
  const Card=({person,root=false,leaf=false,stack=0})=><div className={`td-node ${root?'td-root-node':''} ${leaf?'td-leaf':''} ${stack?'td-stacked-down':''}`}>
   <button className="td-card" onClick={()=>root?up():navigate(person.login)} aria-label={`Посмотреть композицию на уровне ${person.login}`}>
    <span className="td-person"><Portrait person={person} photo={person===own?photo:null}/><span><strong>{person.login}</strong><small>{person.personal?person.name:'Участник структуры'}</small></span><span className="td-rank">{person.rank?'★'.repeat(person.rank):'—'}</span></span>
-   {!leaf&&<><span className="td-package">{person.pack||'Без пакета'}<span>•</span>{person===own?'Ваша ячейка':'Партнёр'}</span><span className="td-numbers"><span><small>Левая нога</small><b>{person.points[0]?.toLocaleString('ru-RU')??'—'}</b></span><span><small>Правая нога</small><b>{person.points[1]?.toLocaleString('ru-RU')??'—'}</b></span></span></>}
+   {!leaf&&<><span className="td-package">{person.pack||'Без пакета'}<span>•</span>{person===own?'Ваша ячейка':'Партнёр'}</span><span className="td-numbers"><span><small>Левая нога</small><b>{formatValue(person.points[0])}</b></span><span><small>Правая нога</small><b>{formatValue(person.points[1])}</b></span></span></>}
   </button>
   {stack>0&&<button className="td-continuation" onClick={()=>navigate(person.login)}><span>Ещё {stack} уровня</span><span aria-hidden="true">↓</span></button>}
  </div>;

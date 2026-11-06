@@ -14,7 +14,7 @@
 .cab-nav-item[aria-current=page]{background:var(--cab-nav-fill);color:var(--cab-nav-ink)}
 .cab-nav-item[aria-current=page] .demo-icon{filter:invert(42%) sepia(48%) saturate(836%) hue-rotate(190deg)}
 .cab-nav-item.nested{padding-left:32px}
-.cab-nav-item>span:not(.demo-icon):not(.cab-solar-icon){flex:1;min-width:0}
+.cab-nav-item>span:not(.demo-icon):not(.cab-solar-icon):not(.cab-nav-filled):not(.cab-nav-icon){flex:1;min-width:0}
 .cab-nav-item i{display:flex;margin-left:auto}
 .cab-nav-item i svg{width:14px;height:14px}
 .cab-nav-item i.expanded{transform:rotate(90deg)}
@@ -53,7 +53,7 @@
 .is-collapsed .cab-sidebar{padding:32px 12px 20px}
 .is-collapsed .cab-brand{overflow:hidden}
 .is-collapsed .cab-brand img{max-width:none}
-.is-collapsed .cab-brand>span,.is-collapsed .cab-nav-item>span:not(.demo-icon):not(.cab-solar-icon),.is-collapsed .cab-nav-item>i:not(:only-child){display:none}
+.is-collapsed .cab-brand>span,.is-collapsed .cab-nav-item>span:not(.demo-icon):not(.cab-solar-icon):not(.cab-nav-filled):not(.cab-nav-icon),.is-collapsed .cab-nav-item>i:not(:only-child){display:none}
 .is-collapsed .cab-nav-item{padding:12px;justify-content:center!important}
 .is-collapsed .cab-collapse i{display:flex!important;margin:0}
 @media(max-width:1000px){.cabinet{--cab-sidebar:232px}.cab-sidebar{padding-left:16px;padding-right:16px}.cabinet .cab-header{padding:0 24px}.cabinet .cab-main{padding:12px 24px 0}}
@@ -61,7 +61,7 @@
  .cabinet{min-height:320px}
  .cab-sidebar,.is-collapsed .cab-sidebar{display:none}
  .menu-open .cab-sidebar{display:flex;position:fixed;z-index:120;inset:0 auto 0 0;width:min(300px,calc(100vw - 48px));background:var(--cab-canvas);padding:32px 20px 20px}
- .menu-open .cab-brand>span,.menu-open .cab-nav-item>span:not(.demo-icon):not(.cab-solar-icon){display:block}
+ .menu-open .cab-brand>span,.menu-open .cab-nav-item>span:not(.demo-icon):not(.cab-solar-icon):not(.cab-nav-filled):not(.cab-nav-icon){display:block}
  .menu-open .cab-nav-item{justify-content:flex-start!important}
  .cab-scrim{position:fixed;inset:0;z-index:110;border:0;border-radius:0;background:#0006;padding:0}
  .cabinet .cab-header{height:72px;min-height:72px;flex-wrap:nowrap;padding:0 16px;gap:12px}
@@ -103,7 +103,7 @@
 .cab-sidebar{padding-right:8px}
 .cab-nav{gap:4px}
 .cab-nav-item{gap:10px}
-.cab-nav-item>span:not(.demo-icon):not(.cab-solar-icon){white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cab-nav-item>span:not(.demo-icon):not(.cab-solar-icon):not(.cab-nav-filled):not(.cab-nav-icon){white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .cab-nav-item i{flex:0 0 14px}
 .cab-nav-item[aria-current=page] .demo-icon{filter:none}
 .cab-nav-item .cab-disclosure{transform:rotate(90deg)}
@@ -221,3 +221,9 @@
 .cab-profile-menu button{display:flex;align-items:center;gap:12px;padding:12px;border-radius:8px;min-height:44px;color:var(--lab-ink)}
 .cab-profile-menu button>.cab-solar-icon,.cab-profile-menu button>svg{width:24px;height:24px;flex:0 0 24px;color:var(--lab-ink)}
 .cab-profile-menu button>svg{fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+
+/* Selected navigation uses the exact Solar Bold counterpart; inactive stays Linear. */
+.cab-nav-filled,.cab-nav-icon{display:flex;width:24px;height:24px;flex:0 0 24px;color:inherit}
+.cabinet .cab-nav-filled svg{stroke:none;stroke-width:0}
+
+

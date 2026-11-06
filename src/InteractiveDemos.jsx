@@ -7,7 +7,7 @@ import './avatar.css';
 import lockIcon from './assets/profile-icons/lock-keyhole.svg';
 import './field-refinements.css';
 import {t,useLocale} from './i18n.js';
-import React,{useState,useEffect,useRef,useId} from 'react';
+import React,{useState,useEffect,useLayoutEffect,useRef,useId} from 'react';
 import {passwordRules,passwordOK} from './password-policy.js';
 import BirthDateField from './BirthDateField.jsx';
 import DateCalendar,{formatDateInput,parseDate,dateInputError} from './DateCalendar.jsx';
@@ -130,12 +130,28 @@ export function createDemos({db,Node,css,text,ink}){
  function SelectDemo({group,embedded=false,value:controlledValue,onChange,source,label=t('Выбор страны'),placeholder=t('Выберите страну'),items=countries.map(c=>c.name),error:externalError,clearable=false,leadingIcon,optionIcon,searchable=true}){useLocale();
   const [open,setOpen]=useState(group.name==='Auth / Select menu'),[query,setQuery]=useState(''),[localValue,setLocalValue]=useState(''),[localDisabled,setDisabled]=useState(false),[error,setError]=useState(false),[active,setActive]=useState(-1);
   const value=controlledValue??localValue,disabled=source?.props?.State?.value==='Disabled'||localDisabled;
-  const root=useRef(null),input=useRef(null),listId=useId();
+  const root=useRef(null),input=useRef(null),menu=useRef(null),listId=useId();
   const options=searchable?items.filter(v=>t(v).toLowerCase().includes(query.toLowerCase())):items;
   function setValue(v){setLocalValue(v);onChange?.(v);}
   function close(){setOpen(false);setQuery('');setActive(-1);}
   function choose(v){setValue(v);close();setError(false);input.current?.focus();}
   useEffect(()=>{const fn=e=>{if(!root.current?.contains(e.target))close();};document.addEventListener('pointerdown',fn);return()=>document.removeEventListener('pointerdown',fn);},[]);
+  // Native popovers escape a dialog's scroll clipping while staying in its top layer.
+  useLayoutEffect(()=>{
+   const el=menu.current,field=root.current?.querySelector('.real-field');
+   if(!open||!el||!field||!root.current.closest('dialog'))return;
+   el.setAttribute('popover','manual');
+   const position=()=>{
+    const r=field.getBoundingClientRect(),gap=8,edge=8;
+    const below=window.innerHeight-r.bottom-gap-edge,above=r.top-gap-edge;
+    const up=below<Math.min(el.scrollHeight,300)&&above>below;
+    Object.assign(el.style,{position:'fixed',margin:'0',inset:'auto',left:r.left+'px',width:r.width+'px',minWidth:'0',boxSizing:'border-box',maxHeight:Math.max(0,Math.min(300,up?above:below))+'px'});
+    if(up)el.style.bottom=(window.innerHeight-r.top+gap)+'px';else el.style.top=(r.bottom+gap)+'px';
+   };
+   position();el.showPopover();position();
+   window.addEventListener('resize',position);document.addEventListener('scroll',position,true);
+   return()=>{window.removeEventListener('resize',position);document.removeEventListener('scroll',position,true);if(el.matches(':popover-open'))el.hidePopover();};
+  },[open,options.length]);
   const showError=!disabled&&!open&&!value&&!!(error||externalError);
   const n=variant('Auth / Select',disabled?'Disabled':open?'Open':showError?'Error':value?'Filled':'Default');
   return <DemoShell embedded={embedded} controls={<><label className="toggle"><input type="checkbox" checked={disabled} onChange={e=>{setDisabled(e.target.checked);close();}}/>Disabled</label><label className="toggle"><input type="checkbox" checked={error} onChange={e=>setError(e.target.checked)}/>Показать ошибку</label><small>Печатай прямо в поле. Стрелки – выбор, Enter – подтвердить, Escape – закрыть.</small></>} status={value?'Выбрано: '+value:'Значение не выбрано'}>
@@ -145,7 +161,7 @@ export function createDemos({db,Node,css,text,ink}){
    {clearable&&(value||query)&&<button type="button" className="field-tool field-clear" disabled={disabled} tabIndex={-1} aria-label={t("Очистить выбор")} onMouseDown={e=>e.preventDefault()} onClick={()=>{setValue('');setQuery('');setOpen(true);input.current?.focus();}}><Icon name="Cross" muted/></button>}
    <button type="button" className="field-tool" disabled={disabled} aria-label={open?t('Закрыть список'):t('Открыть список')} onMouseDown={e=>e.preventDefault()} onClick={()=>{if(open)close();else setOpen(true);input.current?.focus();}}><Icon name="Auth / Icon / Chevron"/></button>
    </div>{showError&&<p className="field-error" role="alert">{externalError||t("Выберите значение")}</p>}
-   {open&&<div className="option-menu"><div role="listbox" id={listId}>{options.length?options.map((v,i)=><button type="button" id={listId+'-'+i} role="option" aria-selected={v===value} className={i===active?'highlight':''} key={v} onMouseEnter={()=>setActive(i)} onMouseDown={e=>e.preventDefault()} onClick={()=>choose(v)}>{optionIcon?.(v)}{t(v)}</button>):<p>{t("Ничего не найдено")}</p>}</div></div>}
+   {open&&<div ref={menu} className="option-menu"><div role="listbox" id={listId}>{options.length?options.map((v,i)=><button type="button" id={listId+'-'+i} role="option" aria-selected={v===value} className={i===active?'highlight':''} key={v} onMouseEnter={()=>setActive(i)} onMouseDown={e=>e.preventDefault()} onClick={()=>choose(v)}>{optionIcon?.(v)}{t(v)}</button>):<p>{t("Ничего не найдено")}</p>}</div></div>}
   </div></DemoShell>;
  }
  function TooltipDemo(){const [show,setShow]=useState(false);return <Frame><div className="tooltip-demo" onMouseEnter={()=>setShow(true)} onMouseLeave={()=>setShow(false)}><Action aria-describedby={show?'sample-tip':undefined} onFocus={()=>setShow(true)} onBlur={()=>setShow(false)} onKeyDown={e=>{if(e.key==='Escape')setShow(false);}}>Наведи или нажми Tab</Action>{show&&<div id="sample-tip" role="tooltip"><Node node={variant('Boris / Tooltip')} root/></div>}</div></Frame>;}

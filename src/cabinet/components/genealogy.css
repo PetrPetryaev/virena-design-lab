@@ -136,7 +136,7 @@
 
 .genealogy-breadcrumb-chevron{display:inline-flex;flex:0 0 24px;width:24px;height:24px;color:var(--lab-muted)}.cabinet .genealogy-breadcrumb-chevron svg{display:block;width:24px;height:24px;fill:none}
 
-/* The 520px own card fits between floating controls only on a wide board. */
+/* The own card fits between floating controls only on a wide board. */
 @container (min-width:1100px){
  .genealogy-board-space:has(.is-own-root){padding-top:var(--tree-lg)}
 }

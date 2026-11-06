@@ -68,3 +68,6 @@
 [data-design] .cabinet [data-ui=Button][data-tone=Outline]>.motion-surface>span{color:var(--lab-ink)!important}
 [data-design] .cabinet [data-ui=Button][data-tone=Outline] .motion-surface [style*="mask"]{background-color:var(--lab-ink)!important}
 [data-design] .cabinet [data-ui=Button][data-tone=Outline]:is([data-state=Hover],[data-state=Pressed])>.motion-surface{background-color:var(--lab-hover)!important;box-shadow:inset 0 0 0 1px var(--lab-ink)!important}
+
+/* Soft header controls need contrast against the grey canvas, not a white-card surface. */
+[data-design=soft] .cab-top-actions [data-ui=Button][data-tone=Soft]{--cab-header-button-bg:color-mix(in srgb,var(--lab-selected) 55%,var(--lab-canvas));--snapshot-soft:var(--cab-header-button-bg)}

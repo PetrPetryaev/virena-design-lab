@@ -91,7 +91,7 @@
 .overview-comparison .overview-columns .overview-option:is(.overview-product,.overview-media-framed) .overview-art{display:block;position:relative;inset:auto;grid-column:2;grid-row:1;width:100%;height:auto;aspect-ratio:1;mask-image:none;margin:0;align-self:center}
 .overview-comparison .overview-columns .overview-product .overview-art img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;transform:none;--art-scale:1}
 .overview-comparison .overview-columns :is(.overview-product-content,.overview-partner-content){max-width:280px}
-@media(max-width:1400px) and (min-width:601px){.overview-comparison .overview-columns{grid-template-columns:1fr}.overview-comparison .overview-columns .overview-option:is(.overview-product,.overview-media-framed){grid-column:1;grid-row:auto}}
+@media(max-width:1400px) and (min-width:601px){.overview-comparison .overview-columns{grid-template-columns:minmax(0,1fr)}.overview-comparison .overview-columns .overview-option:is(.overview-product,.overview-media-framed,.overview-partner){grid-column:1;grid-row:auto}}
 @media(max-width:600px){
  .overview-comparison .overview-columns .overview-option:is(.overview-product,.overview-media-framed){grid-template-columns:1fr;padding:var(--ov-md)}
  .overview-comparison .overview-columns .overview-option:is(.overview-product,.overview-media-framed) .overview-art{grid-column:1;grid-row:2}
@@ -156,4 +156,18 @@
  .overview-comparison .overview-option:is(.overview-product,.overview-partner) .overview-art img{transition:none;translate:none!important;rotate:none!important;scale:none!important}
  .overview-comparison .overview-option:is(.overview-product,.overview-partner) .overview-art::before,
  .overview-comparison .overview-option:is(.overview-product,.overview-partner) .overview-art::after{transition:none;scale:1!important;rotate:none!important}
+}
+
+/* Package banner owns a full row; nested display:contents must not reduce it to one tile. */
+.overview-comparison .overview-columns .overview-package{grid-column:1 / -1;grid-row:auto;grid-template-columns:64px minmax(0,1fr) auto;width:100%;min-width:0}
+.overview-comparison .overview-package .banner-copy{min-width:0}
+.overview-comparison .overview-columns{container-type:inline-size}
+@container(max-width:640px){
+ .overview-comparison .overview-columns .overview-package{grid-template-columns:64px minmax(0,1fr)}
+ .overview-comparison .overview-columns .overview-package>button{grid-column:1 / -1;justify-self:end}
+}
+@media(max-width:1400px) and (min-width:1001px){
+ .overview-comparison .overview-person{flex-wrap:wrap}
+ .overview-comparison .overview-person>div:not(.overview-profile-link){flex:1;min-width:180px}
+ .overview-comparison .overview-person .overview-profile-link{margin-left:0}
 }

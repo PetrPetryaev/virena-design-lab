@@ -25,3 +25,12 @@
 .partner-business-grid .card-clickable{transition:background .18s ease}
 .partner-business-grid .card-clickable:hover{background:var(--lab-soft)}
 @media(prefers-reduced-motion:reduce){.partner-business-grid .card-clickable{transition:none}}
+
+/* Completed partnership: keep the notice clear and history readable, but quieter. */
+.deactivation-content,
+[data-account-state=deactivated]>.inv-shared-banner~:not(dialog):not(.auth-toast){opacity:.82}
+.deactivation-content,
+[data-account-state=deactivated]>.finance-top-grid,
+[data-account-state=deactivated]>.finance-two-grid,
+[data-account-state=deactivated]>.profile-card,
+[data-account-state=deactivated] .ds-data-table{filter:grayscale(1)}

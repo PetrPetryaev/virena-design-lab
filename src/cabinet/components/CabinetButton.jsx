@@ -1,0 +1,2 @@
+import React from 'react';
+export default function CabinetButton({Shared,db,label,onClick,tone='Soft',size='48',icon,leadingIcon,leadingIconContent,disabled,pressed}){return <Shared.Button group={db.components.find(c=>c.name===`Boris / ${icon?'Icon button':'Button'}`)} choice={{Tone:tone,Size:size}} label={label} ariaLabel={label} ariaPressed={pressed} disabled={disabled} onClick={onClick} showIcon={!!leadingIcon} icon={leadingIcon?db.components.find(c=>c.name===leadingIcon)?.id:undefined} iconContent={leadingIconContent||(icon?<Shared.Icon name={icon}/>:undefined)}/>;}

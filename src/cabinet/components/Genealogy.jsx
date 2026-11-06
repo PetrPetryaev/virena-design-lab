@@ -1,3 +1,4 @@
+import TreeLegMetrics from './TreeLegMetrics.jsx';
 import MemberOwnBadge from './MemberOwnBadge.jsx';
 import MemberPackage from './MemberPackage.jsx';
 import {flushSync} from 'react-dom';
@@ -21,9 +22,10 @@ function OwnMemberCard({cell,photo,Shared,db,onDetails,side,disabled,onChange}){
   <div className="own-card-header"><Avatar Shared={Shared} cell={cell} photo={photo}/><div className="genealogy-identity"><strong>{cell.name||cell.login}</strong><span>{cell.login}</span></div><Shared.Button group={db.components.find(c=>c.name==='Boris / Icon button')} choice={{Tone:'Ghost',Size:'40'}} ariaLabel={`Подробная информация: ${cell.login}`} iconContent={<Shared.Icon name="Auth / Icon / Info"/>} onClick={()=>onDetails(cell)}/></div>
   <div className="own-card-meta"><MemberPackage pack={cell.pack}/><MemberOwnBadge/><MemberRank rank={cell.rank}/></div>
   <div className="own-card-summary"><div className="tree-own-totals"><span><strong>{cell.counts[0]+cell.counts[1]}</strong> участников</span><span><strong>{cell.steps}</strong> шагов</span></div><span className="own-card-status">{activityLabel(cell)}</span></div>
-  <fieldset className="own-card-placement"><legend>Куда направлять новых приглашённых</legend><div className="own-card-legs">{['L','R'].map((leg,i)=>{const chosen=side===leg,parts=formatPoints(cell.points[i]).split(',');return <label key={leg} className={`own-leg ${chosen?'is-selected':''} ${disabled?'is-disabled':''}`}>
-   <div className="own-leg-panel"><div className="own-leg-heading"><span>{i===0?'Левая нога':'Правая нога'}</span>{weak===i&&!disabled&&<span className="own-leg-hint">Нужно усилить</span>}</div><strong className="own-leg-points">{parts[0]}{parts[1]&&<small>,{parts[1]}</small>}</strong><div className="own-leg-bottom"><span>баллов</span><span className="own-leg-people" aria-label={`${cell.counts[i]} участников`}><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="7" r="3.5"/><path d="M4.5 18.7c0-3.1 3.4-5.2 7.5-5.2s7.5 2.1 7.5 5.2c0 1.2-.8 1.8-2 1.8h-11c-1.2 0-2-.6-2-1.8Z"/></svg><b>{cell.counts[i]}</b></span></div></div>
-   <span className="own-leg-choice"><input type="radio" name="own-card-placement" aria-label={i===0?'В левую ногу':'В правую ногу'} checked={chosen} disabled={disabled} onChange={()=>onChange(leg)}/><span>{chosen?'Выбрано':i===0?'Направлять влево':'Направлять вправо'}</span></span>
+  <fieldset className="own-card-placement"><legend>Куда направлять новых приглашённых: <span aria-live="polite">выбрано {side==='L'?'лево':'право'}</span></legend><div className="own-card-legs">{['L','R'].map((leg,i)=>{const chosen=side===leg,parts=formatPoints(cell.points[i]).split(',');return <label key={leg} className={`own-leg ${chosen?'is-selected':''} ${disabled?'is-disabled':''}`}>
+   <input className="own-leg-radio" type="radio" name="own-card-placement" aria-label={i===0?'В левую ногу':'В правую ногу'} checked={chosen} disabled={disabled} onChange={()=>onChange(leg)}/>
+   <div className="own-leg-panel">{chosen&&<span className="own-leg-check" aria-hidden="true"><span data-source-node="27:41275" style={{maskImage:`url(${db.assets['27_41275'].url})`,WebkitMaskImage:`url(${db.assets['27_41275'].url})`}}/></span>}<div className="own-leg-heading">{weak===i&&!disabled&&<span className="own-leg-hint">Нужно усилить</span>}</div><strong className="own-leg-points" aria-label={`${formatPoints(cell.points[i])} баллов`}>{parts[0]}{parts[1]&&<small>,{parts[1]}</small>}</strong><span className="own-leg-people" aria-label={`${cell.counts[i]} участников`}><Shared.Icon name="users-group-rounded-linear"/><b>{cell.counts[i]}</b></span></div>
+   <span className="own-leg-choice">{i===0?'Левая нога':'Правая нога'}</span>
   </label>;})}</div></fieldset>
  </section></div>;
 }
@@ -54,7 +56,7 @@ function MemberCard({cells,cell, compact, onOpen, root, onDetails, Shared, db, b
   </span>
   <span className="genealogy-card-meta"><MemberPackage pack={cell.pack} empty={cell.state==='client'?'Клиент':'Без пакета'}/>{cell.path===''&&<MemberOwnBadge/>}<MemberRank rank={cell.rank}/></span>
   {cell.path===''&&<span className="tree-own-totals"><span><strong>{cell.counts[0]+cell.counts[1]}</strong> участников</span><span><strong>{cell.steps}</strong> шагов</span></span>}
-  <span className="genealogy-metrics">{['Левая нога','Правая нога'].map((label,i)=><span className="genealogy-leg-stat" key={label}><span className="genealogy-leg-label">{label}</span><b>{formatPoints(cell.points[i])}</b>{cell.path===''&&cell.points.every(Number.isFinite)&&cell.points[0]!==cell.points[1]&&<span className={`tree-leg-strength-label ${cell.points[i]<cell.points[1-i]?'is-weaker':''}`}><span aria-hidden="true" className={i===0?'points-left':'points-right'} dangerouslySetInnerHTML={{__html:breadcrumbChevron.replace('stroke="black"','stroke="currentColor"')}}/>{cell.points[i]<cell.points[1-i]?'Слабее · усилить':'Сильнее'}</span>}<span className="genealogy-stat-people">Участников: <strong>{cell.counts[i]}</strong></span></span>)}</span>
+  <TreeLegMetrics points={cell.points} counts={cell.counts} showStrength={cell.path===''}/>
 
  {cell.path===''&&cell.state==='partner'&&<span className="tree-own-activity">{activityLabel(cell)}</span>}
  </button>{cell.state!=='partner'&&<span className={`genealogy-card-state state-${cell.state}`}>{activityLabel(cell)}{cell.state==='frozen'&&<TreeLibraryIcon kind="frozen"/>}</span>}{boundary&&extraLevels>0&&<button type="button" className={`genealogy-more ${boundary}`} onClick={onOpen} aria-label={`Открыть следующие ${extraLevels} уровня под ${cell.login}`}>Ещё {extraLevels} ур. <TreeArrow Shared={Shared} direction="down"/></button>}<span className="genealogy-info"><Shared.Button group={db.components.find(c=>c.name==='Boris / Icon button')} choice={{Tone:'Ghost',Size:'40'}} ariaLabel={`Подробная информация: ${cell.login}`} iconContent={<Shared.Icon name="Auth / Icon / Info"/>} onClick={()=>onDetails(cell)}/></span></div>;
@@ -109,12 +111,12 @@ export default function Genealogy({Shared, db, photo, cells=defaultCells, placem
     const path=slot.dataset.treePath;const target=slot.querySelector('.genealogy-member,.genealogy-vacant');
     const parentPath=path.slice(0,-1);const parent=parentPath===rootPath?root:el.querySelector(`[data-tree-path="${parentPath}"] .genealogy-member`);
     if(!parent||!target)return;const a=parent.getBoundingClientRect(),b=target.getBoundingClientRect();
-    if(slot.parentElement.classList.contains('level-3')){const x=b.left+b.width/2-box.left,y=a.bottom-box.top,endY=b.top-box.top-4;paths.push({path,d:`M ${x} ${y} V ${endY}`});return;}
-    const left=path.endsWith('L'),x=(left?a.left-4:a.right+4)-box.left,y=a.top+a.height*.52-box.top;
-    const endX=b.left+b.width/2-box.left,endY=b.top-box.top-4;const sign=left?-1:1;const radius=Math.min(24,Math.abs(endX-x),Math.max(0,endY-y));
+    if(slot.parentElement.classList.contains('level-3')){const x=b.left+b.width/2-box.left,y=a.bottom-box.top,endY=b.top-box.top;paths.push({path,d:`M ${x} ${y} V ${endY}`});return;}
+    const left=path.endsWith('L'),x=(left?a.left:a.right)-box.left,y=a.top+a.height*.52-box.top;
+    const endX=b.left+b.width/2-box.left,endY=b.top-box.top;const sign=left?-1:1;const radius=Math.min(24,Math.abs(endX-x),Math.max(0,endY-y));
     paths.push({path,d:`M ${x} ${y} H ${endX-sign*radius} Q ${endX} ${y} ${endX} ${y+radius} V ${endY}`});
    });setLinks(paths);
-  };const observer=new ResizeObserver(measure);observer.observe(scene.current);measure();return()=>observer.disconnect();
+  };const observer=new ResizeObserver(measure);observer.observe(scene.current);scene.current.querySelectorAll('.genealogy-member,.genealogy-vacant').forEach(node=>observer.observe(node));measure();return()=>observer.disconnect();
  },[rootPath,compactView,viewSize,current.points[0],current.points[1]]);
  const results = useMemo(()=>{
   const q=query.trim().toLocaleLowerCase('ru');

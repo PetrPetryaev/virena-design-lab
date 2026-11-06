@@ -16,7 +16,7 @@ export function BannerCard({loading=false,kind='notice',label,title,description,
  const IconTag=notice?'span':'div';
  return <section className={`${notice?'overview-notice':'overview-option overview-package'}${loading?' card-loading':''}${attention?' is-attention':''}`} aria-busy={loading} inert={loading?true:undefined} data-surface={surface} aria-label={label}>
   <IconTag className={notice?'overview-notice-icon':'overview-art overview-art-package'} aria-hidden="true">{icon}</IconTag>
-  <div><h3>{title}</h3><p>{description}</p>{price&&<strong className="overview-price">{price}</strong>}</div>{action}
+  <div className="banner-copy"><h3>{title}</h3><p>{description}</p>{price&&<strong className="overview-price">{price}</strong>}</div>{action}
  </section>;
 }
 /** Same media card, with either a cropped product or a contained illustration. */
@@ -24,6 +24,6 @@ export function MediaCard({loading=false,title,description,price,src,imageFit='c
  const product=imageFit==='bleed';
  return <article className={`overview-option ${product?'overview-product':'overview-partner'}${imageFit==='framed'?' overview-media-framed':''}${action?' card-clickable':''}${loading?' card-loading':''}`} aria-busy={loading} inert={loading?true:undefined} data-surface={surface}>
   <div className={`overview-art${product?' overview-art-products':''}`} aria-hidden="true">{product?<img src={src} alt=""/>:<span className="networking-art"><img src={src} alt=""/></span>}</div>
-  <div className={product?'overview-product-content':'overview-partner-content'}><div><h3>{title}</h3><p>{description}</p>{price&&<strong className="overview-price">{price}</strong>}</div>{action}</div>
+  <div className={product?'overview-product-content':'overview-partner-content'}><div className="banner-copy"><h3>{title}</h3><p>{description}</p>{price&&<strong className="overview-price">{price}</strong>}</div>{action}</div>
  </article>;
 }

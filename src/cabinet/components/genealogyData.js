@@ -1,3 +1,4 @@
+import {formatValue} from '../../numberFormat.js';
 import demoPortraits from '../../assets/networking-avatars.png';
 // Local fixtures, not API data. No real participant records or contacts.
 export const dataAsOf = '04.11.2026, 10:00 МСК';
@@ -16,7 +17,7 @@ export const genealogyCells = [
  cell('RRR', 'sergey_p', 'Сергей Попов', 'partner', 'Начальный', 0, 0, [0, 0], [0, 0], true),
  cell('LLLL', 'marina_k', 'Марина Крылова', 'partner', 'Профи', 0, 0, [0, 0], [0, 0], true),
 ];
-export const formatPoints = n => n === null ? '—' : n.toLocaleString('ru-RU', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+export const formatPoints = formatValue;
 export const activityLabel = c => c.deadline || ({partner: 'Активна до 02.03.2027', grace: 'Льготное окно до 12.11', frozen: 'Заморожен с 01.11.2026', client: 'Клиент', deactivated: 'Неактивна с 01.10.2026'})[c.state];
 export const legLabel = path => !path ? 'Ваша ячейка' : path[0] === 'L' ? 'Левая нога' : 'Правая нога';
 export function outermost(side,cells=genealogyCells) {return cells.filter(c => c.path && [...c.path].every(s => s === side)).sort((a,b) => b.path.length - a.path.length)[0]||cells[0];}

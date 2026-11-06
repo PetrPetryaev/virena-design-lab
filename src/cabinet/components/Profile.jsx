@@ -1,5 +1,6 @@
-import React,{useCallback,useEffect,useMemo,useRef,useState} from 'react';
+import React,{useCallback,useEffect,useLayoutEffect,useMemo,useRef,useState} from 'react';
 import Cropper from 'react-easy-crop';
+import {SegmentedTabs} from '../../AuthPrimitives.jsx';
 import 'react-easy-crop/react-easy-crop.css';
 import './profile.css';
 import {profileCountries,profileInitialData,profileTabs,relationshipOptions,profileDemoRequisites,profileDemoSuccessor} from './profileData.js';
@@ -20,7 +21,7 @@ const countryForPhone=value=>countryByIso[parsePhoneNumberFromString(value||'')?
 const localPhone=(value,country)=>{const calling=getCountryCallingCode(phoneCountryCode(country));const digits=String(value||'').replace(/\D/g,'');const local=digits.startsWith(calling)?digits.slice(calling.length):digits;return formatPhoneNumber(local,country);};
 const fullPhone=(value,country)=>value?.trim()?`+${getCountryCallingCode(phoneCountryCode(country))} ${String(value).replace(/\D/g,'')}`:'';
 
-function ProfileField({Shared,db,label,value,onChange,type='Text',placeholder='',error,disabled=false,readOnlyHint,leadingIcon,status,countryCode,onCountryChange,trailingContent,showPasswordRules=false}){
+export function ProfileField({Shared,db,label,value,onChange,type='Text',placeholder='',error,disabled=false,readOnlyHint,leadingIcon,status,countryCode,onCountryChange,trailingContent,showPasswordRules=false}){
  const phone=type==='Phone';
  const [selectedCountry,setSelectedCountry]=useState(()=>countryCode||countryForPhone(value));
  useEffect(()=>{if(countryCode)setSelectedCountry(countryCode);},[countryCode]);
@@ -30,14 +31,14 @@ function ProfileField({Shared,db,label,value,onChange,type='Text',placeholder=''
  const update=v=>onChange?.(phone?fullPhone(v,selectedCountry):v);
  return <div className="profile-field"><label className="profile-field-label">{label}{status&&<span className={`profile-field-status ${status.good?'is-good':'is-pending'}`}>{status.text}</span>}</label><Shared.Field group={group} embedded label={label} placeholder={placeholder} type={type} value={displayValue??''} onChange={update} error={error} validateOnBlur={false} readOnly={disabled} readOnlyHint={hint} leadingIcon={leadingIcon} trailingContent={trailingContent} showPasswordRules={showPasswordRules} {...(phone?{countryCode:selectedCountry,onCountryChange:country=>{setSelectedCountry(country);onChange?.(fullPhone(localPhone(value,country),country));onCountryChange?.(country);}}:{})}/>{error&&<p className="profile-error" role="alert">{error}</p>}</div>;
 }
-function ProfileSelect({Shared,db,label,value,onChange,items,error,leadingIcon,optionIcon,help}){
+export function ProfileSelect({Shared,db,label,value,onChange,items,error,leadingIcon,optionIcon,help}){
  return <div className="profile-field"><label className="profile-field-label">{label}</label><Shared.Select group={db.components.find(c=>c.name==='Auth / Select')} embedded label={label} value={value||''} onChange={onChange} items={items} placeholder="Выберите" error={error} leadingIcon={leadingIcon} optionIcon={optionIcon}/>{help&&<small className="profile-help">{help}</small>}</div>;
 }
 function ProfileButton({Shared,db,label,onClick,tone='Outline',disabled=false,size='48',iconContent}){
  return <Shared.Button group={db.components.find(c=>c.name==='Boris / Button')} choice={{Tone:tone,Size:size}} label={label} onClick={onClick} disabled={disabled} {...(iconContent?{iconContent}: {})}/>;
 }
 function ProfileIconButton({Shared,db,icon,onClick,label}){return <Shared.Button group={db.components.find(c=>c.name==='Boris / Icon button')} choice={{Tone:'Ghost',Size:'40'}} label={label} ariaLabel={label} iconContent={icon} onClick={onClick}/>;}
-function ProfileCard({title,description,children,className='',headingActions}){return <section className={`profile-card ${className}`}><div className="profile-card-heading"><div className="profile-card-heading-copy"><h2>{title}</h2>{description&&<p>{description}</p>}</div>{headingActions&&<div className="profile-card-heading-actions">{headingActions}</div>}</div>{children}</section>;}
+export function ProfileCard({title,description,children,className='',headingActions}){return <section className={`profile-card ${className}`}><div className="profile-card-heading"><div className="profile-card-heading-copy"><h2>{title}</h2>{description&&<p>{description}</p>}</div>{headingActions&&<div className="profile-card-heading-actions">{headingActions}</div>}</div>{children}</section>;}
 
 export default function Profile({Shared,db,initialTab='personal',dark,onTheme,registerGuard,onTabChange,scenario='ready',photo='',setPhoto:savePhoto}){
  const [activeTab,setActiveTab]=useState(tabIds.has(initialTab)?initialTab:'personal');
@@ -71,6 +72,14 @@ export default function Profile({Shared,db,initialTab='personal',dark,onTheme,re
  const dirty=useMemo(()=>JSON.stringify(data[activeTab])!==JSON.stringify(saved[activeTab])||Object.values(security).some(Boolean)||(['requisites','successor'].includes(activeTab)&&editingReq!==-1),[data,activeTab,saved,security,editingReq]);
  dirtyRef.current=dirty;
  const notify=useCallback(message=>{setToast(message);clearTimeout(toastTimer.current);toastTimer.current=setTimeout(()=>setToast(''),2800);},[]);
+ const panelRef=useRef(null),previousPanel=useRef(activeTab);
+ useLayoutEffect(()=>{
+  const previous=previousPanel.current;previousPanel.current=activeTab;
+  if(previous===activeTab||!panelRef.current||matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  const direction=profileTabs.findIndex(t=>t.id===activeTab)>profileTabs.findIndex(t=>t.id===previous)?1:-1;
+  const animation=panelRef.current.animate([{opacity:0,transform:`translateX(${direction*32}px)`},{opacity:1,transform:'translateX(0)'}],{duration:400,easing:'cubic-bezier(.16,1,.3,1)'});
+  return()=>animation.cancel();
+ },[activeTab]);
  const completeNavigation=useCallback(id=>{if(!tabIds.has(id))return;setActiveTab(id);setEditingReq(-1);setPendingTab('');onTabChange?.(id);},[onTabChange]);
  const requestNavigation=useCallback(id=>{if(!tabIds.has(id)||id===activeTab)return;if(dirtyRef.current){setPendingTab(id);setDialog({kind:'dirty'});return;}completeNavigation(id);},[activeTab,completeNavigation]);
  useEffect(()=>{registerGuard?.(continueNavigation=>{if(dirtyRef.current){setPendingTab('');setDialog({kind:'dirty',continueNavigation});}else continueNavigation();});return()=>registerGuard?.(null);},[registerGuard]);
@@ -127,8 +136,8 @@ export default function Profile({Shared,db,initialTab='personal',dark,onTheme,re
  if(scenario==='loading')return <div className="profile profile-state" role="status" aria-label="Загрузка профиля"><div className="profile-skeleton"/><div className="profile-skeleton"/><div className="profile-skeleton"/></div>;
  if(scenario==='error'&&!recovered)return <div className="profile profile-load-error"><h2>Не удалось загрузить профиль</h2><p>Демо-данные временно недоступны.</p><ProfileButton Shared={Shared} db={db} label="Повторить" tone="Primary" onClick={()=>setRecovered(true)}/></div>;
  return <div className="profile" data-profile-scenario={scenario}>
-  <div className="profile-layout"><nav className="profile-tabs" role="tablist" aria-label="Разделы профиля">{profileTabs.map(item=><button key={item.id} type="button" role="tab" id={`profile-tab-${item.id}`} aria-selected={activeTab===item.id} aria-controls="profile-panel" onClick={()=>requestNavigation(item.id)}>{item.label}{((item.id==='contacts'&&(!data.contacts.emailVerified||!data.contacts.phoneVerified))||(item.id==='successor'&&!data.successor.person))&&<span className="profile-tab-dot" aria-hidden="true"/>}</button>)}</nav>
-   <main className="profile-content" id="profile-panel" role="tabpanel" aria-labelledby={`profile-tab-${activeTab}`}><div className="profile-sections">{views[activeTab]()}</div>{saveVisible&&<div className="profile-save-bar"><span>{dirty?'Есть несохранённые изменения':'Все изменения сохранены'}</span><div className="profile-save-actions">{dirty&&<ProfileButton Shared={Shared} db={db} label="Отменить" onClick={cancelChanges}/>}<ProfileButton Shared={Shared} db={db} label="Сохранить" tone="Primary" disabled={!dirty||!!statusError()} onClick={save}/></div></div>}</main>
+  <div className="profile-layout"><div className="profile-navigation shared-catalog-toolbar"><SegmentedTabs className="store-category-tabs" label="Разделы профиля" idPrefix="profile-tab-" panelId="profile-panel" value={activeTab} onChange={requestNavigation} items={profileTabs.map(item=>({value:item.id,label:<>{item.label}{((item.id==='contacts'&&(!data.contacts.emailVerified||!data.contacts.phoneVerified))||(item.id==='successor'&&!data.successor.person))&&<span className="profile-tab-dot" aria-hidden="true"/>}</>}))}/></div>
+   <main ref={panelRef} className="profile-content" id="profile-panel" role="tabpanel" aria-labelledby={`profile-tab-${activeTab}`}><div className="profile-sections">{views[activeTab]()}</div>{saveVisible&&<div className="profile-save-bar"><span>{dirty?'Есть несохранённые изменения':'Все изменения сохранены'}</span><div className="profile-save-actions">{dirty&&<ProfileButton Shared={Shared} db={db} label="Отменить" onClick={cancelChanges}/>}<ProfileButton Shared={Shared} db={db} label="Сохранить" tone="Primary" disabled={!dirty||!!statusError()} onClick={save}/></div></div>}</main>
   </div>
   {toast&&<div className="profile-toast" role="status">{toast}</div>}
   {requestOpen&&<div className="profile-overlay" onMouseDown={e=>{if(e.target===e.currentTarget)setRequestOpen(false);}}><section ref={dialogRef} className="profile-dialog profile-request-dialog" role="dialog" aria-modal="true" aria-labelledby="profile-request-title"><div className="profile-request-scroll"><div className="profile-request-header"><h2 id="profile-request-title">Запросить изменение данных</h2><p>Выберите, какие данные хотите изменить, и укажите новое значение.</p></div><div className="profile-request-form">
