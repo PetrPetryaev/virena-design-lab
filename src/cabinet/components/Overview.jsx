@@ -7,7 +7,6 @@ import {PartnerDashboard,PartnershipDetails} from './PartnerDashboard.jsx';
 import profilePhoto from '../../assets/alexandra-avatar.png';
 export {profilePhoto};
 import mark from '../../assets/virena-mark.svg';
-import product from '../../assets/virena-expert-transparent.png';
 import networking from '../../assets/networking-group.png';
 import './overview-variants.css';
 import {IdentityCard,BannerCard,MediaCard} from './Cards.jsx';
@@ -37,7 +36,7 @@ export function OverviewCards({Shared,db,icon,navigate,profile='ready',sponsor='
  </IdentityCard>,
  notice:<BannerCard attention loading={loading} label="Срок первой оплаты" surface={surface} title={`На первый шаг — ${newcomerDemo.days} дней`} description={`Оплатите активность или сделайте покупку до ${newcomerDemo.deadline}, иначе регистрация будет удалена.`} icon={<><TimeRing days={newcomerDemo.days}/>{icon('calendar')}</>} action={button('Оплатить активность',()=>navigate('shop','activity'),'Primary')}/>,
  package:<BannerCard loading={loading} kind="package" surface={surface} title="Выбрать пакет" description="Посмотрите пакеты и условия участия в партнёрской программе." price="от 369 €" icon={icon('box')} action={button('Выбрать пакет',()=>navigate('shop','packages'))}/>,
- product:<MediaCard loading={loading} surface={surface||'soft'} title={client?'Каталог продуктов':'Познакомиться с продуктами'} description={client?'Выберите продукты для следующего заказа.':'Выберите продукт для себя. Ваши заказы появятся в разделе «Мои покупки».'} src={product} imageFit="bleed" action={button('Перейти в каталог',()=>navigate('shop'))}/>,
+ product:<article className={`overview-option overview-product overview-product-scene card-clickable${loading?' card-loading':''}`} aria-busy={loading} inert={loading?true:undefined}><img className="overview-product-scene-image" src={new URL(`../../assets/overview-banner/blue-room-${new URLSearchParams(window.location.search).get('overviewBanner')==='b'?'b':'a'}.png`,import.meta.url).href} alt=""/><div className="overview-product-content"><div className="banner-copy"><h3>{client?'Каталог продуктов':'Познакомиться с продуктами'}</h3><p>{client?'Выберите продукты для следующего заказа.':'Выберите продукт для себя.'}</p></div>{button('Перейти в каталог',()=>navigate('shop'),'White')}</div></article>,
  partner:<MediaCard loading={loading} surface={surface||'soft'} title="Стать партнёром" description="Оплатите годовую активность для участия в партнёрской программе." price={<>120 € <span>/ год</span></>} src={networking} action={button('Оплатить активность',()=>navigate('shop','activity'),'Primary')}/>
  };
  if(only)return cards[only];
