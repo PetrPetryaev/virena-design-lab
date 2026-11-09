@@ -13,9 +13,9 @@ const defaults={remember:true,samePhone:true};
 function readDraft(){try{return JSON.parse(sessionStorage.getItem(draftKey))||{};}catch{return {};}}
 const emailOK=v=>/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v||'');
 const cities={'Россия':['Москва','Санкт-Петербург'],'Казахстан':['Астана','Алматы'],'Германия':['Берлин','Мюнхен'],'США':['Нью-Йорк','Чикаго']};
-export default function AuthFlow({Shared,db,onEnter,settingsTarget}){
+export default function AuthFlow({Shared,db,onEnter,onHome,settingsTarget}){
  const locale=useLocale();
- const goHome=e=>{if(e.button!==0||e.metaKey||e.ctrlKey||e.shiftKey||e.altKey)return;e.preventDefault();onEnter?.('overview');};
+ const goHome=e=>{if(e.button!==0||e.metaKey||e.ctrlKey||e.shiftKey||e.altKey)return;e.preventDefault();if(onHome)onHome();else onEnter?.('overview');};
  const pageRoot=useRef(null),transitionTimer=useRef(null);
  const [transitioning,setTransitioning]=useState(false);
  const initial=new URLSearchParams(location.search).get('screen');

@@ -1,0 +1,23 @@
+/* The marketplace reuses the commerce components and cabinet layout primitives. */
+.marketplace.profile{--cab-sidebar:0px;max-width:none;margin:0}
+.marketplace .cab-body{width:100%}
+.cabinet.marketplace .cab-header{flex-wrap:wrap;height:auto;min-height:calc(var(--profile-px-40) + var(--profile-px-48));padding-block:var(--profile-px-16)}
+.marketplace-brand{display:flex;flex-shrink:0;width:var(--profile-px-140)}
+.marketplace-brand img{width:100%}
+[data-theme=dark] .marketplace-brand img{filter:brightness(0) invert(1)}
+.marketplace-nav{display:flex;align-items:center;gap:var(--profile-px-8)}
+.marketplace .cab-title{font-size:var(--profile-px-16);margin-left:auto}
+.marketplace .cab-main{width:100%;max-width:var(--profile-px-1440);align-self:center}
+@media(max-width:767px){
+ .cabinet.marketplace .cab-header{gap:var(--profile-px-12);padding-inline:var(--profile-px-16)}
+ .marketplace-brand{width:var(--profile-px-120)}
+ .marketplace-nav{order:3;width:100%}
+ .marketplace .cab-title{position:absolute;width:var(--profile-px-1);height:var(--profile-px-1);overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+ .marketplace .store-category-tabs.auth-flow-tabs{display:flex;overflow-x:auto;flex-wrap:nowrap;max-width:100%}
+ .marketplace .store-category-tabs.auth-flow-tabs>button{flex:0 0 auto;white-space:nowrap}
+ .marketplace .cab-main{padding-inline:var(--profile-px-16)}
+}
+
+.marketplace .cab-title{position:absolute;width:var(--profile-px-1);height:var(--profile-px-1);overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+.marketplace .cab-top-actions{margin-left:auto}
+@media(max-width:767px){.marketplace .cab-top-actions{flex-wrap:wrap;justify-content:flex-end}.marketplace .cab-header{justify-content:space-between}}
