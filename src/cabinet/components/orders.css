@@ -31,7 +31,7 @@
 .order-identity{gap:var(--tree-xl)}
 
 /* Order identity first, fixed artwork slot second; equal columns align every row. */
-.order-identity{display:grid;grid-template-columns:minmax(var(--profile-px-180),1fr) calc(var(--tree-control) * 3);gap:var(--tree-xl)}
+.order-identity{display:grid;grid-template-columns:minmax(0,var(--profile-px-180)) calc(var(--tree-control) * 3);gap:var(--tree-lg)}
 @container(max-width:768px){.order-identity{grid-template-columns:minmax(0,1fr);gap:var(--tree-md)}}
 /* Order details use the shared dialog; its contents determine compact layout. */
 .order-modal-body{container-type:inline-size;min-width:0}

@@ -135,7 +135,7 @@
     ]
   },
   "pulse": {
-    "image": "/src/assets/marketplace-products/pulse-v2-studio-1.png",
+    "image": "/src/assets/marketplace-products/pulse-v2-lifestyle-1.jpg",
     "gallery": [
       "/src/assets/marketplace-products/pulse-v2-studio-1.png",
       "/src/assets/marketplace-products/pulse-v2-studio-2.png",
@@ -150,7 +150,7 @@
     ]
   },
   "training": {
-    "image": "/src/assets/marketplace-products/training-v2-studio-1.png",
+    "image": "/src/assets/marketplace-products/training-v2-studio-2.png",
     "gallery": [
       "/src/assets/marketplace-products/training-v2-studio-1.png",
       "/src/assets/marketplace-products/training-v2-studio-2.png",
@@ -165,7 +165,7 @@
     ]
   },
   "a-scan": {
-    "image": "/src/assets/marketplace-products/a-scan-v2-studio-1.png",
+    "image": "/src/assets/marketplace-products/a-scan-v2-lifestyle-1.jpg",
     "gallery": [
       "/src/assets/marketplace-products/a-scan-v2-studio-1.png",
       "/src/assets/marketplace-products/a-scan-v2-studio-2.png",
