@@ -164,3 +164,7 @@
 .store .store-category-brand{color:var(--lab-ink);font-weight:500}
 .store-category-brand>span{color:var(--category-ink)}
 [data-theme=dark] .store-category-brand>span{color:color-mix(in srgb,var(--category-ink) 40%,var(--lab-ink))}
+
+/* Category-colored price action preview; the quantity control keeps its own tones. */
+.store .store-product:is(:hover,:focus-within) .store-card-morph>[data-ui=Button]>.motion-surface{background:var(--category-ink)!important;color:#fff!important}
+.store .store-product:is(:hover,:focus-within) .store-card-morph>[data-ui=Button]>.motion-surface>span{color:#fff!important}

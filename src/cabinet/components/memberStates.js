@@ -8,4 +8,4 @@ export const memberStates = {
  frozen: {label:'Заморозка',status:'Заморожен',partner:true,package:'Стандарт',locked:true},
  deactivated: {label:'Деактивация',status:'Клиент',deactivated:true},
 };
-export const normalizeMember = value => Object.hasOwn(memberStates,value) ? value : 'newcomer';
+export const normalizeMember = value => Object.hasOwn(memberStates,value) ? value : 'partner';
