@@ -241,3 +241,10 @@
 
 .cab-destination-actions{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:8px;margin-top:16px;max-width:100%}
 .cab-destination-actions>[data-ui=Button],.cab-destination-actions .motion-surface{max-width:100%}
+
+/* Compact cabinet header keeps the page title readable above its actions. */
+@media(max-width:720px){
+ .cabinet .cab-header:has(.cab-title){flex-wrap:wrap}
+ .cabinet .cab-header .cab-title{flex:1 1 auto;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+ .cabinet .cab-header:has(.cab-title) .cab-top-actions{flex:1 0 100%;justify-content:flex-end;min-width:0}
+}
