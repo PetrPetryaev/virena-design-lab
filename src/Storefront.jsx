@@ -84,14 +84,19 @@ export function ProductCard({product,href,onClick,onAdd,onQuantity,onRemove,quan
  const [view,setView]=useState(-1),[loaded,setLoaded]=useState([]),[hovered,setHovered]=useState(false),[focused,setFocused]=useState(false);
  const actionRef=useRef(null),restoreActionFocus=useRef(false);
  useLayoutEffect(()=>{if(restoreActionFocus.current){actionRef.current?.querySelector('button')?.focus();restoreActionFocus.current=false;}},[quantity]);
- const gallery=product.gallery,count=gallery.length,active=loaded.includes(view)?view:-1;
+ // Keep the cover stable when filtering: one lifestyle cover per three products.
+ const lifestyleFirst=!compact&&products.findIndex(item=>item.id===product.id)%3===0&&product.gallery.length>2;
+ const order=product.gallery.map((_,index)=>index);
+ if(lifestyleFirst)[order[0],order[2]]=[order[2],order[0]];
+ const gallery=order.map(index=>product.gallery[index]),count=gallery.length,active=loaded.includes(view)?view:-1;
+ const cover=lifestyleFirst?gallery[0]:product.image;
  const move=e=>{if(e.pointerType==='touch')return;const r=e.currentTarget.getBoundingClientRect(),x=e.clientX-r.left,zone=r.width/count;
  setView(current=>{const slot=count===2?(current+1)%2:current;if(current>=0&&x>=slot*zone-6&&x<=(slot+1)*zone+6)return current;const next=Math.max(0,Math.min(count-1,Math.floor(x/zone)));return count===2?(next+1)%2:next;});};
  const keyboard=e=>{if(['ArrowLeft','ArrowRight'].includes(e.key)){e.preventDefault();setView(v=>(Math.max(0,v)+(e.key==='ArrowRight'?1:count-1))%count);}};
  return <article className={'store-product'+(compact?' store-product-compact':'')+(product.image?.fullBleed?' has-fullbleed-art':'')} onPointerEnter={e=>{if(e.pointerType!=='touch'){setHovered(true);setView(count===2?1:0);}}} onPointerMove={move} onPointerLeave={()=>{setHovered(false);setView(-1);}} onFocusCapture={()=>setFocused(true)} onBlurCapture={e=>{if(!e.currentTarget.contains(e.relatedTarget)){setFocused(false);setView(-1);}}} onKeyDown={keyboard}>
  <div className="store-product-art" data-active-view={active}>
- <AssetImage className="store-gallery-layer is-studio" asset={product.image} alt={active===-1?product.name:''} aria-hidden={active!==-1} data-visible={active===-1}/>
- {gallery.map((asset,i)=><AssetImage className={`store-gallery-layer store-generated ${i<2?'is-studio':'is-lifestyle'}`} key={i} asset={asset} alt={active===i?`${product.name} — ракурс ${i+1}`:''} aria-hidden={active!==i} data-visible={active===i} onLoad={()=>setLoaded(v=>v.includes(i)?v:[...v,i])}/>)}
+ <AssetImage className={`store-gallery-layer ${lifestyleFirst?'is-lifestyle':'is-studio'}`} asset={cover} alt={active===-1?product.name:''} aria-hidden={active!==-1} data-visible={active===-1}/>
+ {gallery.map((asset,i)=><AssetImage className={`store-gallery-layer store-generated ${order[i]<2?'is-studio':'is-lifestyle'}`} key={i} asset={asset} alt={active===i?`${product.name} — ракурс ${i+1}`:''} aria-hidden={active!==i} data-visible={active===i} onLoad={()=>setLoaded(v=>v.includes(i)?v:[...v,i])}/>)}
  <span className="store-gallery-bars" aria-hidden="true">{gallery.map((_,i)=><i key={i} data-active={active===i}/>)}</span>
  </div><div className="store-product-bottom"><div><span className="store-eyebrow">{categories.find(([id])=>id===product.category)?.[1]}</span><h2><a className="store-product-link" href={href} onClick={onClick} aria-label={`Подробнее: ${product.name}`}>{product.name}</a></h2></div><span ref={actionRef} className="store-card-action" data-cart-action={!!onAdd}>{quantity? <span className="store-card-morph" key="quantity"><QuantityControl Shared={Shared} db={db} value={quantity} label={`Количество ${product.name}`} onChange={value=>onQuantity?.(product.id,value)} onRemove={()=>{restoreActionFocus.current=!!actionRef.current?.querySelector('button:focus-visible');onRemove?.(product.id);}}/></span>:<span className="store-card-morph" key="add"><Shared.Button group={db.components.find(c=>c.name==='Boris / Button')} choice={{Tone:compact||hovered||focused?'Primary':'Soft',Size:compact?'40':'56'}} label={priceLabel(product)} ariaLabel={onAdd?`Добавить ${product.name} в корзину — ${priceLabel(product)}`:`${product.name} — ${priceLabel(product)}`} onClick={onAdd?e=>{e?.stopPropagation();restoreActionFocus.current=e.currentTarget.matches(':focus-visible');onAdd(product.id,1);}:onClick}/></span>}</span></div></article>;
 }
