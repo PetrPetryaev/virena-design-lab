@@ -302,6 +302,6 @@
 .overview-comparison .overview-option.overview-product-scene{min-width:0;max-width:100%}
 @media(min-width:1401px){
  .overview-comparison .overview-columns .overview-option:is(.overview-product,.overview-partner){align-self:stretch;align-items:stretch;min-width:0;padding:var(--ov-lg);min-height:300px;aspect-ratio:auto}
- .overview-comparison .overview-columns :is(.overview-product-content,.overview-partner-content){align-self:stretch;justify-content:flex-end;padding:0;gap:var(--ov-md)}
+ .overview-comparison .overview-columns :is(.overview-product-content,.overview-partner-content){align-self:stretch;justify-content:space-between;padding:var(--ov-md) 0 var(--ov-xs);gap:var(--ov-md)}
  .overview-comparison .overview-columns :is(.overview-product-content,.overview-partner-content)>button{margin-top:0}
 }
