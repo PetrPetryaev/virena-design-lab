@@ -45,12 +45,11 @@ const hrefFor=(product='',category='all',query='')=>{const u=new URL(location.hr
 function Artwork({product}){return product.image?<AssetImage asset={product.image} alt={product.name} />:<div className="store-art-pending"><span aria-hidden="true">{product.name}</span><small>Изображение скоро появится</small></div>;}
 function ProductAction({Shared,db,inCart,loading,onClick}){
  const target=inCart?'Перейти в корзину':'Добавить в корзину';
- const [shown,setShown]=useState(target),[width,setWidth]=useState(),[shrinking,setShrinking]=useState(false),[animated,setAnimated]=useState(false);
+ const [shown,setShown]=useState(target),[animated,setAnimated]=useState(false);
  const root=useRef(null),restoreFocus=useRef(false);
  useLayoutEffect(()=>{if(!loading&&shown!==target){setShown(target);setAnimated(true);}},[loading,target,shown]);
- useLayoutEffect(()=>{const label=root.current?.querySelector('.store-cta-label');if(!label)return;const style=getComputedStyle(label);const canvas=document.createElement('canvas');const ctx=canvas.getContext('2d');ctx.font=`${style.fontWeight} ${style.fontSize} ${style.fontFamily}`;const next=Math.ceil(ctx.measureText(shown).width+48);setWidth(previous=>{setShrinking(previous!=null&&next<previous);return next;});},[shown]);
  useLayoutEffect(()=>{if(!loading&&restoreFocus.current){root.current?.querySelector('button')?.focus();restoreFocus.current=false;}},[loading]);
- return <div ref={root} className="store-cta" style={width?{width,transitionDelay:shrinking?'60ms':'0ms'}:undefined} data-animated={animated}>
+ return <div ref={root} className="store-cta" data-animated={animated}>
  <Shared.Button group={db.components.find(c=>c.name==='Boris / Button')} choice={{Tone:'Primary',Size:'48'}} ariaLabel={target} loading={loading} onClick={e=>{restoreFocus.current=e.currentTarget.matches(':focus-visible');onClick();}} label={<span className="store-cta-label" aria-hidden="true" key={shown}>{[...shown].map((letter,index)=><span className="store-cta-glyph" style={{'--glyph-index':index}} key={index}>{letter===' '? '\u00a0':letter}</span>)}</span>}/>
  </div>;
 }

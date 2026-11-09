@@ -83,13 +83,13 @@
 .store-purchase-remove{grid-column:2;grid-row:1;justify-self:start;width:0;overflow:hidden;opacity:0;transition:width var(--directory-enter) var(--directory-ease),opacity var(--directory-enter) var(--directory-ease)}
 .store-purchase-area[data-in-cart=true] .store-purchase-remove{width:var(--profile-px-48);opacity:1}
 .store-purchase-main{grid-column:1/-1;grid-row:2;min-width:0}
-.store-cta{max-width:100%;transition:width 240ms cubic-bezier(.22,1,.36,1)}
+.store-cta{width:100%;max-width:100%;margin-left:auto;transform-origin:right center;transition:width 240ms cubic-bezier(.22,1,.36,1)}
 .store-cta>[data-ui=Button],.store-cta>[data-ui=Button]>.motion-surface{width:100%;max-width:100%;min-width:0!important}
 .store-cta-label{display:inline-flex;white-space:nowrap}
 .store-cta-glyph{display:inline-block}
 .store-cta[data-animated=true] .store-cta-glyph{animation:store-glyph-rise 180ms cubic-bezier(.22,1,.36,1) both;animation-delay:calc(var(--glyph-index) * 35ms)}
 @keyframes store-glyph-rise{from{opacity:0;filter:blur(2px);transform:translateY(3px)}to{opacity:1;filter:blur(0);transform:translateY(0)}}
-.store-purchase-area button:not(:disabled)>.motion-surface{transition:transform 150ms ease-out}
+.store-purchase-area button:not(:disabled)>.motion-surface{transition:transform 150ms ease-out}.store-cta>[data-ui=Button],.store-cta>[data-ui=Button]>.motion-surface{transform-origin:right center}
 .store-purchase-area button:not(:disabled):active>.motion-surface{transform:scale(.97)}
 @container(min-width:400px){
  .store-purchase-area .store-purchase-actions{grid-template-columns:auto 0 minmax(0,1fr);column-gap:0;transition:grid-template-columns var(--directory-enter) var(--directory-ease)}
