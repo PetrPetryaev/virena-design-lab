@@ -4,7 +4,7 @@
 .catalog-toolbar-filters:empty{display:none}
 @media(max-width:600px){
  .shared-catalog-toolbar .catalog-toolbar-actions{width:100%;justify-self:stretch}
- .shared-catalog-toolbar .catalog-toolbar-actions:has(>.expanding-search-frame>.expanding-search[data-open=true])>.catalog-toolbar-filters{flex-basis:100%;justify-content:flex-end}
+ .shared-catalog-toolbar .catalog-toolbar-actions>.expanding-search-frame[data-open=true]{flex:0 0 100%;order:2}
 }
 .shared-catalog-toolbar button:not(:disabled)>.motion-surface{transition:transform 120ms ease-out}
 .shared-catalog-toolbar button:not(:disabled):active>.motion-surface{transform:scale(.96)}
@@ -12,3 +12,17 @@
 
 /* Space from the complete control block to its results, on every viewport. */
 .store-catalog>.shared-catalog-toolbar{padding-bottom:var(--tree-gap,32px)}
+
+@media(max-width:600px){
+ .shared-catalog-toolbar .toolbar-filters>button>.motion-surface,.orders-mobile-filters>button>.motion-surface{width:44px!important;min-width:44px!important;height:44px!important;padding:0!important}
+ .shared-catalog-toolbar .toolbar-filters>button>.motion-surface>span:last-child,.orders-mobile-filters>button>.motion-surface>span:last-child{display:none!important}
+ .shared-catalog-toolbar .expanding-search:not([data-open=true]),.shared-catalog-toolbar .expanding-search:not([data-open=true]) .expanding-search-leading,.shared-catalog-toolbar .expanding-search:not([data-open=true]) .expanding-search-trigger{width:44px!important;height:44px}
+ .shared-catalog-toolbar .expanding-search:not([data-open=true]) .expanding-search-leading{flex-basis:44px}
+ .shared-catalog-toolbar .expanding-search:not([data-open=true]) .motion-surface{width:44px!important;min-width:44px!important;height:44px!important}
+}
+
+/* Mobile search temporarily replaces its peer controls. */
+@media(max-width:600px){
+ .shared-catalog-toolbar .catalog-toolbar-actions:has(>.expanding-search-frame[data-open=true])>:not(.expanding-search-frame){display:none!important}
+ .shared-catalog-toolbar .catalog-toolbar-actions>.expanding-search-frame[data-open=true]{order:0}
+}

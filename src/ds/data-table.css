@@ -30,3 +30,22 @@
 @container(max-width:768px){.ds-table-purchases .ds-table-body>.ds-table-row{grid-template-columns:minmax(0,1fr) minmax(0,1fr) var(--table-action-size)}.ds-table-purchases .ds-table-row>[data-column=order]{grid-column:1/3;grid-row:1}.ds-table-purchases .ds-table-row>[data-column=action]{grid-column:3;grid-row:1}.ds-table-purchases .ds-table-row>[data-column=amount]{grid-column:1;grid-row:2}.ds-table-purchases .ds-table-row>[data-column=points]{grid-column:2/4;grid-row:2}.ds-table-purchases .ds-table-row>[data-column=status]{grid-column:1/-1;grid-row:3}.ds-table-purchases .ds-table-row>[data-column=amount]::before,.ds-table-purchases .ds-table-row>[data-column=points]::before{content:attr(data-label);display:block;color:var(--lab-muted);font-size:var(--table-caption);margin-bottom:calc(var(--table-gap) / 4)}}
 
 .ds-table-purchases{--table-action-size:40px}
+
+/* Narrow cards use both columns for content; actions follow the details. */
+@container(max-width:600px){
+ .ds-data-table:not(.ds-table-records):not(.ds-table-purchases) .ds-table-body>.ds-table-row{grid-template-columns:repeat(2,minmax(0,1fr));padding:var(--table-gap);gap:var(--table-gap)}
+ .ds-data-table:not(.ds-table-records):not(.ds-table-purchases) .ds-table-row>[data-column=person]{grid-column:1/-1;grid-row:1;padding-right:48px}
+ .ds-data-table:not(.ds-table-records):not(.ds-table-purchases) .ds-table-row>[data-column=status]{grid-column:1;grid-row:2}
+ .ds-data-table:not(.ds-table-records):not(.ds-table-purchases) .ds-table-row>[data-column=package]{grid-column:2;grid-row:2}
+ .ds-data-table:not(.ds-table-records):not(.ds-table-purchases) .ds-table-row>[data-column=structure]{grid-column:1;grid-row:3}
+ .ds-data-table:not(.ds-table-records):not(.ds-table-purchases) .ds-table-row>[data-column=registered]{grid-column:2;grid-row:3}
+ .ds-data-table:not(.ds-table-records):not(.ds-table-purchases) .ds-table-row>[data-column=action]{grid-column:1/-1;grid-row:1;justify-self:end;align-self:center;z-index:2}
+ .ds-table-purchases .ds-table-body>.ds-table-row{grid-template-columns:repeat(2,minmax(0,1fr));padding:var(--table-gap)}
+ .ds-table-purchases .ds-table-row>[data-column=order]{grid-column:1/-1;grid-row:1}
+ .ds-table-purchases .ds-table-row>[data-column=amount]{grid-column:1;grid-row:2}
+ .ds-table-purchases .ds-table-row>[data-column=points]{grid-column:2;grid-row:2}
+ .ds-table-purchases .ds-table-row>[data-column=status]{grid-column:1;grid-row:3}
+ .ds-table-purchases .ds-table-row>[data-column=action]{grid-column:2;grid-row:3;align-self:end}
+ .ds-table-records .ds-table-body>.ds-table-row{padding:var(--table-gap)}
+ .ds-table-records .ds-table-row>[data-column=action],.ds-table-records .ds-table-row>[data-column=info]{justify-self:end}
+}

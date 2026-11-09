@@ -49,12 +49,10 @@ const hrefFor=(product='',category='all',query='')=>{const u=new URL(location.hr
 function Artwork({product}){return product.image?<AssetImage asset={product.image} alt={product.name} />:<div className="store-art-pending"><span aria-hidden="true">{product.name}</span><small>Изображение скоро появится</small></div>;}
 function ProductAction({Shared,db,inCart,loading,onClick}){
  const target=inCart?'Перейти в корзину':'Добавить в корзину';
- const [shown,setShown]=useState(target),[animated,setAnimated]=useState(false);
  const root=useRef(null),restoreFocus=useRef(false);
- useLayoutEffect(()=>{if(!loading&&shown!==target){setShown(target);setAnimated(true);}},[loading,target,shown]);
  useLayoutEffect(()=>{if(!loading&&restoreFocus.current){root.current?.querySelector('button')?.focus();restoreFocus.current=false;}},[loading]);
- return <div ref={root} className="store-cta" data-animated={animated}>
- <Shared.Button group={db.components.find(c=>c.name==='Boris / Button')} choice={{Tone:'Primary',Size:'48'}} ariaLabel={target} loading={loading} onClick={e=>{restoreFocus.current=e.currentTarget.matches(':focus-visible');onClick();}} label={<span className="store-cta-label" aria-hidden="true" key={shown}>{[...shown].map((letter,index)=><span className="store-cta-glyph" style={{'--glyph-index':index}} key={index}>{letter===' '? '\u00a0':letter}</span>)}</span>}/>
+ return <div ref={root} className="store-cta">
+ <Shared.Button group={db.components.find(c=>c.name==='Boris / Button')} choice={{Tone:'Primary',Size:'48'}} ariaLabel={target} loading={loading} onClick={e=>{restoreFocus.current=e.currentTarget.matches(':focus-visible');onClick();}} label={target}/>
  </div>;
 }
 export default function Storefront({Shared,db,onCountChange,onAdd,onQuantity,onRemove,cartLines=[],navigate:goToPage}){

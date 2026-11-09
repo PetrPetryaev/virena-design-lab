@@ -85,10 +85,6 @@
 .store-purchase-main{grid-column:1/-1;grid-row:2;min-width:0}
 .store-cta{width:100%;max-width:100%;margin-left:auto;transform-origin:right center;transition:width 240ms cubic-bezier(.22,1,.36,1)}
 .store-cta>[data-ui=Button],.store-cta>[data-ui=Button]>.motion-surface{width:100%;max-width:100%;min-width:0!important}
-.store-cta-label{display:inline-flex;white-space:nowrap}
-.store-cta-glyph{display:inline-block}
-.store-cta[data-animated=true] .store-cta-glyph{animation:store-glyph-rise 180ms cubic-bezier(.22,1,.36,1) both;animation-delay:calc(var(--glyph-index) * 35ms)}
-@keyframes store-glyph-rise{from{opacity:0;filter:blur(2px);transform:translateY(3px)}to{opacity:1;filter:blur(0);transform:translateY(0)}}
 .store-purchase-area button:not(:disabled)>.motion-surface{transition:transform 150ms ease-out}.store-cta>[data-ui=Button],.store-cta>[data-ui=Button]>.motion-surface{transform-origin:right center}
 .store-purchase-area button:not(:disabled):active>.motion-surface{transform:scale(.97)}
 @container(min-width:400px){
@@ -127,8 +123,8 @@
 /* Studio product shots stay whole; lifestyle photography fills the frame. */
 .store-detail-generated .store-gallery-layer.is-studio{object-fit:contain;padding:8%}
 .store-detail-generated .store-gallery-layer.is-lifestyle{object-fit:cover;padding:0}
-.store-grid .store-gallery-layer.is-studio{object-fit:contain;padding:8%}
-.store-grid .store-gallery-layer.is-lifestyle{object-fit:cover;padding:0}
+.store-grid .store-gallery-layer.is-studio,.store-related .store-gallery-layer.is-studio{object-fit:contain;padding:8%}
+.store-grid .store-gallery-layer.is-lifestyle,.store-related .store-gallery-layer.is-lifestyle{object-fit:cover;padding:0}
 
 /* Catalog controls share a row with the heading; the full control block has a 32px gap to results. */
 .store-embedded .store-catalog{margin-top:76px}
@@ -147,7 +143,7 @@
 /* Related products share the image and action treatment without a card shell. */
 .store .store-related .store-product-compact,.cabinet .store-related .store-product-compact.has-fullbleed-art{padding:0;border:0;border-radius:0;background:transparent;box-shadow:none;margin:0}
 .store .store-related .store-product-compact:hover,.store .store-related .store-product-compact:active{background:transparent}
-.store-related .store-product-compact .store-product-art{height:auto;aspect-ratio:1;margin:0 0 var(--profile-px-12)}
+.store-related .store-product-compact .store-product-art{height:auto;aspect-ratio:1;margin:0 0 var(--profile-px-12);background:var(--lab-on-primary);border:0;border-radius:var(--profile-px-16);overflow:hidden}
 .store-related .store-product-compact .store-card-morph,.store-related .store-product-compact .store-card-morph>[data-ui=Button]{display:block;width:100%}
 /* Reserve a right-aligned action slot so neighboring content does not jump. */
 .store-grid .store-card-action[data-cart-action=true]{flex:0 0 auto;width:152px;display:flex;justify-content:flex-end}

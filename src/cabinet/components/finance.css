@@ -189,3 +189,8 @@
 .finance-history>.shared-catalog-toolbar{padding:0}
 .finance-history>.finance-filter-summary{margin:var(--tree-md) 0 0}
 .finance-history>.finance-history-panel{margin-top:var(--tree-gap)}
+
+@container(max-width:600px){
+ #finance-history-results .ds-table-records .ds-table-row>[data-column=kind]{grid-column:auto}
+ #finance-history-results .ds-table-records .ds-table-row>[data-column=basis]{grid-column:1/-1}
+}

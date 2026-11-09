@@ -11,3 +11,11 @@
 .expanding-search input::-webkit-search-cancel-button{-webkit-appearance:none}
 .expanding-search-clear{display:flex;flex:none;padding-right:4px;opacity:var(--search-reveal,0)}
 @media(prefers-reduced-motion:reduce){.expanding-search{transition:none}}
+
+.expanding-search-close{display:none}
+@media(max-width:600px){
+ .expanding-search-frame[data-open=true]{width:100%;gap:8px;justify-content:stretch}
+ .expanding-search-frame[data-open=true] .expanding-search{width:auto;flex:1;min-width:0}
+ .expanding-search-frame[data-open=true] .expanding-search-field,.expanding-search-frame[data-open=true] .expanding-search-clear{opacity:1;transform:none}
+ .expanding-search-close{display:flex;flex:none}
+}

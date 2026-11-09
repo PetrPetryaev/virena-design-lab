@@ -248,3 +248,23 @@
  .cabinet .cab-header .cab-title{flex:1 1 auto;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
  .cabinet .cab-header:has(.cab-title) .cab-top-actions{flex:1 0 100%;justify-content:flex-end;min-width:0}
 }
+
+/* Compact navigation and mobile cabinet header. */
+.cab-mobile-brand,.cab-mobile-market,.cab-mobile-sidebar-actions,.cab-mobile-title{display:none}
+@media(max-width:720px){
+ .cabinet:not(.marketplace) .cab-header:has(.cab-title){height:72px;min-height:72px;flex-wrap:nowrap;padding-block:0}
+ .cabinet:not(.marketplace) .cab-header .cab-title{display:none}
+ .cabinet:not(.marketplace) .cab-header .cab-top-actions{flex:0 0 auto;min-width:0;margin-left:auto}
+ .cab-mobile-brand{display:flex;align-items:center;flex:0 0 auto}
+ .cab-mobile-brand img{display:block;width:100px;height:auto}
+ [data-theme=dark] .cab-mobile-brand img{filter:brightness(0) invert(1)}
+ .cabinet:not(.marketplace) .cab-mobile-menu,.cabinet:not(.marketplace) .cab-mobile-close{width:44px;height:44px;flex:0 0 44px}
+ .cab-mobile-market{display:flex}
+ .cab-mobile-market button{width:44px!important;height:44px!important;min-width:44px!important;min-height:44px!important}
+ .cabinet:not(.marketplace) .cab-avatar{width:44px;height:44px}
+ .cab-mobile-sidebar-actions{display:block}
+ .cab-mobile-title{display:block;margin:0 0 20px;font-size:24px;line-height:1.3;font-weight:600;letter-spacing:-.3px}
+ .menu-open.is-collapsed .cab-nav-item{padding:12px 16px;justify-content:flex-start!important}
+ .menu-open.is-collapsed .cab-nav-item.nested{padding-left:32px}
+ .menu-open.is-collapsed .cab-nav-item>i:not(:only-child){display:flex}
+}

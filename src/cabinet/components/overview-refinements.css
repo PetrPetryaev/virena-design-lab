@@ -315,3 +315,26 @@
 }
 
 .overview-comparison .overview-product-scene button .motion-surface>span{color:var(--overview-scene-ink)!important}
+
+/* Keep identity cards readable at the tablet breakpoint. */
+@media(min-width:901px){
+ .overview-comparison .overview-identity{grid-template-columns:minmax(0,3fr) minmax(0,2fr)}
+ .overview-comparison .partner-dashboard .overview-identity{grid-template-columns:minmax(0,2fr) minmax(0,1fr)}
+}
+@media(max-width:900px){
+ .overview-comparison .overview-identity,.overview-comparison .partner-dashboard .overview-identity{grid-template-columns:minmax(0,1fr)}
+}
+
+/* On narrow screens the scene follows the copy in normal flow. */
+@media(max-width:850px){
+ .overview-comparison .overview-columns .overview-option.overview-product-scene,
+ .overview-comparison .partner-workspace .overview-option.overview-product-scene{display:flex;flex-direction:column;align-items:stretch;gap:0;padding:0}
+ .overview-comparison .overview-product-scene .overview-product-content,
+ .overview-comparison .partner-workspace .overview-product-scene .overview-product-content{order:0;width:auto;max-width:none;padding:var(--ov-md);gap:var(--ov-md)}
+ .overview-comparison .overview-product-scene .overview-product-scene-image{position:static;order:1;display:block;width:100%;height:auto;object-fit:contain;mask-image:linear-gradient(to bottom,transparent,#000 12%);z-index:auto}
+ .overview-comparison .partner-workspace .overview-product-scene button{margin-top:0}
+}
+@media(max-width:700px){
+ .overview-comparison .partner-workspace .partner-business-grid{background:var(--lab-surface);border:1px solid var(--lab-line);border-radius:24px}
+ .overview-comparison .partner-workspace{gap:var(--ov-md)}
+}

@@ -24,3 +24,13 @@
 @media(max-width:767px){.marketplace .cab-top-actions{flex-wrap:wrap;justify-content:flex-end}.marketplace .cab-header{justify-content:space-between}}
 /* Size columns from the catalog's available width, including its gaps. */
 .marketplace .store-grid{grid-template-columns:repeat(auto-fill,minmax(min(100%,calc(var(--profile-px-320) + var(--profile-px-20))),1fr))}
+
+/* Mobile commerce navigation fits one line, keeping the profile at the far right. */
+.marketplace-mobile-home{display:none}
+@media(max-width:720px){
+ .cabinet.marketplace .cab-header:has(.cab-title){height:72px;min-height:72px;flex-wrap:nowrap;padding-block:0;gap:12px}
+ .cabinet.marketplace .marketplace-brand{width:100px}
+ .cabinet.marketplace .cab-header:has(.cab-title) .cab-top-actions{flex:0 0 auto;flex-wrap:nowrap;gap:8px;margin-left:auto}
+ .marketplace-mobile-home{display:flex}
+ .cabinet.marketplace .cab-header .cab-top-actions>span button,.cabinet.marketplace .cab-header .cab-avatar{width:44px!important;height:44px!important;min-width:44px!important;min-height:44px!important}
+}

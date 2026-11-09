@@ -40,3 +40,10 @@
 
 /* Summary is the first filtered result; preserve the same gap on mobile. */
 .orders{gap:var(--tree-gap)}
+
+@media(max-width:600px){
+ .orders-summary{display:grid;grid-template-columns:minmax(0,1fr);gap:var(--tree-lg);overflow:visible}
+ .orders-summary>div{min-width:0}
+ .orders-summary>div+div{padding:var(--tree-lg) 0 0;box-shadow:0 calc(-1 * var(--tree-line)) 0 var(--lab-line)}
+ .orders-summary strong{white-space:normal;overflow-wrap:anywhere}
+}

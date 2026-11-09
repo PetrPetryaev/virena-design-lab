@@ -11,7 +11,7 @@
 .cart-product-copy p{margin:0 0 var(--profile-px-8);font-size:var(--profile-px-13);line-height:var(--profile-px-18);color:var(--lab-muted);overflow-wrap:anywhere}
 .cart-unit-price{font-size:var(--profile-px-13);line-height:var(--profile-px-18);color:var(--lab-muted)}
 .cart-line-actions{grid-column:3;grid-row:1;align-self:end;display:flex;align-items:center;gap:var(--profile-px-8)}
-.cart-line-total{font-size:var(--profile-px-18);line-height:var(--profile-px-24);white-space:nowrap;font-variant-numeric:tabular-nums}
+.cart-line-total{font-size:var(--profile-px-18);line-height:var(--profile-px-24);overflow-wrap:anywhere;font-variant-numeric:tabular-nums}
 .cart-item-controls{grid-column:2/-1;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:var(--profile-px-8)}
 .cart-summary{padding:var(--profile-px-24)}
 .cart-summary h2{margin:0 0 var(--profile-px-24)}
@@ -55,7 +55,7 @@
 .cart-summary{width:auto;border:0;overflow:visible;scrollbar-gutter:auto}
 .cart-items,.cart-summary,.cart-state{box-shadow:inset 0 0 0 var(--profile-px-1) var(--lab-line)}
 [data-design=soft] :is(.cart-items,.cart-summary,.cart-state){box-shadow:none}
-.cart-total dd{white-space:nowrap}
+.cart-summary dt,.cart-summary dd{min-width:0;overflow-wrap:anywhere}
 
 .cart-back{display:flex;margin-bottom:var(--profile-px-16)}
 .cart-back>[data-ui=Button]{max-width:100%}
@@ -69,8 +69,8 @@
 .cart-drawer-dialog .participant-scroll{padding-bottom:var(--profile-px-24)}
 
 /* One lower row keeps quantity, amount and removal together at every width. */
-.cart-item-bottom{grid-column:2/-1;display:flex;align-items:center;justify-content:space-between;gap:var(--profile-px-16);min-width:0}
-.cart-item-bottom .cart-item-controls,.cart-item-bottom .cart-line-actions{display:flex;align-items:center;flex:none}
+.cart-item-bottom{grid-column:2/-1;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:var(--profile-px-16);min-width:0}
+.cart-item-bottom .cart-item-controls,.cart-item-bottom .cart-line-actions{display:flex;align-items:center;min-width:0;max-width:100%}
 .cart-item-bottom .cart-line-total{font-size:var(--profile-px-16)}
 .cart-in-drawer .cart-item{grid-template-columns:var(--profile-px-72) minmax(0,1fr);gap:var(--profile-px-12);padding:var(--profile-px-16)}
 .cart-in-drawer .cart-art{grid-row:1}

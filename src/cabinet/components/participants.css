@@ -115,3 +115,21 @@
 /* The sort control is part of the toolbar; the results begin one DS gap below it. */
 .participants{gap:var(--tree-gap)}
 .participants>.shared-catalog-toolbar{padding:0}
+
+.participants-tab-short{display:none}
+@media(max-width:600px){
+ .participants-tab-full{display:none}.participants-tab-short{display:inline}
+ .participants-panel{background:var(--lab-surface);overflow:hidden}
+ .participants-pagination{margin-top:0;border-radius:0}
+ .participants-mobile-sort{margin-left:auto;max-width:220px}
+ .participants-mobile-sort .real-field{background:var(--lab-surface)!important}
+}
+
+@media(max-width:600px){
+ .participants .catalog-toolbar-actions{justify-content:flex-start;flex-wrap:nowrap}
+ .participants .participants-mobile-sort{display:block;flex:1 1 auto;width:auto;max-width:190px;min-width:0;margin-left:auto}
+ .participants .participants-mobile-sort .real-field{height:44px!important;min-height:44px!important;border-radius:22px!important;background:var(--lab-surface)!important}
+ .participants .participants-mobile-sort .option-menu{left:auto;right:0}
+ .participants .catalog-toolbar-actions:has(>.expanding-search-frame>.expanding-search[data-open=true]){flex-wrap:wrap}
+ .participants .catalog-toolbar-actions:has(>.expanding-search-frame>.expanding-search[data-open=true])>.catalog-toolbar-filters{flex-basis:auto}
+}

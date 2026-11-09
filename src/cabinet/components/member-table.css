@@ -8,3 +8,8 @@
 .ds-data-table [data-ui=Status]{height:24px!important;min-height:24px!important;box-sizing:border-box}
 
 .member-table-name .genealogy-you{flex:none}
+
+@container(max-width:600px){
+ .ds-table-stack{height:auto;min-height:48px}
+ .ds-table-stack>small.ds-table-line{white-space:normal;overflow:visible;text-overflow:clip;overflow-wrap:anywhere}
+}
