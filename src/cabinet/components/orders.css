@@ -37,3 +37,6 @@
 .order-modal-body{container-type:inline-size;min-width:0}
 .order-modal-meta{display:flex;align-items:center;flex-wrap:wrap;gap:var(--tree-md);color:var(--lab-muted);font-size:var(--tree-body);margin-bottom:var(--tree-lg)}
 @media(max-width:600px){.order-modal-body .order-detail dd{flex-shrink:1;overflow-wrap:anywhere}.order-modal-body .order-actions{flex-direction:column}}
+
+/* Summary is the first filtered result; preserve the same gap on mobile. */
+.orders{gap:var(--tree-gap)}

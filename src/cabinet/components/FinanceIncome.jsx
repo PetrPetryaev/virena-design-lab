@@ -7,8 +7,8 @@ import Button from './CabinetButton.jsx';
 import {euro,AS_OF} from './financeData.js';
 import chevron from '../../assets/navigation/alt-arrow-right-linear.svg?raw';
 
-export function RollingMoney({value}){
- const text=euro(value),comma=text.lastIndexOf(',');
+export function RollingMoney({value,format=euro}){
+ const text=format(value),comma=text.lastIndexOf(',');
  return <strong className="finance-rolling-money" aria-label={text}><span aria-hidden="true">{[...text].map((char,i)=>{const minor=comma>=0&&i>=comma;return <span key={text.length-i} className={(minor?'is-minor ':'')+(/\d/.test(char)?'finance-digit':'finance-money-char')}>{/\d/.test(char)?<span className="finance-digit-reel" style={{transform:`translateY(-${Number(char)*10}%)`}}>{Array.from({length:10},(_,n)=><span key={n}>{n}</span>)}</span>:char}</span>;})}</span></strong>;
 }
 

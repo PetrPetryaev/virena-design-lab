@@ -1,0 +1,6 @@
+.has-page-skeleton{position:relative!important}
+.has-page-skeleton>*:not(.page-skeleton-layer){visibility:hidden!important}
+.page-skeleton-layer{position:absolute;inset:0;pointer-events:none;z-index:2;overflow:hidden;visibility:visible!important}
+.page-skeleton-piece{position:absolute;display:block;background:var(--lab-skeleton);border-radius:8px}
+.page-skeleton-card{background:var(--lab-surface);border-radius:var(--lab-radius,16px)}
+.page-skeleton-text{border-radius:4px}

@@ -65,7 +65,7 @@
  .auth-promo>p{font-size:clamp(16px,1.4vw,20px);margin-top:20px}
 }
 .auth-form{position:relative}
-.auth-form[data-loading]>.auth-exit,.auth-form[data-loading] .auth-mode-panel>:not(.auth-skeleton){visibility:hidden}
+.auth-form[data-loading]>.auth-exit{visibility:hidden}
 .auth-mode-panel{position:relative}
 .auth-skeleton{position:absolute;inset:0;display:flex;flex-direction:column;gap:24px;overflow:hidden;pointer-events:none}
 .auth-skeleton span{display:block;flex-shrink:0;background:var(--auth-skeleton-fill);border-radius:8px}

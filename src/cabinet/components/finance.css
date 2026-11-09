@@ -184,3 +184,8 @@
 .finance-income-horizontal .finance-income-upgrade p{margin:0 0 var(--tree-sm)}
 
 .finance-info-trigger{display:inline-flex;align-items:center}.cab-nav-tooltip.finance-info-tooltip{position:fixed;left:auto;transform:none;width:max-content;max-width:min(320px,calc(100vw - 24px));white-space:normal;line-height:1.5;pointer-events:none;z-index:1000}#finance-history-results [data-column=info]::before,#finance-history-results [data-column=action]::before{display:none}
+
+/* The applied-filter summary belongs to the controls, not the result panel. */
+.finance-history>.shared-catalog-toolbar{padding:0}
+.finance-history>.finance-filter-summary{margin:var(--tree-md) 0 0}
+.finance-history>.finance-history-panel{margin-top:var(--tree-gap)}

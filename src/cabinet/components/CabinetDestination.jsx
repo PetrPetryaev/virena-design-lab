@@ -18,7 +18,7 @@ export default function CabinetDestination({Shared,db,page,intent,navigate}){
   <h2>{cart?'Корзина пока пуста':destination.title}</h2>
   <p>{cart?'Посмотрите продукты Virena в каталоге.':destination.description}</p>
   <p>{cart?'В демонстрации доступны просмотр продуктов и история покупок. Добавление товаров и оформление заказа пока не подключены.':'Демонстрационные условия. Покупка и оплата пакетов и активности пока не подключены.'}</p>
-  <div className="profile-card-actions">
+  <div className="cab-destination-actions">
    <Button Shared={Shared} db={db} label="Перейти в каталог" tone="Primary" onClick={()=>navigate('shop')}/>
    <Button Shared={Shared} db={db} label={cart?'Мои покупки':'Открыть финансы'} onClick={()=>navigate(cart?'orders':'finances')}/>
   </div>

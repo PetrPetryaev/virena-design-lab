@@ -43,3 +43,7 @@
 
 /* Specificity keeps modal sizing stable regardless of shared CSS import order. */
 .participant-dialog.inv-modal{height:fit-content}
+
+/* Keep the results one DS gap below the toolbar or its search hint. */
+.invitations{gap:var(--tree-gap)}
+.invitations>.shared-catalog-toolbar{padding:0}

@@ -4,10 +4,11 @@
 .catalog-toolbar-filters:empty{display:none}
 @media(max-width:600px){
  .shared-catalog-toolbar .catalog-toolbar-actions{width:100%;justify-self:stretch}
- .shared-catalog-toolbar .catalog-toolbar-actions>.expanding-search[data-open=true]{width:min(248px,100%)}
- .shared-catalog-toolbar .catalog-toolbar-actions:has(>.expanding-search[data-open=true])>.catalog-toolbar-filters{flex-basis:100%;justify-content:flex-end}
+ .shared-catalog-toolbar .catalog-toolbar-actions:has(>.expanding-search-frame>.expanding-search[data-open=true])>.catalog-toolbar-filters{flex-basis:100%;justify-content:flex-end}
 }
 .shared-catalog-toolbar button:not(:disabled)>.motion-surface{transition:transform 120ms ease-out}
 .shared-catalog-toolbar button:not(:disabled):active>.motion-surface{transform:scale(.96)}
-@media(max-width:600px){.shared-catalog-toolbar .catalog-toolbar-actions>.expanding-search[data-open=true]{flex:1 1 144px;max-width:248px;min-width:0}}
 @media(prefers-reduced-motion:reduce){.shared-catalog-toolbar button>.motion-surface{transition:none}.shared-catalog-toolbar button:active>.motion-surface{transform:none}}
+
+/* Space from the complete control block to its results, on every viewport. */
+.store-catalog>.shared-catalog-toolbar{padding-bottom:var(--tree-gap,32px)}

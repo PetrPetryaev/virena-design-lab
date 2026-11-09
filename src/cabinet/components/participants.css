@@ -111,3 +111,7 @@
 @media(max-width:600px){.participants-team{grid-column:1;grid-row:4}.participants-registration{grid-column:2;grid-row:4}.member-directory-facts{overflow-wrap:anywhere}}
 @media(min-width:1251px){.participants-columns,.participants-row{grid-template-columns:minmax(150px,1fr) 130px minmax(135px,1fr) 100px 120px 140px 140px}.participants-columns>*{min-width:0;white-space:normal}.participants-registration,.participants-team{min-width:0}.participants-action{max-width:100%}}
 .participants-sort{white-space:normal;min-width:0}.participants-sort>span{flex:none}.participants-columns{column-gap:var(--tree-md)}
+
+/* The sort control is part of the toolbar; the results begin one DS gap below it. */
+.participants{gap:var(--tree-gap)}
+.participants>.shared-catalog-toolbar{padding:0}

@@ -1,0 +1,182 @@
+{
+  "expert": {
+    "image": "/src/assets/marketplace-products/expert-v2-studio-1.png",
+    "gallery": [
+      "/src/assets/marketplace-products/expert-v2-studio-1.png",
+      "/src/assets/marketplace-products/expert-v2-studio-2.png",
+      "/src/assets/marketplace-products/expert-v2-lifestyle-1.jpg",
+      "/src/assets/marketplace-products/expert-v2-lifestyle-2.jpg"
+    ],
+    "labels": [
+      "Предметный кадр",
+      "Ракурс",
+      "На рабочем столе",
+      "В интерьере"
+    ]
+  },
+  "balance": {
+    "image": "/src/assets/marketplace-products/balance-v2-studio-1.png",
+    "gallery": [
+      "/src/assets/marketplace-products/balance-v2-studio-1.png",
+      "/src/assets/marketplace-products/balance-v2-studio-2.png",
+      "/src/assets/marketplace-products/balance-v2-lifestyle-1.jpg",
+      "/src/assets/marketplace-products/balance-v2-lifestyle-2.jpg"
+    ],
+    "labels": [
+      "Предметный кадр",
+      "Ракурс",
+      "С аксессуарами",
+      "В интерьере"
+    ]
+  },
+  "beauty": {
+    "image": "/src/assets/marketplace-products/beauty-v2-studio-1.png",
+    "gallery": [
+      "/src/assets/marketplace-products/beauty-v2-studio-1.png",
+      "/src/assets/marketplace-products/beauty-v2-studio-2.png",
+      "/src/assets/marketplace-products/beauty-v2-lifestyle-1.jpg",
+      "/src/assets/marketplace-products/beauty-v2-lifestyle-2.jpg"
+    ],
+    "labels": [
+      "Предметный кадр",
+      "Ракурс",
+      "В интерьере",
+      "В окружении"
+    ]
+  },
+  "water": {
+    "image": "/src/assets/marketplace-products/water-v2-studio-1.png",
+    "gallery": [
+      "/src/assets/marketplace-products/water-v2-studio-1.png",
+      "/src/assets/marketplace-products/water-v2-studio-2.png",
+      "/src/assets/marketplace-products/water-v2-lifestyle-1.jpg",
+      "/src/assets/marketplace-products/water-v2-lifestyle-2.jpg"
+    ],
+    "labels": [
+      "Предметный кадр",
+      "Ракурс",
+      "В интерьере",
+      "В окружении"
+    ]
+  },
+  "mini-balance": {
+    "image": "/src/assets/marketplace-products/mini-balance-v2-studio-1.png",
+    "gallery": [
+      "/src/assets/marketplace-products/mini-balance-v2-studio-1.png",
+      "/src/assets/marketplace-products/mini-balance-v2-studio-2.png",
+      "/src/assets/marketplace-products/mini-balance-v2-lifestyle-1.jpg",
+      "/src/assets/marketplace-products/mini-balance-v2-lifestyle-2.jpg"
+    ],
+    "labels": [
+      "Предметный кадр",
+      "Ракурс",
+      "В интерьере",
+      "В окружении"
+    ]
+  },
+  "deep-sleep": {
+    "image": "/src/assets/marketplace-products/deep-sleep-v2-studio-1.png",
+    "gallery": [
+      "/src/assets/marketplace-products/deep-sleep-v2-studio-1.png",
+      "/src/assets/marketplace-products/deep-sleep-v2-studio-2.png",
+      "/src/assets/marketplace-products/deep-sleep-v2-lifestyle-1.jpg",
+      "/src/assets/marketplace-products/deep-sleep-v2-lifestyle-2.jpg"
+    ],
+    "labels": [
+      "Предметный кадр",
+      "Ракурс",
+      "В интерьере",
+      "В окружении"
+    ]
+  },
+  "bio-life": {
+    "image": "/src/assets/marketplace-products/bio-life-v2-studio-1.png",
+    "gallery": [
+      "/src/assets/marketplace-products/bio-life-v2-studio-1.png",
+      "/src/assets/marketplace-products/bio-life-v2-studio-2.png",
+      "/src/assets/marketplace-products/bio-life-v2-lifestyle-1.jpg",
+      "/src/assets/marketplace-products/bio-life-v2-lifestyle-2.jpg"
+    ],
+    "labels": [
+      "Предметный кадр",
+      "Ракурс",
+      "В интерьере",
+      "В окружении"
+    ]
+  },
+  "more-life": {
+    "image": "/src/assets/marketplace-products/more-life-v2-studio-1.png",
+    "gallery": [
+      "/src/assets/marketplace-products/more-life-v2-studio-1.png",
+      "/src/assets/marketplace-products/more-life-v2-studio-2.png",
+      "/src/assets/marketplace-products/more-life-v2-lifestyle-1.jpg",
+      "/src/assets/marketplace-products/more-life-v2-lifestyle-2.jpg"
+    ],
+    "labels": [
+      "Предметный кадр",
+      "Ракурс",
+      "В интерьере",
+      "В окружении"
+    ]
+  },
+  "neuro-life": {
+    "image": "/src/assets/marketplace-products/neuro-life-v2-studio-1.png",
+    "gallery": [
+      "/src/assets/marketplace-products/neuro-life-v2-studio-1.png",
+      "/src/assets/marketplace-products/neuro-life-v2-studio-2.png",
+      "/src/assets/marketplace-products/neuro-life-v2-lifestyle-1.jpg",
+      "/src/assets/marketplace-products/neuro-life-v2-lifestyle-2.jpg"
+    ],
+    "labels": [
+      "Предметный кадр",
+      "Ракурс",
+      "В интерьере",
+      "В окружении"
+    ]
+  },
+  "pulse": {
+    "image": "/src/assets/marketplace-products/pulse-v2-studio-1.png",
+    "gallery": [
+      "/src/assets/marketplace-products/pulse-v2-studio-1.png",
+      "/src/assets/marketplace-products/pulse-v2-studio-2.png",
+      "/src/assets/marketplace-products/pulse-v2-lifestyle-1.jpg",
+      "/src/assets/marketplace-products/pulse-v2-lifestyle-2.jpg"
+    ],
+    "labels": [
+      "Экран 1",
+      "Экран 2",
+      "Экран 3",
+      "Экран 4"
+    ]
+  },
+  "training": {
+    "image": "/src/assets/marketplace-products/training-v2-studio-1.png",
+    "gallery": [
+      "/src/assets/marketplace-products/training-v2-studio-1.png",
+      "/src/assets/marketplace-products/training-v2-studio-2.png",
+      "/src/assets/marketplace-products/training-v2-lifestyle-1.jpg",
+      "/src/assets/marketplace-products/training-v2-lifestyle-2.jpg"
+    ],
+    "labels": [
+      "Экран 1",
+      "Экран 2",
+      "Экран 3",
+      "Экран 4"
+    ]
+  },
+  "a-scan": {
+    "image": "/src/assets/marketplace-products/a-scan-v2-studio-1.png",
+    "gallery": [
+      "/src/assets/marketplace-products/a-scan-v2-studio-1.png",
+      "/src/assets/marketplace-products/a-scan-v2-studio-2.png",
+      "/src/assets/marketplace-products/a-scan-v2-lifestyle-1.jpg",
+      "/src/assets/marketplace-products/a-scan-v2-lifestyle-2.jpg"
+    ],
+    "labels": [
+      "Экран 1",
+      "Экран 2",
+      "Экран 3",
+      "Экран 4"
+    ]
+  }
+}

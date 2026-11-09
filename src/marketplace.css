@@ -7,7 +7,8 @@
 [data-theme=dark] .marketplace-brand img{filter:brightness(0) invert(1)}
 .marketplace-nav{display:flex;align-items:center;gap:var(--profile-px-8)}
 .marketplace .cab-title{font-size:var(--profile-px-16);margin-left:auto}
-.marketplace .cab-main{width:100%;max-width:var(--profile-px-1440);align-self:center}
+/* Cabinet gutters already cap the inner content; do not cap the padded wrapper twice. */
+.marketplace .cab-main{width:100%;max-width:none;align-self:center}
 @media(max-width:767px){
  .cabinet.marketplace .cab-header{gap:var(--profile-px-12);padding-inline:var(--profile-px-16)}
  .marketplace-brand{width:var(--profile-px-120)}
@@ -21,3 +22,5 @@
 .marketplace .cab-title{position:absolute;width:var(--profile-px-1);height:var(--profile-px-1);overflow:hidden;clip-path:inset(50%);white-space:nowrap}
 .marketplace .cab-top-actions{margin-left:auto}
 @media(max-width:767px){.marketplace .cab-top-actions{flex-wrap:wrap;justify-content:flex-end}.marketplace .cab-header{justify-content:space-between}}
+/* Size columns from the catalog's available width, including its gaps. */
+.marketplace .store-grid{grid-template-columns:repeat(auto-fill,minmax(min(100%,calc(var(--profile-px-320) + var(--profile-px-20))),1fr))}
