@@ -143,3 +143,19 @@
 /* Fill the circular thumbnails without changing the main gallery fit. */
 .store-thumbnails button{padding:0;overflow:hidden}
 .store-thumbnails img,.store-thumbnails svg{display:block;width:100%;height:100%;object-fit:cover;object-position:center;padding:0}
+
+/* Related products share the image and action treatment without a card shell. */
+.store .store-related .store-product-compact,.cabinet .store-related .store-product-compact.has-fullbleed-art{padding:0;border:0;border-radius:0;background:transparent;box-shadow:none;margin:0}
+.store .store-related .store-product-compact:hover,.store .store-related .store-product-compact:active{background:transparent}
+.store-related .store-product-compact .store-product-art{height:auto;aspect-ratio:1;margin:0 0 var(--profile-px-12)}
+.store-related .store-product-compact .store-card-morph,.store-related .store-product-compact .store-card-morph>[data-ui=Button]{display:block;width:100%}
+/* Reserve a right-aligned action slot so neighboring content does not jump. */
+.store-grid .store-card-action[data-cart-action=true]{flex:0 0 auto;width:152px;display:flex;justify-content:flex-end}
+.store-card-morph{display:inline-flex;transform-origin:right center;animation:store-card-morph 220ms cubic-bezier(.22,1,.36,1) both}
+@keyframes store-card-morph{from{opacity:0;transform:scaleX(.8)}to{opacity:1;transform:scaleX(1)}}
+@media(prefers-reduced-motion:reduce){.store-card-morph{animation:none}}
+.store-grid .store-product-bottom{flex-wrap:wrap}
+.store-grid .store-product-bottom>div:first-child{min-width:0;flex:1 1 80px}
+.store-grid .store-card-action[data-cart-action=true]{margin-left:auto;max-width:100%}
+
+@media(max-width:700px){.store-grid .store-product-bottom>div:first-child{flex:0 1 auto}}
