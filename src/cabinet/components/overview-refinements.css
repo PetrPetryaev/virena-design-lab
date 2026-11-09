@@ -338,3 +338,30 @@
  .overview-comparison .partner-workspace .partner-business-grid{background:var(--lab-surface);border:1px solid var(--lab-line);border-radius:24px}
  .overview-comparison .partner-workspace{gap:var(--ov-md)}
 }
+
+/* Partnership banner: the existing portrait composition sits inside pastel orbits. */
+.overview-comparison .partner-workspace .overview-option.overview-partner-orbit{
+ grid-template-columns:minmax(0,1fr) minmax(0,1fr);background:#eee8f7;border:0;align-items:center;
+}
+.overview-comparison .partner-workspace .overview-partner-orbit .overview-art{
+ grid-column:2;grid-row:1;overflow:hidden;isolation:isolate;align-self:center;
+}
+.overview-comparison .partner-workspace .overview-partner-orbit .overview-art::before{display:none}
+.overview-comparison .partner-workspace .overview-partner-orbit .overview-partner-content{grid-column:1;grid-row:1;align-self:center;justify-content:center}
+.overview-comparison .partner-workspace .overview-partner-orbit .networking-art{position:absolute;inset:0;display:grid;place-items:center;width:100%;height:100%;aspect-ratio:auto}
+.overview-comparison .partner-workspace .overview-partner-orbit .overview-art img{
+ position:absolute;inset:5%;width:90%;height:90%;padding:0;object-fit:contain;z-index:1;
+}
+.partner-orbits{position:absolute;inset:0;display:grid;place-items:center;pointer-events:none}
+.partner-orbits i{position:absolute;display:block;aspect-ratio:1;border:0;border-radius:50%}
+.partner-orbits i b{position:absolute;width:var(--orbit-dot);height:var(--orbit-dot);border-radius:50%;background:currentColor;transform:translate(-50%,-50%)}
+.partner-orbits i:nth-child(1){width:60%;color:#b8a0d9;--orbit-dot:5px}
+.partner-orbits i:nth-child(2){width:90%;color:#d7a0c6;--orbit-dot:7px}
+.partner-orbits i:nth-child(3){width:120%;color:#9fcfca;--orbit-dot:9px}
+@media(max-width:600px){
+ .overview-comparison .partner-workspace .overview-option.overview-partner-orbit{grid-template-columns:minmax(0,1fr)}
+ .overview-comparison .partner-workspace .overview-partner-orbit .overview-art{grid-column:1;grid-row:2;height:180px}
+ .overview-comparison .partner-workspace .overview-partner-orbit .overview-partner-content{grid-column:1;grid-row:1}
+}
+
+.overview-comparison .overview-partner-orbit button .motion-surface{background-color:#fff!important;transform:none!important;translate:none!important;scale:none!important}

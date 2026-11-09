@@ -20,10 +20,10 @@ export function BannerCard({loading=false,kind='notice',label,title,description,
  </section>;
 }
 /** Same media card, with either a cropped product or a contained illustration. */
-export function MediaCard({loading=false,title,description,price,src,imageFit='contain',action,surface='white'}){
+export function MediaCard({loading=false,title,description,price,src,imageFit='contain',action,surface='white',orbit=false}){
  const product=imageFit==='bleed';
- return <article className={`overview-option ${product?'overview-product':'overview-partner'}${imageFit==='framed'?' overview-media-framed':''}${action?' card-clickable':''}${loading?' card-loading':''}`} aria-busy={loading} inert={loading?true:undefined} data-surface={surface}>
-  <div className={`overview-art${product?' overview-art-products':''}`} aria-hidden="true">{product?<img src={src} alt=""/>:<span className="networking-art"><img src={src} alt=""/></span>}</div>
+ return <article className={`overview-option ${product?'overview-product':'overview-partner'}${imageFit==='framed'?' overview-media-framed':''}${orbit?' overview-partner-orbit':''}${action?' card-clickable':''}${loading?' card-loading':''}`} aria-busy={loading} inert={loading?true:undefined} data-surface={surface}>
+  <div className={`overview-art${product?' overview-art-products':''}`} aria-hidden="true">{product?<img src={src} alt=""/>:<span className="networking-art">{orbit&&<span className="partner-orbits">{[18,24,30].map((count,ring)=><i key={ring}>{Array.from({length:count},(_,dot)=>{const angle=dot/count*Math.PI*2;return <b key={dot} style={{left:`${50+50*Math.cos(angle)}%`,top:`${50+50*Math.sin(angle)}%`}}/>;})}</i>)}</span>}<img src={src} alt=""/></span>}</div>
   <div className={product?'overview-product-content':'overview-partner-content'}><div className="banner-copy"><h3>{title}</h3><p>{description}</p>{price&&<strong className="overview-price">{price}</strong>}</div>{action}</div>
  </article>;
 }

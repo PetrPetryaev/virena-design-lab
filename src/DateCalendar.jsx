@@ -1,4 +1,5 @@
-import calendarIcon from './assets/navigation/calendar-linear.svg';
+import calendarSource from './assets/navigation/calendar-linear.svg?raw';
+const calendarIcon=calendarSource.replaceAll('stroke="black"','stroke="currentColor"').replace('width="24" height="24"','width="20" height="20"');
 import {t,useLocale} from './i18n.js';
 import React,{useRef,useState,useEffect,useId} from 'react';
 import {DayPicker} from '@daypicker/react';
@@ -27,7 +28,7 @@ export default function DateCalendar({value,onChange,disabled,inputRef}){
  useEffect(()=>{const close=e=>{if(!root.current?.contains(e.target))setOpen(false);};document.addEventListener('pointerdown',close);return()=>document.removeEventListener('pointerdown',close);},[]);
  useEffect(()=>{if(disabled)setOpen(false);},[disabled]);
  return <div ref={root} className="date-calendar" onKeyDown={e=>{if(e.key==='Escape'){e.stopPropagation();setOpen(false);trigger.current?.focus();}}} onBlur={e=>{if(!e.currentTarget.contains(e.relatedTarget))setOpen(false);}}>
- <button ref={trigger} type="button" className="field-tool calendar-trigger" disabled={disabled} aria-label={t("Открыть календарь")} aria-expanded={open} aria-controls={id} onMouseDown={e=>e.preventDefault()} onClick={()=>{setMonth(parseDate(value)||month);setOpen(true);}}><span aria-hidden="true" style={{width:20,height:20,backgroundColor:'currentColor',mask:`url(${calendarIcon}) center / contain no-repeat`}}/></button>
+ <button ref={trigger} type="button" className="field-tool calendar-trigger" disabled={disabled} aria-label={t("Открыть календарь")} aria-expanded={open} aria-controls={id} onMouseDown={e=>e.preventDefault()} onClick={()=>{setMonth(parseDate(value)||month);setOpen(true);}}><span aria-hidden="true" style={{display:'flex',width:20,height:20}} dangerouslySetInnerHTML={{__html:calendarIcon}}/></button>
  {open&&<div className="calendar-popover" id={id} role="dialog" aria-label={t("Выберите дату рождения")}><DayPicker locale={locale==='en'?enUS:ru} mode="single" selected={parseDate(value)} month={month} onMonthChange={setMonth} captionLayout="dropdown" startMonth={new Date(1900,0)} endMonth={new Date()} disabled={{after:new Date()}} onSelect={d=>{if(d){onChange(`${String(d.getDate()).padStart(2,'0')}.${String(d.getMonth()+1).padStart(2,'0')}.${d.getFullYear()}`);setOpen(false);inputRef.current?.focus();}}}/></div>}
  </div>;
 }
