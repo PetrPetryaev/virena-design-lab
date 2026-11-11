@@ -9,7 +9,7 @@
 [data-design=soft] :is(.partner-metric-strip,.partner-workspace .partner-business-grid,.cab-placeholder,.partnership-dialog){background:var(--design-card);border-color:transparent;box-shadow:none}
 [data-design=soft] .overview-comparison .overview-package .overview-art-package{box-shadow:none}
 /* Keep warning cues in icons/text, and preserve keyboard focus outlines. */
-[data-design=soft] .overview-comparison .overview-notice.is-attention:not(.card-loading){background:var(--design-card);border-color:transparent}
+[data-design=soft] .overview-comparison .overview-notice.is-attention:not(.card-loading){background:var(--lab-warning-surface);border-color:transparent}
 [data-design=soft] .overview-comparison .card-loading{background:var(--lab-skeleton)}
 [data-design=soft] :is(.store-catalog,.store-product,.store-detail-art,.store-related-links a){background:var(--design-card);border-color:transparent;box-shadow:none}
 [data-design=soft] .store:not(.store-embedded){background:var(--design-canvas)}
@@ -48,3 +48,6 @@
 
 /* Current design: empty sections sit directly on the page canvas. */
 [data-design=original] .cab-placeholder{background:transparent}
+[data-design=soft] .overview-comparison .overview-notice.is-attention .overview-notice-icon{background:var(--snapshot-surface, #fff);color:var(--lab-ink)}
+[data-design=soft] .overview-comparison .overview-notice.is-attention:not(.card-loading){background:#ffe69a}
+[data-theme=dark] [data-design=soft] .overview-comparison .overview-notice.is-attention:not(.card-loading){background:var(--lab-warning-surface)}

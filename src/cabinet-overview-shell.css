@@ -1,0 +1,12 @@
+.cab-language-control,.cab-notification-control{position:relative;display:inline-flex}
+.cab-language-control button,.cab-notification-control button{min-width:44px;min-height:44px}
+.cab-notification-dot{position:absolute;top:7px;right:7px;width:8px;height:8px;border-radius:50%;background:var(--lab-error);pointer-events:none}
+@media(max-width:720px){
+ .cabinet:not(.marketplace) .cab-language-control{display:none}
+ .cabinet:not(.marketplace) .cab-language-control button,.cabinet:not(.marketplace) .cab-notification-control button{width:44px!important;height:44px!important}
+}
+
+.cab-language-menu{position:relative}
+.cab-language-popover{position:fixed;left:16px;right:auto;top:auto;bottom:88px;z-index:100;max-width:calc(100vw - 32px)}
+.lab-settings:has(.cab-overview-toolbar select[aria-label="Участник"]){left:16px;right:auto}
+.lab-settings:has(.cab-overview-toolbar select[aria-label="Участник"]) .lab-settings-panel{left:0;right:auto}

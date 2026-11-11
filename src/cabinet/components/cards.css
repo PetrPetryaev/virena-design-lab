@@ -34,3 +34,26 @@
 [data-account-state=deactivated]>.finance-two-grid,
 [data-account-state=deactivated]>.profile-card,
 [data-account-state=deactivated] .ds-data-table{filter:grayscale(1)}
+
+/* One presentation for existing account warnings across cabinet sections. */
+.overview-comparison .overview-notice.is-attention:not(.card-loading){display:grid;grid-template-columns:minmax(0,1fr) auto 64px;align-items:center;gap:24px;background:var(--lab-warning-surface);color:var(--lab-ink);box-shadow:none;border:0}
+.overview-comparison .overview-notice.is-attention .banner-copy{grid-column:1;grid-row:1;min-width:0}
+.overview-comparison .overview-notice.is-attention .overview-notice-icon{grid-column:3;grid-row:1;width:64px;height:64px;display:flex;align-items:center;justify-content:center;padding:16px;border-radius:50%;background:var(--lab-surface);color:var(--lab-ink)}
+.overview-comparison .overview-notice.is-attention .banner-copy h3{margin:0;color:var(--lab-ink)}
+.overview-comparison .overview-notice.is-attention .banner-copy p{margin:8px 0 0;color:var(--lab-ink)}
+.overview-comparison .overview-notice.is-attention > :not(.banner-copy):not(.overview-notice-icon){grid-column:2;grid-row:1;margin:0}
+@media(max-width:700px){
+ .overview-comparison .overview-notice.is-attention:not(.card-loading){grid-template-columns:minmax(0,1fr) 48px;gap:16px;padding:24px 20px}
+ .overview-comparison .overview-notice.is-attention .overview-notice-icon{grid-column:2;width:48px;height:48px;padding:12px;align-self:start}
+ .overview-comparison .overview-notice.is-attention > :not(.banner-copy):not(.overview-notice-icon){grid-column:1/-1;grid-row:2;justify-self:start;max-width:100%}
+}
+.overview-comparison .overview-notice.is-attention:not(.card-loading){grid-template-columns:64px minmax(0,1fr) auto}
+.overview-comparison .overview-notice.is-attention .overview-notice-icon{grid-column:1}
+.overview-comparison .overview-notice.is-attention .banner-copy{grid-column:2}
+.overview-comparison .overview-notice.is-attention > :not(.banner-copy):not(.overview-notice-icon){grid-column:3}
+@media(max-width:700px){
+ .overview-comparison .overview-notice.is-attention:not(.card-loading){grid-template-columns:48px minmax(0,1fr)}
+ .overview-comparison .overview-notice.is-attention .overview-notice-icon{grid-column:1}
+ .overview-comparison .overview-notice.is-attention .banner-copy{grid-column:2}
+ .overview-comparison .overview-notice.is-attention > :not(.banner-copy):not(.overview-notice-icon){grid-column:2;grid-row:2}
+}

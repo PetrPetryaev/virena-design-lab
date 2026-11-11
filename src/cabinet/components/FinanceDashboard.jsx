@@ -5,9 +5,9 @@ import Button from './CabinetButton.jsx';
 import MemberPackage from './MemberPackage.jsx';
 import TreeLegMetrics from './TreeLegMetrics.jsx';
 import FinanceIncome,{RollingMoney} from './FinanceIncome.jsx';
-import {euro,bv,AS_OF,displayDate,financeSnapshot} from './financeData.js';
+import FinanceWallet from './FinanceWallet.jsx';
+import {euro,bv,displayDate,financeSnapshot} from './financeData.js';
 
-function Money({value}){const text=euro(value),split=text.lastIndexOf(',');return <>{text.slice(0,split)}<small>{text.slice(split)}</small></>;}
 export default function FinanceDashboard({Shared,db,loading,skeleton,balanceRef,available,paid,reserved,scenario,noPackage,frozen,inactive,isEmpty,pack,pendingDates,pendingTotal,pendingTable,ledger,legs,requestControl,navigate,goPoints,goHistory,incomeProps}){
  const [showConditions,setShowConditions]=useState(false),[showBinary,setShowBinary]=useState(false);
  const direction='calm';
@@ -16,11 +16,8 @@ export default function FinanceDashboard({Shared,db,loading,skeleton,balanceRef,
  const pendingGroups=groups=><div className="fd-schedule">{groups.map((group,index)=><section className="fd-schedule-group" key={group.id}><div className="fd-schedule-date"><Shared.Icon name="calendar-date-linear"/><span>{displayDate(group.date)}</span>{group.id===next?.id&&<small>Ближайшее</small>}</div>{group.items.map(item=><button type="button" className="fd-schedule-item" key={item.source} onClick={()=>goHistory({source:item.source,state:'Начислено',period:null})}><span><strong>{item.source}</strong>{item.accruing&&<span className="fd-schedule-status">Копится</span>}</span><b>{euro(item.amount)}</b></button>)}</section>)}</div>;
  return <><div className="fd-dashboard" data-direction={direction}>
  <div className="fd-primary">
- <div ref={balanceRef} className="fd-wallet-shell"><Card title="Доступно к выводу" className="fd-wallet fd-card" headingActions={<Shared.Status tone={frozen?'Danger':'Neutral'} label={frozen?'Заблокировано':'EUR'}/>}>
- {loading?skeleton('баланс'):<><div className="fd-wallet-main"><div className="fd-balance" data-testid="available"><Money value={available}/></div><div className="fd-wallet-actions"><Button Shared={Shared} db={db} label="Реквизиты" tone="Soft" onClick={()=>navigate('details')}/>{requestControl}</div></div>
- {(reserved>0||scenario==='debt')&&<p className="fd-note">{reserved>0?`В заявке на вывод: ${euro(reserved)}`:`Погашено в счёт задолженности: ${euro(financeSnapshot.repaidDebt)}`}</p>}
- <div className="fd-wallet-context"><div><span>Выведено в {AS_OF.slice(0,4)}</span><strong>{euro(paid)}</strong></div><div><span>Ближайшее поступление</span>{next?<><button type="button" className="finance-row-trigger" onClick={()=>document.querySelector('.fd-pending')?.scrollIntoView({block:'nearest',behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'})}>{euro(next.amount)}</button><small>{displayDate(next.date)}</small></>:<strong>Нет ожидаемых</strong>}</div></div></>}
- </Card></div>
+ <FinanceWallet {...{Shared,db,balanceRef,available,paid,reserved,scenario,frozen,loading,skeleton,next,requestControl}} onDetails={()=>navigate('details')} onPending={()=>document.querySelector('.fd-pending')?.scrollIntoView({block:'nearest',behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'})}/>
+
  <Card title="Партнёрский пакет" className="fd-package fd-card" headingActions={<div className="fd-package-heading-actions"><MemberPackage pack={noPackage?'':pack}/>{!noPackage&&scenario!=='supervip'&&<Button Shared={Shared} db={db} icon="Auth / Icon / Info" label="Условия повышения пакета" tone="Ghost" size="40" onClick={()=>setShowConditions(true)}/>}</div>}>
  {loading?skeleton('пакет'):noPackage?<div className="fd-package-empty"><span className="fd-icon"><Shared.Icon name="box-linear"/></span><div className="fd-package-empty-copy"><h3>Начните с первого пакета</h3><p>Пакеты от 369 €. Выберите подходящие условия участия.</p></div><Button Shared={Shared} db={db} tone="Primary" label="Выбрать пакет" onClick={()=>navigate('shop','packages')}/></div>:<>
  <div className={'fd-plan-compare'+(!canUpgrade?' is-single':'')}><div className="fd-plan-current"><span className="fd-eyebrow"><Shared.Icon name="box-linear"/>Ваш пакет</span><h3>{pack}</h3>{scenario==='supervip'?<p>Без потолка засчёта</p>:<><strong>{bv(financeSnapshot.statusThreshold)} € <small>/ {bv(financeSnapshot.statusBV)} BV</small></strong><p>Лимит с одной покупки</p><p className="fd-plan-current-note">Сумма выше лимита не учитывается в расчёте ВЗР.</p></>}</div>

@@ -11,8 +11,6 @@
 .overview-comparison .overview-profile-meta>div:first-child{min-width:0}
 .overview-comparison .overview-profile-meta{grid-template-columns:repeat(3,minmax(0,1fr))}
 .overview-comparison .overview-profile-meta dt .cab-solar-icon,.overview-comparison .overview-profile-meta dt .demo-icon,.overview-comparison .partner-stat-title .cab-solar-icon,.overview-comparison .partner-stat-title .demo-icon{width:24px;height:24px;flex:0 0 24px;color:var(--lab-ink);opacity:1}
-.overview-comparison .overview-notice.is-attention:not(.card-loading){background:color-mix(in srgb,var(--lab-link) 7%,var(--lab-surface));border-color:color-mix(in srgb,var(--lab-link) 24%,var(--lab-line))}
-.overview-comparison .is-attention .overview-notice-icon{color:var(--lab-link);background:var(--lab-surface);border-radius:50%}
 .partner-stat-link{color:var(--lab-ink);text-decoration:none;position:relative;transition:background .18s ease;cursor:pointer}
 .partner-stat-link:hover{background:var(--lab-soft)}
 .partner-stat-link:focus-visible{outline:2px solid var(--lab-link);outline-offset:-3px}
