@@ -2,6 +2,8 @@ import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { SegmentedTabs } from '../../AuthPrimitives.jsx';
 import Button from './CabinetButton.jsx';
 import EmptyIllustration from './EmptyIllustration.jsx';
+import { publicOfferUrl, Terms } from './PublicOffer.jsx';
+import { profileInitialData } from './profileData.js';
 import { getOffers } from './offersData.js';
 import './offers.css';
 
@@ -87,6 +89,7 @@ export default function Offers({
 }) {
   const locale = /^(en(?:-|$)|english$|английский$)/i.test(language) ? 'en' : 'ru';
   const labels = copy[locale];
+  const [shared, setShared] = useState(null);
   const [tab, setTab] = useState('active');
   const [limit, setLimit] = useState(pageSize);
   const [pagination, setPagination] = useState('ready');
@@ -146,6 +149,20 @@ export default function Offers({
     return () => clearTimeout(timer);
   }, [pagination, tab, detailId, scenario, failedMore]);
 
+  async function shareOffer() {
+    const url = publicOfferUrl(detailId, locale, profileInitialData.personal.partnerId).href;
+    try {
+      await navigator.clipboard.writeText(url);
+      setShared({ id: detailId, copied: true });
+    } catch {
+      setShared({ id: detailId, url });
+    }
+  }
+
+  useEffect(() => {
+    setShared(null);
+  }, [detailId]);
+
   function openOffer(id) {
     const active = document.activeElement;
     const focus = active?.matches('.offers-card-action button') ? '.offers-card-action button' : '.offers-title a';
@@ -197,10 +214,13 @@ export default function Offers({
       <h2 ref={detailTitle} tabIndex={-1}>{detail.title}</h2>
       <OfferMeta offer={detail} labels={labels} />
       <OfferConditions offer={detail} labels={labels} />
-      <p className="offers-detail-description">{detail.description}</p>
-      {detail.details?.filter(paragraph => paragraph !== detail.description).map(paragraph => (
-        <p className="offers-detail-description" key={paragraph}>{paragraph}</p>
-      ))}
+      {detail.public && <div className="offer-share">
+        {button(locale === 'ru' ? 'Поделиться' : 'Share', shareOffer, { size: '40' })}
+        {shared?.id === detailId && (shared.copied
+          ? <span role="status">{locale === 'ru' ? 'Ссылка скопирована' : 'Link copied'}</span>
+          : <input aria-label={locale === 'ru' ? 'Ссылка на акцию' : 'Offer link'} readOnly value={shared.url} onFocus={event => event.target.select()} />)}
+      </div>}
+      <Terms offer={detail} language={locale}/>
       {detailTab === 'active' && !detail.reasons.length && detail.action && <div>
         {button(detail.action.label, () => window.location.assign(detail.action.href), { tone: 'Primary' })}
       </div>}

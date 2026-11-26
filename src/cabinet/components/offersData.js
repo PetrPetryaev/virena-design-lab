@@ -13,7 +13,7 @@ const covers = {
 
 const campaigns = [
   {
-    id: 'expert-week', start: -4, end: 3, pinned: true,
+    id: 'expert-week', public: true, start: -4, end: 3, pinned: true,
     action: { ru: 'Перейти к Expert', en: 'View Expert', href: '?tab=store&page=shop&product=expert' },
     ru: {
       title: 'Неделя Expert',
@@ -49,7 +49,8 @@ const campaigns = [
     },
   },
   {
-    id: 'balance-week', start: 4, end: 11,
+    id: 'balance-week', public: true, start: 4, end: 11,
+    en: { title: 'Balance Week', description: 'Order Balance during the offer to get an introductory session with the device.' },
     ru: {
       title: 'Неделя Balance',
       description: 'В течение недели при заказе Balance будет доступно вводное занятие по работе с прибором.',
@@ -82,7 +83,10 @@ const pastCampaigns = [
   ['regional-meeting', 'Встреча команды в Казахстане', 'Обсуждение планов и материалов команды в Казахстане.', covers.meeting, { countries: ['KZ'] }],
 ].map(([id, title, description, cover, eligibility], index) => {
   const end = -2 - 8 * index;
-  return { id, start: end - 5, end, ru: { title, description, cover }, ...eligibility };
+  const water = id === 'water-week';
+  return { id, start: end - 5, end, ru: { title, description, cover }, ...eligibility, public: water,
+    ...(water && { en: { title: 'Water Week', description: 'A Water offer with an introductory session on using the device.' } }),
+  };
 });
 
 const DAY_MS = 86_400_000;
@@ -161,6 +165,13 @@ export function getOffers({ tab = 'active', scenario = 'ready', partner = closed
       : formatter.formatRange(new Date(start * DAY_MS), new Date(end * DAY_MS)).replace(/\sг\.$/u, '');
     return [{
       id: offer.id,
+      public: offer.public === true && !offer.id.endsWith('-edition'),
+      attachment: primary ? {
+        name: locale === 'en' ? 'Expert Week terms' : 'Условия акции «Неделя Expert»',
+        file: 'expert-week-' + locale + '.txt',
+        bytes: locale === 'en' ? 249 : 415,
+      } : null,
+      audience: primary ? (locale === 'en' ? ['For partners'] : ['Для партнёров']) : [],
       status,
       title: copy.title,
       description: copy.description,

@@ -134,7 +134,7 @@ try {
       await open(undefined, id);
       await detail.getByRole('heading', { name, exact: true }).waitFor();
       if (status) await detail.getByText(status, { exact: true }).waitFor();
-      assert.equal(await detail.getByRole('button').count(), 1);
+      assert.equal(await detail.getByRole('button', { name: 'Поделиться' }).count(), ['water-week','balance-week'].includes(id) ? 1 : 0);
       await overflow();
       await detail.getByRole('button', { name: 'Все акции' }).click();
       await tab(returnTab).and(page.locator('[aria-selected="true"]')).waitFor();
