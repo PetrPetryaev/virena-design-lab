@@ -40,6 +40,20 @@ jobs:
           npm ci
           npm run build
           mv dist ../dist/tes-255
+      - name: Check out the business center review version
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: 789d5e42b4b73792c50219df8ed39819a60efbe0
+          path: bc-review
+          persist-credentials: false
+      - name: Build business center review
+        working-directory: bc-review
+        env:
+          DEPLOY_BASE: /virena-design-lab/bc/
+        run: |
+          npm ci
+          npm run build
+          mv dist ../dist/bc
       - uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d
       - uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9
         with:
