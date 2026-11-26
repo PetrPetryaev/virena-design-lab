@@ -286,7 +286,8 @@ export default function Checkout({Shared,db,lines,draft,setDraft,navigate,onFixt
   if(!focusHeading.current)return;
   focusHeading.current=false;
   const target=paying?heading.current:form.current?.querySelector('[data-checkout-stage="'+current+'"] h2');
-  target?.focus();
+  target?.focus({preventScroll:paying});
+  if(paying)target?.closest('.cab-main')?.scrollTo({top:0,behavior:'instant'});
  },[current,paying]);
  const clearError=key=>{setErrors(previous=>({...previous,[key]:''}));setSubmitError(false);setBalanceReview(false);};
  const update=(key,value)=>{setDraft(d=>({...d,[key]:value}));clearError(key);};

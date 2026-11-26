@@ -244,8 +244,8 @@
 .checkout-account-fields{display:grid;grid-template-columns:minmax(0,1fr);min-width:0;gap:var(--profile-s24)}
 .checkout-recipient-cell,.checkout-recipient-cell .profile-field{min-width:0}
 .checkout-account-fields > p{margin:0;overflow-wrap:anywhere}
-.checkout-pay-layout{display:grid;grid-template-columns:minmax(0,var(--profile-px-560));justify-content:center;align-items:start;gap:var(--profile-s16)}
-.checkout-pay-card{min-width:0;padding:var(--profile-s32);border:var(--profile-px-1) solid var(--lab-line);border-radius:var(--profile-large-radius)}
+.checkout-pay-layout{display:grid;grid-template-columns:minmax(0,1fr);align-items:start;gap:var(--profile-s24)}
+.checkout-pay-card{width:100%;max-width:var(--profile-px-560);box-sizing:border-box;justify-self:center;min-width:0;padding:var(--profile-s32);border:var(--profile-px-1) solid var(--lab-line);border-radius:var(--profile-large-radius)}
 .checkout-pay-card h1{margin:0 0 var(--profile-s24);text-align:center;font-size:var(--profile-px-24);line-height:var(--profile-px-32);font-weight:600;overflow-wrap:anywhere}
 .checkout-pay-card > [data-ui=Button],.checkout-pay-card > [data-ui=Button] > .motion-surface{width:100%!important}
 .checkout-pay-card .checkout-payment-icon{width:var(--profile-px-24);height:var(--profile-px-24);background:var(--lab-muted)}

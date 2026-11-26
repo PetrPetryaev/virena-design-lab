@@ -13,6 +13,14 @@ try{
   try{
    await page.goto(base+'?tab=store&page=checkout');
    const apply=page.locator('.checkout-stage-actions').getByRole('button',{name:'Применить',exact:true});
+   await apply.waitFor();
+   const backOffset=()=>page.locator('.checkout-top button').first().evaluate(el=>{
+    const button=el.getBoundingClientRect(),main=el.closest('.cab-main').getBoundingClientRect();
+    return [Math.round(button.left-main.left),Math.round(button.top-main.top)];
+   });
+   await page.locator('.checkout-top button').first().waitFor({state:'visible'});
+   await page.locator('.checkout-top button').first().click({trial:true});
+   const checkoutOffset=await backOffset();
    await apply.click();
    const cardOption=page.getByRole('radio',{name:/Банковская карта/});
    const next=page.getByRole('button',{name:'Перейти к оплате',exact:true});
@@ -30,6 +38,7 @@ try{
     assert.ok(await field.isEditable());
     assert.equal(await field.getAttribute('inputmode'),'numeric');
    }
+   assert.deepEqual(await backOffset(),checkoutOffset);
    assert.equal(await cvv.getAttribute('type'),'password');
    assert.ok(await fits());
    assert.equal((await expiry.boundingBox()).y,(await cvv.boundingBox()).y);
