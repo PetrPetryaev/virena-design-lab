@@ -43,7 +43,7 @@ jobs:
       - name: Check out the business center review version
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
-          ref: 789d5e42b4b73792c50219df8ed39819a60efbe0
+          ref: 279ebfbe46a8ec92978f39bc539c3fb2e9e92796
           path: bc-review
           persist-credentials: false
       - name: Build business center review
