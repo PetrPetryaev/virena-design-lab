@@ -268,3 +268,15 @@
  .menu-open.is-collapsed .cab-nav-item.nested{padding-left:32px}
  .menu-open.is-collapsed .cab-nav-item>i:not(:only-child){display:flex}
 }
+.cab-nav-count {
+  display: inline-block;
+  margin-inline-start: 8px;
+  padding-inline: 6px;
+  border-radius: 8px;
+  background: var(--lab-soft);
+  color: var(--lab-muted);
+  font-size: 12px;
+  line-height: 18px;
+  vertical-align: middle;
+  font-variant-numeric: tabular-nums;
+}

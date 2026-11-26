@@ -8,8 +8,8 @@
 .ds-table-sort .demo-icon{flex:none;width:24px;height:24px}.ds-table-sort svg{width:24px;height:24px}
 .ds-table-header::after,.ds-table-body>.ds-table-row+.ds-table-row::after{content:'';position:absolute;left:var(--table-inset);right:var(--table-inset);height:1px;background:var(--table-divider);pointer-events:none}
 .ds-table-header::after{bottom:0}.ds-table-body>.ds-table-row+.ds-table-row::after{top:0}
-.ds-table-body>.ds-table-row::before{content:'';position:absolute;inset:0 var(--table-hover-inset);border-radius:var(--table-radius);background:transparent;z-index:-1}
-.ds-table-body>.ds-table-row:is(:hover,:focus-within)::before{background:color-mix(in srgb,var(--lab-soft) 60%,var(--lab-surface))}
+:is(.ds-table-body>.ds-table-row,.ds-hover-row)::before{content:'';position:absolute;inset:0 var(--table-hover-inset);border-radius:var(--table-radius);background:transparent;z-index:-1}
+:is(.ds-table-body>.ds-table-row,.ds-hover-row):is(:hover,:focus-within)::before{background:color-mix(in srgb,var(--lab-soft) 60%,var(--lab-surface))}
 .ds-table-body>.ds-table-row:is(:hover,:focus-within)::after,.ds-table-body>.ds-table-row:is(:hover,:focus-within)+.ds-table-row::after,.ds-data-table:has(.ds-table-body>.ds-table-row:first-child:is(:hover,:focus-within)) .ds-table-header::after{opacity:0}
 .ds-table-body>.ds-table-row{cursor:pointer}.ds-table-row small{font-size:var(--table-caption);color:var(--lab-muted)}
 .ds-table-line{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
