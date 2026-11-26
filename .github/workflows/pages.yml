@@ -26,6 +26,20 @@ jobs:
       - run: npm run build
         env:
           DEPLOY_BASE: /virena-design-lab/
+      - name: Check out the TES-255 review version
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: 0b35fd89d3fed516c5243c6fdacfdb33a1043325
+          path: tes-255-review
+          persist-credentials: false
+      - name: Build storefront review
+        working-directory: tes-255-review
+        env:
+          DEPLOY_BASE: /virena-design-lab/tes-255/
+        run: |
+          npm ci
+          npm run build
+          mv dist ../dist/tes-255
       - uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d
       - uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9
         with:
