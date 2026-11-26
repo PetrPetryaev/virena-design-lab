@@ -1,0 +1,65 @@
+import assert from 'node:assert/strict';
+import {checkoutErrors,checkoutPayerCell,checkoutQuote,createDemoOrder,deliveryDates,deliveryMapAddress,emptyCheckout,exampleDeliverySlots,exampleShowrooms,fulfillmentDetails} from '../src/cabinet/components/commerceData.js';
+
+const products=[{id:'training',name:'Обучающий бот',category:'online',price:29,description:'Обучение'}];
+const lines=[{productId:'training',quantity:1}],draft={...emptyCheckout(),payment:'external'};
+assert.deepEqual(checkoutErrors(draft,false),{});
+const invalid={...draft,address:'',payment:'invalid'};
+assert.ok(checkoutErrors(invalid,true,'delivery').address);
+assert.equal(checkoutErrors(invalid,true,'delivery').payment,undefined);
+assert.ok(checkoutErrors(invalid,true,'payment').payment);
+assert.equal(checkoutErrors(invalid,true,'payment').address,undefined);
+assert.deepEqual(checkoutErrors({...draft,recipient:''},false),{});
+for(const payment of ['external','balance']){
+ const order=createDemoOrder(lines,products,{...draft,payment,useBonus:true,saveCard:true},'DEMO');
+ assert.equal(order.useBonus,true);
+ assert.equal(order.paymentChoice,payment==='external'?'external-bonus':'balance');
+ assert.equal(order.saveCard,payment==='external');
+ assert.deepEqual(order.payments,[]);
+}
+const legacy=createDemoOrder(lines,products,{...draft,useBonus:undefined,payment:'external-bonus'},'LEGACY');
+assert.equal(legacy.paymentChoice,'external-bonus');
+assert.equal(legacy.useBonus,true);
+const legacyDisabled=createDemoOrder(lines,products,{...draft,payment:'external-bonus',useBonus:false},'LEGACY-OFF');
+assert.equal(legacyDisabled.paymentChoice,'external');
+assert.equal(legacyDisabled.useBonus,false);
+assert.equal(emptyCheckout().saveCard,false);
+assert.equal(emptyCheckout().payment,'');
+assert.equal(checkoutErrors(emptyCheckout(),false,'payment').payment,'Выберите способ оплаты');
+assert.equal(emptyCheckout().payerCell,'VR-100024');
+assert.equal(checkoutPayerCell({payerCell:''}).id,'VR-100024');
+assert.equal(checkoutPayerCell({payerCell:'VR-100081'}),undefined);
+assert.deepEqual(checkoutQuote(lines,products,{...draft,useBonus:true}),{
+ goodsCents:2900,physical:false,deliveryCents:0,taxCents:483,bonusCapCents:1208,bonusCents:1208,payableCents:1692,
+});
+const physicalProducts=[{id:'expert',price:690,category:'device'}];
+const physicalLines=[{productId:'expert',quantity:1}];
+const courierQuote=checkoutQuote(physicalLines,physicalProducts,{...draft,useBonus:true});
+assert.equal(courierQuote.deliveryCents,990);
+assert.equal(courierQuote.taxCents,11500);
+assert.equal(courierQuote.bonusCents,2500);
+assert.equal(courierQuote.payableCents,67490);
+assert.equal(checkoutQuote(physicalLines,physicalProducts,{...draft,fulfillment:'showroom'}).payableCents,69000);
+const courierOrder=createDemoOrder(physicalLines,physicalProducts,{...draft,useBonus:true},'COURIER');
+assert.deepEqual(courierOrder.quote,courierQuote);
+assert.equal(courierOrder.taxCents,0);
+assert.equal(courierOrder.includedTaxCents,11500);
+const addressDetails={entrance:'2',floor:'4',comment:'Уточнить при звонке'};
+assert.deepEqual(createDemoOrder(physicalLines,physicalProducts,{...draft,addressDetails},'ADDRESS').delivery.addressDetails,addressDetails);
+assert.equal(createDemoOrder(physicalLines,physicalProducts,{...draft,addressDetails,fulfillment:'showroom'},'PICKUP').delivery.addressDetails,undefined);
+const friday=new Date(2026,10,27);
+const [first,second,third]=deliveryDates(friday).map(day=>day.key);
+assert.deepEqual([first,second,third],['2026-12-01','2026-12-02','2026-12-03']);
+const selected={...draft,deliveryDate:first,deliverySlot:exampleDeliverySlots[0]};
+assert.deepEqual(checkoutErrors(selected,true,'all',friday),{});
+assert.ok(checkoutErrors({...selected,deliveryDate:'2026-11-25'},true,'delivery',friday).deliveryDate);
+assert.ok(checkoutErrors({...selected,deliverySlot:'00:00'},true,'delivery',friday).deliverySlot);
+assert.ok(checkoutErrors({...selected,deliveryOther:true},true,'delivery',friday).deliveryName);
+const pickup={...selected,fulfillment:'showroom',showroom:exampleShowrooms[0],deliveryOther:true,deliveryName:'Другой адресат',deliveryPhone:'+7 999 555 22 33'};
+assert.deepEqual(checkoutErrors(pickup,true,'all',friday),{});
+assert.deepEqual(fulfillmentDetails(pickup),{pickup:true,method:'Самовывоз',address:exampleShowrooms[0],schedule:'',name:draft.recipient,phone:''});
+assert.ok(checkoutErrors({...pickup,pickupOther:true,pickupName:'Анна'},true,'all',friday).pickupPhone);
+assert.ok(checkoutErrors({...selected,deliveryOther:true,deliveryName:'Анна',deliveryPhone:'+7999999999999999999'},true,'all',friday).deliveryPhone);
+assert.equal(deliveryMapAddress({country:'Россия',city:'Москва',address:'Тестовая улица, 5 кв. 8',postal:'123456'}),'Россия, Москва, Тестовая улица, 5');
+assert.equal(deliveryMapAddress({country:'Россия',city:'Москва',address:'Тестовая улица, 5, стр. 8, кв. 2',postal:'123456'}),'Россия, Москва, Тестовая улица, 5, стр. 8');
+console.log('PASS checkout choices, fulfillment dates and branches, and legacy payment draft');

@@ -7,7 +7,7 @@ export function normalizeCommerceUrl(url){
  const page=url.searchParams.get('page'),intent=url.searchParams.get('intent')||'';
  if(['store','cabinet'].includes(tab)){
   if(page==='shop'&&membershipIntents.includes(intent))url.searchParams.set('tab','cabinet');
-  else if(isMarketplacePage(page,intent)){url.searchParams.set('tab','store');url.searchParams.delete('intent');}
+  else if(isMarketplacePage(page,intent)){url.searchParams.set('tab','store');if(page!=='confirmation'||!/^order:\d+$/.test(intent))url.searchParams.delete('intent');}
  }
  return url;
 }

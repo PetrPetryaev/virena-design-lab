@@ -38,6 +38,16 @@ const base=[
  ],{deliveryCents:700,delivery})
 ];
 const clone=value=>JSON.parse(JSON.stringify(value));
+export function readSessionOrders(raw){
+ const orders=JSON.parse(raw??'[]');
+ return Array.isArray(orders)?orders.filter(order=>
+  order?.demo===true&&order.status==='demo'&&typeof order.id==='string'&&/^\d+$/.test(order.id)&&
+  Number.isSafeInteger(Number(order.id))&&Number(order.id)>=300001&&Number.isFinite(Date.parse(order.date))&&Array.isArray(order.payments)&&
+  Number.isSafeInteger(order.deliveryCents)&&Number.isSafeInteger(order.taxCents)&&
+  typeof order.quote?.physical==='boolean'&&['goodsCents','deliveryCents','taxCents','bonusCents','payableCents'].every(key=>Number.isSafeInteger(order.quote[key]))&&
+  Array.isArray(order.items)&&order.items.length>0&&order.items.every(item=>
+   typeof item?.name==='string'&&[item.quantity,item.unitCents,item.discountCents,item.bv].every(Number.isSafeInteger))):[];
+}
 export function ordersFor(scenario='ready'){
  if(scenario==='empty')return [];
  if(scenario==='single')return clone(base.slice(0,1));
