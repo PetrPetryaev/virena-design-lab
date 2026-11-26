@@ -142,7 +142,7 @@
 .checkout-recipient-lookup .real-field{width:100%!important;height:var(--profile-px-48)!important;padding-inline-end:var(--profile-s12)!important}
 .checkout-recipient-lookup [data-ui=Button]{flex:none}
 .checkout-recipient-lookup [data-ui=Button]>.motion-surface{min-width:0!important;padding-inline:var(--profile-s12)!important}
-.checkout-recipient-result-row{display:flex;align-items:center;flex-wrap:wrap;gap:var(--profile-s12)}
+.checkout-recipient-result-row{display:grid;grid-template-columns:minmax(0,1fr)}
 .checkout-recipient-result-row .checkout-choice{max-width:100%;overflow-wrap:anywhere}
 
 /* Delivery and pickup share the same choice and disclosure styles. */
@@ -234,8 +234,8 @@
 .checkout-buyer-contacts{display:flex;flex-wrap:wrap;gap:var(--profile-s4) var(--profile-s12);color:var(--lab-muted);font-size:var(--profile-px-14);line-height:var(--profile-px-20);overflow-wrap:anywhere}
 .checkout-one-page .checkout-recipient{gap:var(--profile-s24)}
 .checkout-payer-options .checkout-option{position:relative;display:grid;align-content:center;justify-items:start;gap:var(--profile-s4);padding:var(--profile-s12) var(--profile-s16);min-width:0;min-height:var(--profile-px-56)}
-.checkout-payer-options .checkout-option small{white-space:nowrap}
-.checkout-payer-options .checkout-option-list{grid-template-columns:repeat(3,minmax(0,var(--profile-px-120)));display:grid}
+.checkout-payer-options .checkout-option :is(strong,small){min-width:0;white-space:normal;overflow-wrap:anywhere}
+.checkout-payer-options .checkout-option-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,var(--profile-px-220)),1fr))}
 @media(max-width:600px){
  .checkout-payer-options .checkout-option-list{display:flex;flex-wrap:wrap}
  .checkout-payer-options .checkout-option{flex:0 0 auto;padding-inline:var(--profile-s12)}
@@ -339,3 +339,31 @@
 
 
 .checkout-account-id{white-space:nowrap}
+
+@media(max-width:767px){
+ .checkout :is(.checkout-stage-actions,.checkout-payment-result) [data-ui=Button],
+ .checkout :is(.checkout-stage-actions,.checkout-payment-result) [data-ui=Button]>.motion-surface{width:100%!important;min-width:0!important}
+}
+
+@media(max-width:767px){
+ .checkout-layout>.checkout-after-summary{grid-column:1;margin:0}
+ .checkout .checkout-subtotal{font-size:18px;line-height:24px}
+}
+
+@media(max-width:767px){
+ .checkout-one-page .checkout-layout :is(.checkout-panel,.checkout-summary){
+  margin-inline:calc(50% - 50vw - 8px);
+  padding:24px;
+ }
+ .checkout.checkout-one-page{width:100vw;margin-inline:calc(50% - 50vw);padding-inline:calc(50vw - 50%);box-sizing:border-box;overflow-x:clip}
+}
+
+.checkout-recipient-result>legend{width:100%}
+.checkout-recipient-heading{display:flex;align-items:center;justify-content:space-between;gap:8px}
+
+@media(max-width:767px){
+ .checkout .checkout-payer-options :is(.checkout-option-list,.checkout-recipient-result-row){display:grid;grid-template-columns:minmax(0,1fr)}
+ .checkout .checkout-payer-options .checkout-choice{width:100%;box-sizing:border-box}
+ .cab-main:has(.checkout-after-summary){animation:none!important;transform:none!important;padding-bottom:calc(80px + env(safe-area-inset-bottom))}
+ .checkout-layout>.checkout-after-summary{position:fixed;inset:auto 0 0;z-index:20;padding:8px 16px calc(8px + env(safe-area-inset-bottom));background:var(--lab-surface);border-top:1px solid var(--lab-line)}
+}

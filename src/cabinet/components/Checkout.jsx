@@ -169,7 +169,8 @@ function CheckoutPaymentPage({ui,draft,scenario,quote,navigate,back,onFixturePai
  const savedCard=paymentMethod(draft)==='saved-card',account=draft.committedRecipient||checkoutAccount(draft,scenario);
  const [card,setCard]=useState(emptyCard),[visited,setVisited]=useState({}),[result,setResult]=useState('');
  const [pending,setPending]=useState(false),[showSecurityHelp,setShowSecurityHelp]=useState(false);
- const timer=useRef(null),form=useRef(null);
+ const timer=useRef(null),form=useRef(null),retrying=useRef(false),errorHeading=useRef(null);
+ useLayoutEffect(()=>{if(result)errorHeading.current?.focus();},[result]);
  const errors=cardErrors(card);
  useLayoutEffect(()=>()=>clearTimeout(timer.current),[]);
 
@@ -186,8 +187,8 @@ function CheckoutPaymentPage({ui,draft,scenario,quote,navigate,back,onFixturePai
    setPending(false);
    setCard(emptyCard);
    setVisited({});
-   if(scenario==='payment-paid'&&onFixturePaid){onFixturePaid();return;}
-   setResult(scenario==='payment-failed'?'failed':scenario==='payment-pending'?'pending':'checked');
+   if(scenario==='payment-failed'&&!retrying.current){setResult('failed');return;}
+   onFixturePaid(scenario==='payment-pending'?'pending':'paid');
   },600);
  };
 
@@ -200,22 +201,16 @@ function CheckoutPaymentPage({ui,draft,scenario,quote,navigate,back,onFixturePai
   {visited[name]&&errors[name]&&<p className="profile-error" role="alert">{errors[name]}</p>}
  </div>;
 
- const resultTitle={checked:'Проверка формы завершена',failed:'Тестовый платёж отклонён',pending:'Тестовый платёж проверяется'};
  return <div className="checkout-pay-layout">
   <div className="checkout-top"><Button {...ui} label="Назад" leadingIconContent={<ui.Shared.Icon name="return-to-list"/>} onClick={back}/></div>
   <section className="profile-card checkout-pay-card" aria-labelledby="checkout-pay-title">
    <h1 id="checkout-pay-title" ref={heading} tabIndex={-1}>Оплата банковской картой</h1>
    {account&&<p className="checkout-caption">Заказ на {account.payer?account.login:account.name} · {account.id}{!account.payer&&account.login&&' · '+account.login}{account.payer&&<> · Оплачивает {account.payer.name} · {account.payer.id}</>}</p>}
    {result?<div className="checkout-payment-result" role="status">
-    <h2>{resultTitle[result]}</h2>
-    <p>Деньги не списаны. Товары остались в корзине.</p>
-    {result==='failed'?<>
-     <Button {...ui} label="Попробовать ещё раз" tone="Primary" onClick={()=>setResult('')}/>
-     <Button {...ui} label="Выбрать другой способ" onClick={back}/>
-    </>:<>
-     <Button {...ui} label="Вернуться к оформлению" tone="Primary" onClick={back}/>
-     <Button {...ui} label="Продолжить покупки" onClick={()=>navigate('shop')}/>
-    </>}
+    <h2 ref={errorHeading} tabIndex={-1}>Не удалось оплатить</h2>
+    <p>Платёж отклонён. Товары и данные заказа сохранены.</p>
+    <Button {...ui} label="Попробовать ещё раз" tone="Primary" onClick={()=>{retrying.current=true;setResult('');requestAnimationFrame(()=>form.current?.querySelector('input')?.focus());}}/>
+    <Button {...ui} label="Выбрать другой способ" onClick={back}/>
    </div>:<form className="checkout-card-form" ref={form} autoComplete="off" aria-busy={pending}
     onSubmit={event=>{event.preventDefault();pay();}}
     onKeyDown={event=>{if(event.key==='Enter'&&event.target.tagName==='INPUT'){event.preventDefault();pay();}}}>
@@ -256,24 +251,26 @@ function CheckoutStage({ui,stage,title,active,complete,summary,headerAction,edit
    {complete&&<div className="checkout-stage-summary">{summary}</div>}
    <div className="checkout-stage-content" hidden={!active}>{children}</div>
   </section>
-  {active&&<div className="checkout-stage-actions">{action??<Button {...ui} tone="Primary" label="Применить" disabled={busy||applyDisabled} onClick={apply}/>}</div>}
+  {active&&action!==false&&<div className="checkout-stage-actions">{action??<Button {...ui} tone="Primary" label="Применить" disabled={busy||applyDisabled} onClick={apply}/>}</div>}
  </div>;
 }
 
 function CheckoutSuccess({ui,order,navigate}){
  const heading=useRef(null);
  useLayoutEffect(()=>heading.current?.focus(),[order.id]);
+ const pending=order.status==='pending',legacy=order.status==='demo';
  const delivery=order.delivery;
  const payment=paymentLabels[order.paymentChoice==='external-bonus'?'external':order.paymentChoice];
  return <div className="profile checkout checkout-confirmation">
   <section className="profile-card checkout-success" aria-labelledby="checkout-success-title">
-   <span className="checkout-success-mark" aria-hidden="true"><ui.Shared.Icon name="Auth / Icon / Success"/></span>
-   <h2 id="checkout-success-title" ref={heading} tabIndex={-1}>Тестовый заказ № {order.id}</h2>
-   <p>Проверка оплаты завершена. Деньги не списаны.</p>
+   <span className="checkout-success-mark" data-pending={pending} aria-hidden="true"><ui.Shared.Icon name={pending?'Auth / Icon / Info':'Auth / Icon / Success'}/></span>
+   <h2 id="checkout-success-title" ref={heading} tabIndex={-1}>{pending?'Ожидаем подтверждения оплаты':legacy?'Проверка формы завершена':'Оплата прошла'}</h2>
+   <strong>Заказ № {order.id}</strong>
+   <p>{pending?'Платёж обрабатывается. Статус заказа можно посмотреть в «Моих покупках».':legacy?'Деньги не списаны.':'Состав заказа и способ получения сохранены в «Моих покупках».'}</p>
    <div className="checkout-receipt">
     <div className="checkout-receipt-heading">
      <h3>Состав заказа</h3>
-     <ui.Shared.Status tone="Neutral" label="Без оплаты"/>
+     <ui.Shared.Status tone={pending?'Warning':legacy?'Neutral':'Success'} label={pending?'В обработке':legacy?'Без оплаты':'Оплачен'}/>
     </div>
     <ul className="checkout-success-products">{order.items.map(item=>{
      const product=products.find(product=>product.id===item.productId);
@@ -290,7 +287,7 @@ function CheckoutSuccess({ui,order,navigate}){
      {order.recipient&&<section><h3>Аккаунт получателя</h3><p>{order.recipient.name||order.recipient.login}</p><p>{order.recipient.id}</p></section>}
      {payment&&<section><h3>Способ оплаты</h3><p>{payment}</p></section>}
     </div>
-    <CheckoutTotals quote={order.quote} pickup={delivery?.method==='Самовывоз'} totalLabel="Сумма проверки"/>
+    <CheckoutTotals quote={order.quote} pickup={delivery?.method==='Самовывоз'} totalLabel={pending?'Сумма заказа':legacy?'Сумма проверки':'Оплачено'}/>
    </div>
    <div className="checkout-actions">
     <Button {...ui} label="Мои покупки" tone="Primary" onClick={()=>navigate('orders','order:'+order.id)}/>
@@ -301,6 +298,14 @@ function CheckoutSuccess({ui,order,navigate}){
 }
 
 export default function Checkout({Shared,db,lines,draft,setDraft,navigate,onFixturePaid,order,confirmation=false,scenario='ready',guest=false,onSignIn,onGuestVerified,deliveryProfile}){
+ const [mobileLayout,setMobileLayout]=useState(()=>matchMedia('(max-width:767px)').matches);
+ React.useEffect(()=>{
+  const media=matchMedia('(max-width:767px)');
+  const update=()=>setMobileLayout(media.matches);
+  media.addEventListener('change',update);
+  update();
+  return ()=>media.removeEventListener('change',update);
+ },[]);
  const [errors,setErrors]=useState({}),[submitError,setSubmitError]=useState(false),[balanceReview,setBalanceReview]=useState(false);
  const [recipientLoading,setRecipientLoading]=useState(false),[fulfillmentLoading,setFulfillmentLoading]=useState(false);
  const [stage,setStage]=useState('buyer'),[applied,setApplied]=useState({});
@@ -408,6 +413,14 @@ export default function Checkout({Shared,db,lines,draft,setDraft,navigate,onFixt
   setDraft(d=>({...d,step:'pay',committedRecipient:account,committedFulfillment:physical?fulfillmentDetails(draft):null}));
  };
  const account=applied.buyer,receiving=applied.fulfillment;
+ const paymentAction=<>
+     {submitError&&<p className="profile-error" role="alert">Не удалось создать заказ. Корзина и данные сохранены. Попробуйте ещё раз.</p>}
+     {reviewingBalance?<section className="checkout-balance-review" aria-label="Оплата с балансового счёта" role="status">
+      <h3>Оплата с балансового счёта</h3>
+      <p className="checkout-caption">Списание со счёта сейчас недоступно.</p>
+      <Button {...ui} label={`Оплатить ${euro(quote.payableCents)}`} tone="Primary" disabled/>
+     </section>:<Button {...ui} label={submitError?'Повторить оформление':'Перейти к оплате'} tone="Primary" disabled={busy||!!draft.buyerContact||physical&&!fulfillmentAvailable} onClick={continueToPayment}/>}
+      </>;
  const back=(label,page)=><Button {...ui} label={label} leadingIconContent={<Shared.Icon name="return-to-list"/>} onClick={()=>navigate(page)}/>;
  if(confirmation&&order&&!guest)return <CheckoutSuccess {...{ui,order,navigate}}/>;
  if(!lines.length||confirmation)return <div className="profile checkout"><section className="profile-card profile-empty"><EmptyIllustration kind="cart"/><h2>{confirmation?'Нет подтверждённого заказа':'Корзина пуста'}</h2><p>{confirmation?'Проверьте список в «Моих покупках».':'Добавьте товары, чтобы перейти к оформлению.'}</p>{back('Вернуться к магазину','shop')}</section></div>;
@@ -439,19 +452,13 @@ export default function Checkout({Shared,db,lines,draft,setDraft,navigate,onFixt
        hideRegion showPrice onLoadingChange={setFulfillmentLoading}/>
       {errors.addressMode&&<p className="profile-error" role="alert">{errors.addressMode}</p>}
      </CheckoutStage>}
-     <CheckoutStage {...stageProps('payment')} title="Способ оплаты" action={<>
-     {submitError&&<p className="profile-error" role="alert">Не удалось создать заказ. Корзина и данные сохранены. Попробуйте ещё раз.</p>}
-     {reviewingBalance?<section className="checkout-balance-review" aria-label="Оплата с балансового счёта" role="status">
-      <h3>Оплата с балансового счёта</h3>
-      <p className="checkout-caption">Списание со счёта сейчас недоступно.</p>
-      <Button {...ui} label={`Оплатить ${euro(quote.payableCents)}`} tone="Primary" disabled/>
-     </section>:<Button {...ui} label={submitError?'Повторить оформление':'Перейти к оплате'} tone="Primary" disabled={busy||!!draft.buyerContact||physical&&!fulfillmentAvailable} onClick={continueToPayment}/>}
-      </>}>
+     <CheckoutStage {...stageProps('payment')} title="Способ оплаты" action={mobileLayout?false:paymentAction}>
       <CheckoutPaymentOptions {...ui} {...{draft,setDraft}} scenario={scenario} quote={quote} onChange={()=>clearError('payment')} error={errors.payment}/>
      </CheckoutStage>
     </>}
    </div>
    <CheckoutOrderSummary {...{lines,draft,guest,scenario}} snapshot={applied} quote={summaryQuote} available={fulfillmentAvailable}/>
+   {mobileLayout&&!guest&&!busy&&!draft.buyerContact&&current==='payment'&&applied.buyer&&(!physical||(applied.fulfillment&&fulfillmentAvailable))&&!Object.keys(validate('payment')).length&&<div className="checkout-stage-actions checkout-after-summary">{paymentAction}</div>}
   </div>
  </div>;
 }

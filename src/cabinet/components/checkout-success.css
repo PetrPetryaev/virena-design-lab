@@ -11,3 +11,4 @@
 .checkout-receipt .checkout-order-totals{margin:var(--profile-s16) 0 0}
 .checkout-receipt .checkout-subtotal{margin-bottom:0}
 @media(max-width:600px){.checkout-receipt-details{grid-template-columns:minmax(0,1fr)}}
+.checkout-success-mark[data-pending="true"]{background:var(--lab-warning-surface);color:var(--lab-warning)}

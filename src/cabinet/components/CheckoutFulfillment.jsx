@@ -164,8 +164,8 @@ function AddressEditor({ui,draft,onSave,onClose}){
    </div>
   </div>
   <div className="checkout-address-actions">
-   <Button {...ui} label="Сохранить адрес" tone="Primary" onClick={save}/>
-   <Button {...ui} label="Отменить изменения" size="40" onClick={onClose}/>
+   <Button {...ui} label="Сохранить" tone="Primary" onClick={save}/>
+   <Button {...ui} label="Отменить" size="40" onClick={onClose}/>
   </div>
  </section>;
 }

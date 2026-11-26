@@ -16,7 +16,8 @@ function PayerCells({draft,setDraft,scenario,error,other}){
    {cells.map(cell=><label className="checkout-option checkout-choice" key={cell.id}>
     <input type="radio" name={id} checked={selected===cell.id} aria-invalid={error?true:undefined}
      onChange={()=>setDraft(d=>({...d,payerCell:cell.id}))}/>
-    <strong>{cell.position}</strong><small>{cell.id}</small>
+    <strong>{cell.position}</strong><small>{cell.id}{selected===cell.id&&<> · {cell.login}</>}</small>
+    {selected===cell.id&&<small>{other?'Оплачивает заказ':'Получает и оплачивает заказ'}</small>}
    </label>)}
   </div>
   {error&&<p id={id} className="profile-error" role="alert">{error}</p>}
@@ -67,13 +68,14 @@ export default function CheckoutRecipient({Shared,db,draft,setDraft,scenario,val
   setEditing(null);
  };
  const feedback=displayedCell?<fieldset className="checkout-options checkout-payer-options checkout-recipient-result">
-  <legend>Получатель</legend>
+  <legend><span className="checkout-recipient-heading">Получатель
+   {draft.recipientCell&&<Button {...{Shared,db}} label="Изменить" size="40" tone="Soft" onClick={editRecipient}/>}
+  </span></legend>
   <div className="checkout-recipient-result-row">
    <label className="checkout-option checkout-choice">
     <input type="radio" name={id+'recipient'} checked={!!draft.recipientCell} onChange={confirmRecipient}/>
     <strong>{displayedCell.login}</strong><small>{displayedCell.id}</small>
    </label>
-   {draft.recipientCell&&<Button {...{Shared,db}} label="Изменить получателя" size="40" tone="Ghost" onClick={editRecipient}/>}
   </div>
  </fieldset>:lookupMessage?<p className="profile-error" role="alert">{lookupMessage}</p>:null;
  useLayoutEffect(()=>{if(feedback)lastFeedback.current=feedback;},[feedback]);

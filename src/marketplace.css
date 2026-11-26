@@ -1,10 +1,9 @@
 /* The marketplace reuses the commerce components and cabinet layout primitives. */
 .marketplace.profile{--cab-content-max:1240px;--cab-sidebar:0px;max-width:none;margin:0}
 .marketplace .cab-body{width:100%}
-.cabinet.marketplace .cab-header{flex-wrap:wrap;height:auto;min-height:72px;padding-block:12px;gap:24px;background:transparent}
+.cabinet.marketplace .cab-header{flex-wrap:wrap;height:auto;min-height:72px;padding-block:12px;background:transparent}
 .marketplace-brand{display:flex;flex-shrink:0;width:111px}
 .marketplace-brand img{width:100%}
-.marketplace .cab-avatar{width:40px;height:40px}
 [data-theme=dark] .marketplace-brand img{filter:brightness(0) invert(1)}
 .marketplace-nav{display:flex;align-items:center;gap:var(--profile-px-8)}
 .marketplace .cab-title{font-size:var(--profile-px-16);margin-left:auto}

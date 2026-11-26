@@ -18,6 +18,7 @@ function CartLoading(){
 export default function Cart({Shared,db,lines=[],onQuantity,onRemove,onCheckout,navigate,scenario='ready',onRetry,modal=false}){
  const resolved=lines.map(line=>({product:products.find(p=>p.id===line.productId),quantity:quantityOf(line.quantity)})).filter(line=>line.product);
  const totalCents=resolved.reduce((total,{product,quantity})=>total+Math.round(product.price*100)*quantity,0);
+ const itemCount=resolved.reduce((sum,line)=>sum+line.quantity,0);
  const empty=scenario==='empty'||!resolved.length;
  return <div className={'profile cart'+(modal?' cart-in-modal':'')}>
   {!modal&&<div className="cart-back"><Button {...{Shared,db}} label="Вернуться к магазину" tone="White" leadingIconContent={<Shared.Icon name="return-to-list"/>} onClick={()=>navigate('shop')}/></div>}
@@ -28,7 +29,13 @@ export default function Cart({Shared,db,lines=[],onQuantity,onRemove,onCheckout,
     <div className="cart-item-bottom"><div className="cart-item-controls"><QuantityControl {...{Shared,db}} value={quantity} label={`Количество ${product.name}`} onChange={value=>onQuantity(product.id,value)}/></div>
     <div className="cart-line-actions"><strong className="cart-line-total" aria-label={`Сумма за ${product.name}`}>{formatCents(Math.round(product.price*100)*quantity)}</strong><Button {...{Shared,db}} icon="Boris / Icon / Trash action" label={`Удалить ${product.name}`} size="40" tone="Ghost" onClick={()=>onRemove(product.id)}/></div></div>
    </article>)}</section>
-   <aside className="cart-summary" aria-label="Итог корзины"><h2>Ваш заказ</h2><dl><div className="cart-total"><dt>Сумма товаров</dt><dd>{formatCents(totalCents)}</dd></div></dl><Button {...{Shared,db}} label="Перейти к оформлению" tone="Primary" onClick={onCheckout}/></aside>
+   <aside className="cart-summary" aria-label="Итог корзины">
+    <h2>Ваш заказ</h2>
+    <dl><div><dt>Товары · {itemCount} шт.</dt><dd>{formatCents(totalCents)}</dd></div>
+     <div className="cart-total"><dt>Итого без доставки и налогов</dt><dd>{formatCents(totalCents)}</dd></div></dl>
+    <p className="cart-summary-details">Доставка и налоги — на следующих шагах.</p>
+    <Button {...{Shared,db}} label="Перейти к оформлению" tone="Primary" onClick={onCheckout}/>
+   </aside>
   </div>}
  </div>;
 }

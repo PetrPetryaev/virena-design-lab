@@ -2,10 +2,13 @@
 
 .lab-settings-panel .auth-toolbar{display:grid;padding:0;background:none;gap:16px}.lab-settings-panel .auth-toolbar select{max-width:100%;width:100%}.lab-settings-panel .auth-toolbar span{font-size:12px;line-height:1.5}.lab-settings-panel .segmented-tabs{max-width:100%}
 
-@media(max-width:720px){
- #root:has(>.cabinet.marketplace .checkout){display:grid;grid-template-rows:minmax(0,1fr) auto;height:100dvh}
- #root>.cabinet.marketplace:has(.checkout){grid-row:1;height:100%}
- #root:has(>.cabinet.marketplace .checkout)>.lab-settings{position:relative;grid-row:2;inset:auto;padding-inline:16px;background:var(--lab-surface);border-top:1px solid var(--lab-line)}
- #root:has(>.cabinet.marketplace .checkout)>.lab-settings .lab-settings-panel{right:16px}
- #root:has(>.cabinet.marketplace .checkout)>.lab-settings .lab-settings-trigger>button{box-shadow:none}
+@media(max-width:767px){
+ #root:has(.store-mobile-nav,.marketplace .checkout)>.lab-settings{top:8px;right:12px;bottom:auto}
+ #root:has(.store-mobile-nav,.marketplace .checkout)>.lab-settings .lab-settings-panel{top:52px;bottom:auto}
+ #root:has(>.lab-settings)>.marketplace:has(.store-mobile-nav,.checkout) .cab-top-actions{margin-right:52px}
+ body:has(.cabinet.marketplace)>.auth-toast,.cart-modal-dialog>.auth-toast{
+  position:fixed;inset:calc(env(safe-area-inset-top,0px) + 12px) 16px auto;
+  width:max-content;max-width:calc(100% - 32px);box-sizing:border-box;margin:0 auto;
+  transform:none;pointer-events:none
+ }
 }
