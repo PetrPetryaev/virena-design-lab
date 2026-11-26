@@ -1,0 +1,28 @@
+{
+  "fileKey": "dmsrC5mmWpl8HYgprXt22D",
+  "model": "gemini-3.1-flash-image",
+  "format": "Editorial illustrations generated in Figma, exported by panel in reading order.",
+  "sheets": {
+    "90:12": [
+      "partner-cabinet-guide",
+      "catalog-update",
+      "partner-meeting",
+      "welcome-materials",
+      "offer-details",
+      "product-card",
+      "online-event",
+      "event-calendar"
+    ],
+    "90:13": [
+      "community",
+      "profile-settings",
+      "product-questions",
+      "offer-news",
+      "learning",
+      "product-info"
+    ]
+  },
+  "individualCovers": {
+    "partner-cabinet-guide": "91:12"
+  }
+}
