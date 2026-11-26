@@ -69,7 +69,7 @@ export function createDemos({db,Node,css,text,ink}){
   </button>;
  }
  function Frame({children,controls,status}){return <div className="playground"><div className="preview"><div className="real-stage">{children}</div><div className="preview-status" role="status">{status||'Интерактивный пример · тестовые данные'}</div></div><div className="controls">{controls||<small>Попробуй мышь, Tab, Enter и Escape.</small>}</div></div>;}
- function FieldDemo({group,embedded=false,value:controlledValue,onChange,source,label:fieldLabel,placeholder:fieldPlaceholder,type:providedType,codeLength=6,error:externalError,validateOnBlur=true,showPasswordRules=!embedded,emailSuggestions=false,countryCode,onCountryChange,readOnly=false,readOnlyHint='',clearable,leadingIcon,trailingContent,searchSuggestions=true}){useLocale();
+ function FieldDemo({group,embedded=false,value:controlledValue,onChange,source,label:fieldLabel,placeholder:fieldPlaceholder,type:providedType,codeLength=6,error:externalError,validateOnBlur=true,showPasswordRules=!embedded,emailSuggestions=false,countryCode,onCountryChange,readOnly=false,readOnlyHint='',clearable,leadingIcon,trailingContent,inputMode,autoComplete,masked=false,searchSuggestions=true}){useLocale();
 
   const search=group.name==='Boris / Search',phone=group.name==='Auth / Phone';
   const canClear=clearable??true;
@@ -114,7 +114,7 @@ export function createDemos({db,Node,css,text,ink}){
    {leadingIcon}{search&&<Icon name="Serach"/>}
    {phone&&<div className="country-wrap" onBlur={e=>{if(!e.currentTarget.contains(e.relatedTarget))setCountryOpen(false);}}><button type="button" className="field-tool country" disabled={disabled||readOnly} aria-label={t("Код страны")} aria-expanded={countryOpen} onClick={()=>setCountryOpen(!countryOpen)}><img src={country.flag} alt={t(country.name)}/><Icon name="Auth / Icon / Chevron" muted/></button>{countryOpen&&<div className="option-menu" onKeyDown={e=>{if(e.key==='Escape')setCountryOpen(false);}}>{countries.map(c=><button type="button" key={c.name} aria-selected={c.name===country.name} onClick={()=>{setCountry(c);setValue(formatPhoneNumber(value,c.name));onCountryChange?.(c.name);setCountryOpen(false);input.current?.focus();}}><img src={c.flag} alt=""/>{t(c.name)} {c.code}</button>)}</div>}</div>}
    {phone&&<span>{country.code}</span>}
-   <input readOnly={readOnly} ref={input} data-email-suggestions={emailSuggestions} role={emailSuggestions?"combobox":undefined} aria-autocomplete={emailSuggestions?"list":undefined} aria-expanded={emailSuggestions?!!emails.length:undefined} aria-controls={emails.length?emailListId:undefined} aria-activedescendant={emails.length?emailListId+'-'+emailIndex:undefined} aria-describedby={dateError?dateErrorId:hasRules?rulesId:undefined} aria-label={fieldLabel||(search?t('Поиск участника'):phone?t('Телефон'):code?t('Код подтверждения'):password?t('Пароль'):t('Текст поля'))} aria-invalid={invalid} disabled={disabled} type={password&&!reveal?'password':phone?'tel':type==='Email'?'email':'text'} inputMode={phone||code||date?'numeric':undefined} autoComplete={date?"bday":code?"one-time-code":undefined} maxLength={code?codeLength:undefined} onPaste={phone?e=>{e.preventDefault();setValue(formatPhoneNumber(e.clipboardData.getData('text'),country.name));}:code?e=>{e.preventDefault();setValue(e.clipboardData.getData('text').replace(/\D/g,'').slice(0,codeLength));}:undefined} placeholder={phone?phoneExample(country.name):fieldPlaceholder??(search?t('Поиск участника'):code?'123456':date?t('ДД.ММ.ГГГГ'):password?t('Введите пароль'):t('Введите текст'))} value={value} onChange={e=>{if(phone)handlePhoneChange(e);else if(date){setValue(e.target.value);setTouched(false);}else setValue(code?e.target.value.replace(/\D/g,''):e.target.value);setPicked('');}} onFocus={()=>setFocused(true)} onBlur={()=>{setFocused(false);setTouched(true);if(date){const normalized=formatDateInput(value);setValue(normalized);setDateError(dateInputError(normalized));}}} onKeyDown={e=>{if(emails.length&&['ArrowDown','ArrowUp','Enter','Escape'].includes(e.key)){e.preventDefault();e.stopPropagation();if(e.key==='Enter')pickEmail(emails[emailIndex]);else if(e.key==='Escape')setEmailDismissed(true);else setEmailActive((emailIndex+(e.key==='ArrowDown'?1:-1)+emails.length)%emails.length);return;}if(e.key==='Escape'){if(canClear&&!readOnly)clear();setCountryOpen(false);}if(e.key==='Enter'&&search&&searchSuggestions&&candidates[0]){setPicked(candidates[0]);setValue(candidates[0]);}}}/>
+   <input readOnly={readOnly} ref={input} data-email-suggestions={emailSuggestions} role={emailSuggestions?"combobox":undefined} aria-autocomplete={emailSuggestions?"list":undefined} aria-expanded={emailSuggestions?!!emails.length:undefined} aria-controls={emails.length?emailListId:undefined} aria-activedescendant={emails.length?emailListId+'-'+emailIndex:undefined} aria-describedby={dateError?dateErrorId:hasRules?rulesId:undefined} aria-label={fieldLabel||(search?t('Поиск участника'):phone?t('Телефон'):code?t('Код подтверждения'):password?t('Пароль'):t('Текст поля'))} aria-invalid={invalid} disabled={disabled} type={masked||password&&!reveal?'password':phone?'tel':type==='Email'?'email':'text'} inputMode={inputMode??(phone||code||date?'numeric':undefined)} autoComplete={autoComplete??(date?"bday":code?"one-time-code":undefined)} maxLength={code?codeLength:undefined} onPaste={phone?e=>{e.preventDefault();setValue(formatPhoneNumber(e.clipboardData.getData('text'),country.name));}:code?e=>{e.preventDefault();setValue(e.clipboardData.getData('text').replace(/\D/g,'').slice(0,codeLength));}:undefined} placeholder={phone?phoneExample(country.name):fieldPlaceholder??(search?t('Поиск участника'):code?'123456':date?t('ДД.ММ.ГГГГ'):password?t('Введите пароль'):t('Введите текст'))} value={value} onChange={e=>{if(phone)handlePhoneChange(e);else if(date){setValue(e.target.value);setTouched(false);}else setValue(code?e.target.value.replace(/\D/g,''):e.target.value);setPicked('');}} onFocus={()=>setFocused(true)} onBlur={()=>{setFocused(false);setTouched(true);if(date){const normalized=formatDateInput(value);setValue(normalized);setDateError(dateInputError(normalized));}}} onKeyDown={e=>{if(emails.length&&['ArrowDown','ArrowUp','Enter','Escape'].includes(e.key)){e.preventDefault();e.stopPropagation();if(e.key==='Enter')pickEmail(emails[emailIndex]);else if(e.key==='Escape')setEmailDismissed(true);else setEmailActive((emailIndex+(e.key==='ArrowDown'?1:-1)+emails.length)%emails.length);return;}if(e.key==='Escape'){if(canClear&&!readOnly)clear();setCountryOpen(false);}if(e.key==='Enter'&&search&&searchSuggestions&&candidates[0]){setPicked(candidates[0]);setValue(candidates[0]);}}}/>
    {canClear&&focused&&!disabled&&!readOnly&&!!value&&(!code||codeLength>1)&&<button type="button" className="field-tool field-clear" disabled={disabled} tabIndex={-1} aria-label={t("Очистить текст")} onMouseDown={e=>e.preventDefault()} onClick={clear}><Icon name="Cross" muted/></button>}
    {code&&codeLength>1&&!value&&<span className="code-paste"><Button group={family('Boris / Button')} choice={{Tone:'White',Size:'40'}} label={t("Вставить")} disabled={disabled} onClick={async()=>{try{const raw=await navigator.clipboard.readText();const digits=raw.replace(/\D/g,'');if(!digits){setPasteError(t('В буфере нет кода. Введите 6 цифр вручную.'));return;}setValue(digits.slice(0,codeLength));input.current?.focus();}catch{setPasteError(t('Не удалось прочитать буфер. Вставьте код через Ctrl+V или ⌘V.'));input.current?.focus();}}}/></span>}
    {date&&<DateCalendar value={value} onChange={setValue} disabled={disabled} inputRef={input}/>}
@@ -129,14 +129,58 @@ export function createDemos({db,Node,css,text,ink}){
    {search&&searchSuggestions&&value&&!disabled&&focused&&!picked&&<div className="search-results">{loading?<p>Поиск…</p>:scenario==='error'?<p role="alert">Не удалось загрузить. <button type="button" onClick={()=>setScenario('normal')}>Повторить</button></p>:scenario==='empty'||!candidates.length?<p>{t("Ничего не найдено")}</p>:candidates.map(name=><button type="button" key={name} onMouseDown={e=>e.preventDefault()} onClick={()=>{setPicked(name);setValue(name);}}>{name}</button>)}</div>}
   </div></DemoShell>;
  }
- function SelectDemo({group,embedded=false,value:controlledValue,onChange,source,label=t('Выбор страны'),placeholder=t('Выберите страну'),items=countries.map(c=>c.name),error:externalError,clearable=false,leadingIcon,optionIcon,searchable=items.length>8}){useLocale();
+ function SelectDemo({group,embedded=false,value:controlledValue,onChange,source,label=t('Выбор страны'),placeholder=t('Выберите страну'),items=countries.map(c=>c.name),error:externalError,clearable=false,leadingIcon,optionIcon,searchable=items.length>8,autoSelectSingle=true}){useLocale();
   const [open,setOpen]=useState(group.name==='Auth / Select menu'),[query,setQuery]=useState(''),[localValue,setLocalValue]=useState(''),[localDisabled,setDisabled]=useState(false),[error,setError]=useState(false),[active,setActive]=useState(-1);
   const value=controlledValue??localValue,disabled=source?.props?.State?.value==='Disabled'||localDisabled;
-  const root=useRef(null),input=useRef(null),menu=useRef(null),listId=useId();
+  const root=useRef(null),trigger=useRef(null),menu=useRef(null),listId=useId();
+  const autoSelected=useRef(null),typeahead=useRef({text:'',time:0});
+  const onlyOption=items.length===1?items[0]:null;
+  useEffect(()=>{
+   if(autoSelected.current!==onlyOption)autoSelected.current=null;
+   if(!autoSelectSingle||disabled||value||!onlyOption||autoSelected.current===onlyOption)return;
+   autoSelected.current=onlyOption;
+   setLocalValue(onlyOption);
+   onChange?.(onlyOption);
+  },[autoSelectSingle,disabled,onChange,onlyOption,value]);
   const options=searchable?items.filter(v=>t(v).toLowerCase().includes(query.toLowerCase())):items;
   function setValue(v){setLocalValue(v);onChange?.(v);}
-  function close(){setOpen(false);setQuery('');setActive(-1);}
-  function choose(v){setValue(v);close();setError(false);input.current?.focus();}
+  function close(){setOpen(false);setQuery('');setActive(-1);typeahead.current={text:'',time:0};}
+  function choose(v){setValue(v);close();setError(false);trigger.current?.focus();}
+  function handleKey(e){
+   if(disabled)return;
+   const {key}=e;
+   if(key==='Escape'&&open){e.preventDefault();e.stopPropagation();close();return;}
+   if(key==='Tab'){close();return;}
+   if(key==='ArrowDown'||key==='ArrowUp'){
+    e.preventDefault();
+    const direction=key==='ArrowDown'?1:-1;
+    setOpen(true);
+    setActive(i=>i<0?(direction===1?0:options.length-1):Math.max(0,Math.min(i+direction,options.length-1)));
+    return;
+   }
+   if(key==='Enter'||(!searchable&&key===' ')){
+    if(open){e.preventDefault();if(options[active])choose(options[active]);}
+    else if(!searchable||key==='Enter'){
+     e.preventDefault();
+     setOpen(true);
+     setActive(items.length?Math.max(0,items.indexOf(value)):-1);
+    }
+    return;
+   }
+   if(e.ctrlKey||e.metaKey||e.altKey||e.isComposing||key.length!==1)return;
+   if(searchable){
+    if(!open){e.preventDefault();setQuery(key);setActive(-1);setOpen(true);}
+    return;
+   }
+   const time=Date.now(),letter=key.toLocaleLowerCase();
+   const prefix=(time-typeahead.current.time<500?typeahead.current.text:'')+letter;
+   typeahead.current={text:prefix,time};
+   const repeated=[...prefix].every(char=>char===letter);
+   const term=repeated?letter:prefix;
+   const start=repeated?(open?active:items.indexOf(value))+1:0;
+   const index=items.findIndex((_,i)=>t(items[(start+i)%items.length]).toLocaleLowerCase().startsWith(term));
+   if(index>=0){e.preventDefault();setActive((start+index)%items.length);setOpen(true);}
+  }
   useEffect(()=>{const fn=e=>{if(!root.current?.contains(e.target))close();};document.addEventListener('pointerdown',fn);return()=>document.removeEventListener('pointerdown',fn);},[]);
   // Shared menus escape scroll clipping and flip above the field near the viewport edge.
   useLayoutEffect(()=>{
@@ -156,12 +200,14 @@ export function createDemos({db,Node,css,text,ink}){
   },[open,options.length]);
   const showError=!disabled&&!open&&!value&&!!(error||externalError);
   const n=variant('Auth / Select',disabled?'Disabled':open?'Open':showError?'Error':value?'Filled':'Default');
-  return <DemoShell embedded={embedded} controls={<><label className="toggle"><input type="checkbox" checked={disabled} onChange={e=>{setDisabled(e.target.checked);close();}}/>Disabled</label><label className="toggle"><input type="checkbox" checked={error} onChange={e=>setError(e.target.checked)}/>Показать ошибку</label><small>Печатай прямо в поле. Стрелки – выбор, Enter – подтвердить, Escape – закрыть.</small></>} status={value?'Выбрано: '+value:'Значение не выбрано'}>
-  <div data-ui="Select" className={'select-demo'+(embedded?' embedded-control':'')} ref={root} onKeyDown={e=>{if(e.key==='Escape'){e.preventDefault();close();}if(e.key==='ArrowDown'){e.preventDefault();setOpen(true);setActive(i=>i<0?0:Math.min(i+1,options.length-1));}if(e.key==='ArrowUp'){e.preventDefault();setOpen(true);setActive(i=>i<0?options.length-1:Math.max(0,i-1));}if(!searchable&&(e.key===' '||e.key==='Enter')&&!open){e.preventDefault();setOpen(true);setActive(Math.max(0,items.indexOf(value)));}else if((e.key==='Enter'||(!searchable&&e.key===' '))&&open){e.preventDefault();if(options[active])choose(options[active]);}if(e.key==='Tab')close();}}>
+  return <DemoShell embedded={embedded} controls={<><label className="toggle"><input type="checkbox" checked={disabled} onChange={e=>{setDisabled(e.target.checked);close();}}/>Disabled</label><label className="toggle"><input type="checkbox" checked={error} onChange={e=>setError(e.target.checked)}/>Показать ошибку</label><small>{searchable?'Введите текст для поиска. ':'Начните печатать, чтобы перейти к совпадению. '}Стрелки – выбор, Enter – подтвердить, Escape – закрыть.</small></>} status={value?'Выбрано: '+value:'Значение не выбрано'}>
+  <div data-ui="Select" className={'select-demo'+(embedded?' embedded-control':'')} ref={root} onKeyDown={handleKey}>
    <div className="real-field" style={{...css(n,true),width:source?.w??n.w,height:source?.h??n.h,maxWidth:'100%',padding:'0 var(--field-inset)',display:'flex',alignItems:'center',gap:8,overflow:'visible'}}>
-   {leadingIcon}<input ref={input} role="combobox" aria-invalid={showError} aria-label={label} readOnly={!searchable} aria-autocomplete={searchable?"list":"none"} aria-expanded={open} aria-controls={listId} aria-activedescendant={open&&options[active]?listId+'-'+active:undefined} disabled={disabled} placeholder={placeholder} value={open&&searchable?query:t(value)} onClick={()=>{setOpen(true);setActive(-1);}} onChange={e=>{setQuery(e.target.value);setOpen(true);setActive(-1);}}/>
-   {clearable&&(value||query)&&<button type="button" className="field-tool field-clear" disabled={disabled} tabIndex={-1} aria-label={t("Очистить выбор")} onMouseDown={e=>e.preventDefault()} onClick={()=>{setValue('');setQuery('');setOpen(true);input.current?.focus();}}><Icon name="Cross" muted/></button>}
-   <button type="button" className="field-tool" disabled={disabled} aria-label={open?t('Закрыть список'):t('Открыть список')} onMouseDown={e=>e.preventDefault()} onClick={()=>{if(open)close();else setOpen(true);input.current?.focus();}}><Icon name="Auth / Icon / Chevron"/></button>
+   {leadingIcon}{searchable
+    ? <input ref={trigger} className="select-search" role="combobox" aria-invalid={showError} aria-label={label} readOnly={!open} aria-autocomplete="list" aria-expanded={open} aria-controls={open?listId:undefined} aria-activedescendant={open&&options[active]?listId+'-'+active:undefined} disabled={disabled} placeholder={placeholder} value={open?query:t(value)} onClick={()=>{if(!open){setOpen(true);setActive(-1);}}} onChange={e=>{setQuery(e.target.value);setOpen(true);setActive(-1);}}/>
+    : <button type="button" ref={trigger} className="select-trigger" role="combobox" aria-invalid={showError} aria-label={label} aria-expanded={open} aria-controls={open?listId:undefined} aria-activedescendant={open&&options[active]?listId+'-'+active:undefined} disabled={disabled} data-placeholder={!value} onClick={()=>{if(open)close();else{setOpen(true);setActive(items.length?Math.max(0,items.indexOf(value)):-1);}}}>{value?t(value):placeholder}</button>}
+   {clearable&&(value||query)&&<button type="button" className="field-tool field-clear" disabled={disabled} tabIndex={-1} aria-label={t("Очистить выбор")} onMouseDown={e=>e.preventDefault()} onClick={()=>{setValue('');setQuery('');setOpen(true);trigger.current?.focus();}}><Icon name="Cross" muted/></button>}
+   <button type="button" className="field-tool" disabled={disabled} tabIndex={-1} aria-label={open?t('Закрыть список'):t('Открыть список')} onMouseDown={e=>e.preventDefault()} onClick={()=>{if(open)close();else setOpen(true);trigger.current?.focus();}}><Icon name="Auth / Icon / Chevron"/></button>
    </div>{showError&&<p className="field-error" role="alert">{externalError||t("Выберите значение")}</p>}
    {open&&<div ref={menu} className="option-menu"><div role="listbox" id={listId}>{options.length?options.map((v,i)=><button type="button" id={listId+'-'+i} role="option" tabIndex={-1} aria-selected={v===value} className={i===active?'highlight':''} key={v} onMouseEnter={()=>setActive(i)} onMouseDown={e=>e.preventDefault()} onClick={()=>choose(v)}>{optionIcon?.(v)}{t(v)}</button>):<p>{t("Ничего не найдено")}</p>}</div></div>}
   </div></DemoShell>;

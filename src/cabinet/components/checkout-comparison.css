@@ -1,0 +1,72 @@
+.checkout-study,.study-panel{display:grid;min-width:0;gap:var(--profile-s24)}
+.checkout-study .study-header h1,.checkout-study .study-context h2,.checkout-study .study-side-heading h3{margin:0;line-height:1.2}
+.checkout-study .study-header h1{font-size:var(--profile-px-32);letter-spacing:-.03em}
+.study-header p,.study-context p,.study-side-heading p{margin:var(--profile-s8) 0 0;color:var(--lab-muted);line-height:1.5}
+.study-context h2{font-size:var(--profile-px-24)}
+.study-context p{max-width:var(--profile-px-900)}
+.study-tabs.auth-flow-tabs{display:flex;flex-wrap:wrap;border-radius:var(--profile-radius);width:fit-content;max-width:100%;gap:var(--profile-s4)}
+.study-tabs.auth-flow-tabs>button{padding-inline:var(--profile-s12);white-space:nowrap}
+.study-pair{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--profile-s24);align-items:start}
+.study-side{display:grid;gap:var(--profile-s16);min-width:0}
+.study-side-heading h3{font-size:var(--profile-px-20)}
+.study-side-heading p{font-size:var(--profile-px-14)}
+.study-side .checkout-layout{grid-template-columns:minmax(0,1fr);grid-template-areas:'step' 'summary' 'footer';grid-template-rows:auto;gap:var(--profile-s16)}
+.study-side .checkout-summary{position:static}
+.study-side .checkout-step-footer{border:var(--profile-px-1) solid var(--lab-line);border-radius:var(--profile-radius)}
+.study-side .checkout-layout .checkout-sections>.profile-card{border-radius:var(--profile-radius)}
+.study-side .checkout-review-row{grid-template-columns:minmax(0,1fr) auto}
+.study-side .checkout-review-row > .checkout-fulfillment-details{grid-row:2;grid-column:1/-1}
+.study-side .checkout-review-row > [data-ui=Button]{grid-column:2}
+.study-side .cart-layout{grid-template-columns:minmax(0,1fr)}
+.study-side .cart-item{grid-template-columns:var(--profile-px-56) minmax(0,1fr);gap:var(--profile-s12)}
+.study-side .cart-item .cart-art{grid-column:1;grid-row:1}
+.study-side .cart-item .cart-product-copy{grid-column:2;grid-row:1}
+.study-side .cart-item .cart-item-bottom{grid-column:1/-1;grid-row:2}
+.study-source-list{display:flex;flex-wrap:wrap;gap:var(--profile-s16);margin-top:var(--profile-s8)}
+.study-source-list a{color:var(--lab-link);font-size:var(--profile-px-14);text-underline-offset:var(--profile-s4)}
+.study-choice,.study-source-note{margin:0;line-height:1.55}
+.study-choice{display:grid;gap:var(--profile-s4);padding:var(--profile-s16);border-radius:var(--profile-radius);background:var(--lab-soft)}
+.study-source-note{color:var(--lab-muted);font-size:var(--profile-px-14)}
+.study-accordion{display:grid;gap:var(--profile-s12)}
+.study-accordion-block{padding:var(--profile-s16);border:var(--profile-px-1) solid var(--lab-line);border-radius:var(--profile-radius);background:var(--lab-surface);min-width:0}
+.study-accordion-block h3{margin:0}
+.study-accordion-trigger{display:flex;align-items:center;gap:var(--profile-s8);min-height:var(--profile-px-40);padding:0;border:0;background:transparent;color:var(--lab-ink);font:600 var(--profile-px-16) Inter,sans-serif;text-align:left;width:100%;cursor:pointer}
+.study-accordion-trigger:disabled{color:var(--lab-muted);cursor:default}
+.study-accordion-trigger:focus-visible{outline:var(--profile-px-2) solid var(--lab-link);outline-offset:var(--profile-px-2)}
+.study-accordion-trigger small{margin-left:auto;color:var(--lab-muted);font-size:var(--profile-px-14)}
+.study-accordion-trigger .checkout-step-number{flex:none}
+.study-accordion-trigger[aria-expanded=true] .checkout-step-number{background:var(--lab-ink);color:var(--lab-surface)}
+.study-accordion-summary{display:grid;gap:var(--profile-s4);padding-left:var(--profile-s32);font-size:var(--profile-px-14);color:var(--lab-muted);line-height:1.5}
+.study-accordion-body,.study-order,.study-delivery-summary,.study-cart-add{display:grid;gap:var(--profile-s12);min-width:0}
+.study-accordion-body{padding-top:var(--profile-s12)}
+.study-accordion-body[hidden]{display:none}
+.study-side [data-ui=Button]{max-width:100%;justify-self:start}
+.study-side .study-payment-options .checkout-payment-option{min-height:var(--profile-px-72)}
+.study-side .study-payment-options + .checkout-check{margin-block:var(--profile-s12)}
+.study-side .profile-card>.checkout-recipient+[data-ui=Button]{margin-top:var(--profile-s16)}
+.study-account-summary,.study-product small,.study-order small{display:grid;gap:var(--profile-s4);margin:0}
+.study-account-summary{padding:var(--profile-s12) 0;border-bottom:var(--profile-px-1) solid var(--lab-line)}
+.study-account-summary small,.study-product small,.study-order small{color:var(--lab-muted);font-size:var(--profile-px-14)}
+.study-account-summary+[data-ui=Button]{margin-top:var(--profile-s12)}
+.study-schedule+.study-schedule{margin-top:var(--profile-s16)}
+.study-schedule:disabled .checkout-option{color:var(--lab-muted);cursor:default}
+.study-order-row,.study-product{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:var(--profile-s8);align-items:center;min-width:0}
+.study-order-row{padding-block:var(--profile-s8);border-top:var(--profile-px-1) solid var(--lab-line)}
+.study-order-row>div{display:grid;gap:var(--profile-s4);min-width:0;overflow-wrap:anywhere}
+.study-product{grid-template-columns:var(--profile-px-56) minmax(0,1fr) auto}
+.study-product img,.study-product svg{width:var(--profile-px-56);height:var(--profile-px-56);object-fit:contain;border-radius:var(--profile-s8)}
+.study-cart-add{border:var(--profile-px-1) solid var(--lab-line);border-radius:var(--profile-radius);background:var(--lab-surface);padding:var(--profile-s16)}
+.checkout-study-dialog .participant-scroll,.checkout-study-dialog .participant-actions{min-width:0}
+@media(max-width:900px){.study-pair{grid-template-columns:minmax(0,1fr)}}
+@media(max-width:600px){
+ .checkout-study,.study-panel,.study-pair{gap:var(--profile-s16)}
+ .checkout-study .study-header h1{font-size:var(--profile-px-24)}
+ .study-tabs.auth-flow-tabs{flex-wrap:nowrap;overflow-x:auto}
+ .study-tabs.auth-flow-tabs>button{flex:0 0 auto}
+ .study-order-row{grid-template-columns:minmax(0,1fr)}
+}
+
+.study-side .checkout-steps{min-width:0;inline-size:100%;overflow-x:auto;overflow-y:hidden}
+
+.checkout-study .checkout-fulfillment-details{display:grid;gap:var(--profile-s4);min-width:0;font-size:var(--profile-px-14);overflow-wrap:anywhere}
+.checkout-study .checkout-fulfillment-details strong{font-weight:600}

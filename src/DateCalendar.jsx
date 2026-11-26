@@ -22,13 +22,13 @@ export function dateInputError(value){
  if(date.getFullYear()<1900||date>new Date())return 'Дата должна быть от 1900 года до сегодняшнего дня';
  return '';
 }
-export default function DateCalendar({value,onChange,disabled,inputRef}){
- const locale=useLocale();
- const root=useRef(null),trigger=useRef(null),id=useId(),[open,setOpen]=useState(false),[month,setMonth]=useState(parseDate(value)||new Date(1990,0,1));
+export default function DateCalendar({value,onChange,disabled,inputRef,allowedDates,triggerLabel}){
+ const locale=useLocale(), bounded=!!allowedDates?.length;
+ const root=useRef(null),trigger=useRef(null),id=useId(),[open,setOpen]=useState(false),[month,setMonth]=useState(parseDate(value)||allowedDates?.[0]||new Date(1990,0,1));
  useEffect(()=>{const close=e=>{if(!root.current?.contains(e.target))setOpen(false);};document.addEventListener('pointerdown',close);return()=>document.removeEventListener('pointerdown',close);},[]);
  useEffect(()=>{if(disabled)setOpen(false);},[disabled]);
  return <div ref={root} className="date-calendar" onKeyDown={e=>{if(e.key==='Escape'){e.stopPropagation();setOpen(false);trigger.current?.focus();}}} onBlur={e=>{if(!e.currentTarget.contains(e.relatedTarget))setOpen(false);}}>
- <button ref={trigger} type="button" className="field-tool calendar-trigger" disabled={disabled} aria-label={t("Открыть календарь")} aria-expanded={open} aria-controls={id} onMouseDown={e=>e.preventDefault()} onClick={()=>{setMonth(parseDate(value)||month);setOpen(true);}}><span aria-hidden="true" style={{display:'flex',width:20,height:20}} dangerouslySetInnerHTML={{__html:calendarIcon}}/></button>
- {open&&<div className="calendar-popover" id={id} role="dialog" aria-label={t("Выберите дату рождения")}><DayPicker locale={locale==='en'?enUS:ru} mode="single" selected={parseDate(value)} month={month} onMonthChange={setMonth} captionLayout="dropdown" startMonth={new Date(1900,0)} endMonth={new Date()} disabled={{after:new Date()}} onSelect={d=>{if(d){onChange(`${String(d.getDate()).padStart(2,'0')}.${String(d.getMonth()+1).padStart(2,'0')}.${d.getFullYear()}`);setOpen(false);inputRef.current?.focus();}}}/></div>}
+ <button ref={trigger} type="button" className={bounded?"calendar-trigger checkout-calendar-trigger":"field-tool calendar-trigger"} disabled={disabled} aria-label={triggerLabel||t("Открыть календарь")} aria-expanded={open} aria-controls={id} onMouseDown={e=>{if(!bounded)e.preventDefault();}} onClick={()=>{setMonth(parseDate(value)||month);setOpen(!open);}}><span aria-hidden="true" style={{display:'flex',width:20,height:20}} dangerouslySetInnerHTML={{__html:calendarIcon}}/>{triggerLabel}</button>
+ {open&&<div className="calendar-popover" id={id} role="dialog" aria-label={bounded?"Выберите дату доставки":t("Выберите дату рождения")}><DayPicker locale={locale==='en'?enUS:ru} mode="single" selected={parseDate(value)} month={month} onMonthChange={setMonth} captionLayout={bounded?"label":"dropdown"} startMonth={bounded?allowedDates[0]:new Date(1900,0)} endMonth={bounded?allowedDates.at(-1):new Date()} disabled={bounded?d=>!allowedDates.some(allowed=>+allowed===+d):{after:new Date()}} autoFocus={bounded} onSelect={d=>{if(d){onChange(`${String(d.getDate()).padStart(2,'0')}.${String(d.getMonth()+1).padStart(2,'0')}.${d.getFullYear()}`);setOpen(false);(inputRef?.current||trigger.current)?.focus();}}}/></div>}
  </div>;
 }

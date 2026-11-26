@@ -85,3 +85,22 @@ html,body,aside,main,.canvas,.real-stage,.preview-stage,.option-menu,.composite-
 
 .password-rules{display:flex;flex-wrap:wrap;column-gap:16px;row-gap:6px}
 .password-rules li{white-space:nowrap;gap:6px}
+.select-demo .select-trigger {
+ font: 16px Inter;
+ text-align: start;
+ min-width: 0;
+ flex: 1;
+ height: 100%;
+ border: 0;
+ padding: 0;
+ background: transparent;
+ color: var(--lab-ink);
+ white-space: nowrap;
+ overflow: hidden;
+ text-overflow: ellipsis;
+}
+
+.select-demo .select-trigger[data-placeholder=true] { color: var(--lab-muted); }
+.select-demo .select-trigger:not(:disabled), .select-demo .select-search[readonly]:not(:disabled) { cursor: pointer; }
+.select-demo .select-search[readonly] { caret-color: transparent; }
+.select-demo .select-trigger:focus-visible { outline: 2px solid var(--lab-link); outline-offset: 2px; }

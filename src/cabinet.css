@@ -229,6 +229,9 @@
 
 
 .cab-cart-trigger{position:relative}.cab-cart-badge{position:absolute;top:0;right:0;pointer-events:none}.cab-cart-count{display:block;min-width:calc(var(--cab-gap) * .75);height:calc(var(--cab-gap) * .75);padding-inline:calc(var(--cab-gap) / 6);border-radius:var(--cab-gap);background:var(--lab-error);color:var(--lab-surface);font-size:calc(var(--cab-gap) / 2);line-height:1.5;text-align:center;pointer-events:none;font-variant-numeric:tabular-nums}
+.cab-cart-panel{width:min(360px,calc(100vw - 32px));box-sizing:border-box;gap:12px;color:var(--lab-ink)}
+.cab-cart-heading,.cab-cart-total{display:flex;align-items:center;justify-content:space-between;gap:12px}.cab-cart-heading>strong{font-size:16px;padding:0}.cab-cart-total{border-top:1px solid var(--lab-line);padding-top:12px}.cab-cart-total>strong{padding:0}.cab-cart-total>span{color:var(--lab-muted);font-size:14px}
+.cab-cart-items{display:grid;gap:12px;max-height:min(300px,40vh);overflow-y:auto;overscroll-behavior:contain}.cab-cart-item{display:flex;align-items:center;gap:12px;min-width:0;font-size:13px}.cab-cart-image{width:56px;height:56px;flex:none;border-radius:12px;overflow:hidden;background:var(--lab-soft)}.cab-cart-image img,.cab-cart-image svg{width:100%;height:100%;object-fit:contain}.cab-cart-item>div:nth-child(2){display:grid;gap:4px;flex:1;min-width:0}.cab-cart-item strong{padding:0;overflow-wrap:anywhere}.cab-cart-item span{color:var(--lab-muted)}.cab-cart-item b{white-space:nowrap;font-weight:500;font-variant-numeric:tabular-nums}.cab-cart-panel>[data-ui=Button],.cab-cart-panel>[data-ui=Button]>.motion-surface{width:100%!important}
 
 .cab-cart-badge.is-added{animation:cart-badge-slide 260ms cubic-bezier(.22,1,.36,1) both}
 .cab-cart-badge.is-added .cab-cart-count{animation:cart-badge-pop 500ms cubic-bezier(.34,1.36,.64,1) both,cart-badge-reveal 400ms ease both}
@@ -268,3 +271,10 @@
  .menu-open.is-collapsed .cab-nav-item.nested{padding-left:32px}
  .menu-open.is-collapsed .cab-nav-item>i:not(:only-child){display:flex}
 }
+
+[data-design-revision=after] .cab-cart-badge.is-added .cab-cart-count{animation:cart-badge-pop 220ms cubic-bezier(.22,1,.36,1) both,cart-badge-reveal 180ms ease-out both}
+@media(prefers-reduced-motion:reduce){[data-design-revision=after] .cab-cart-badge.is-added .cab-cart-count{animation:none}}
+
+/* Checkbox controls use the marketplace’s monochrome palette in both themes. */
+.cabinet.marketplace [data-ui=Toggle][role=checkbox]{filter:grayscale(1)}
+[data-theme=dark] .cabinet.marketplace [data-ui=Toggle][role=checkbox]{filter:grayscale(1) invert(1)}

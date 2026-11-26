@@ -1,0 +1,87 @@
+.store-product-details {
+ margin-top: var(--profile-px-16);
+ overflow-wrap: anywhere;
+}
+
+.store-product-details details {
+ min-width: 0;
+ border-bottom: var(--profile-px-1) solid var(--lab-line);
+}
+
+.store-product-details summary {
+ display: flex;
+ align-items: center;
+ justify-content: space-between;
+ gap: var(--profile-px-12);
+ padding-block: var(--profile-px-16);
+ min-height: var(--profile-px-48);
+ font-weight: 600;
+ cursor: pointer;
+ list-style: none;
+}
+
+.store-product-details summary::-webkit-details-marker { display: none; }
+.store-product-details summary:focus-visible {
+ outline: var(--profile-px-1) solid var(--lab-link);
+ outline-offset: var(--profile-px-4);
+}
+
+.store-product-details summary .store-ds-arrow { transform: rotate(90deg); }
+.store-product-details details[open] summary .store-ds-arrow { transform: rotate(-90deg); }
+
+.store-detail-copy .store-product-details p, .store-product-details dl {
+ margin: 0 0 var(--profile-px-16);
+ line-height: 1.5;
+}
+
+.store-product-details p {
+ max-width: 70ch;
+ white-space: pre-line;
+}
+
+.store-product-details dl > div {
+ display: grid;
+ grid-template-columns: minmax(0,1fr) minmax(0,2fr);
+ gap: var(--profile-px-16);
+ border-top: var(--profile-px-1) solid var(--lab-line);
+ padding-block: var(--profile-px-12);
+}
+
+.store-product-details dt { color: var(--lab-muted); }
+.store-product-details dd { margin: 0; }
+
+@media (max-width: 480px) {
+ .store-product-details dl > div {
+  grid-template-columns: minmax(0,1fr);
+  gap: var(--profile-px-4);
+ }
+}
+
+.store-cart-action-label { display:inline-flex; align-items:center; gap:var(--profile-px-8); }
+
+@media (prefers-reduced-motion: no-preference) {
+ .store-product-details summary .store-ds-arrow {
+  transition: transform var(--directory-enter) var(--directory-ease);
+ }
+
+ @supports (interpolate-size: allow-keywords) and selector(details::details-content) {
+  .store-product-details details {
+   interpolate-size: allow-keywords;
+  }
+
+  .store-product-details details::details-content {
+   block-size: 0;
+   overflow: clip;
+   opacity: 0;
+   transition:
+    block-size var(--directory-enter) var(--directory-ease),
+    opacity var(--directory-enter) var(--directory-ease),
+    content-visibility var(--directory-enter) allow-discrete;
+  }
+
+  .store-product-details details[open]::details-content {
+   block-size: auto;
+   opacity: 1;
+  }
+ }
+}
