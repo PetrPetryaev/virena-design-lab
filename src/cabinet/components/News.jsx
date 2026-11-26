@@ -250,7 +250,6 @@ export default function News({
             <div className="news-related-list">{related.map(item => card(item))}</div>
           </section>
         )}
-        {backButton}
       </div>
     );
   }

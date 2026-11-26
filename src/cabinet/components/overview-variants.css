@@ -151,9 +151,9 @@
 .overview-loading{align-content:start}
 .overview-loading span{background:var(--lab-skeleton)}
 .overview-comparison .overview-product,.overview-comparison .overview-package{box-shadow:inset 0 0 0 1px var(--lab-line)}
-.overview-comparison .overview-product,.overview-comparison .overview-partner{transition:box-shadow 180ms ease}
-@media(hover:hover){.overview-comparison .overview-product:hover,.overview-comparison .overview-partner:hover,.overview-comparison .overview-package:hover{box-shadow:inset 0 0 0 1px var(--lab-line),0 6px 20px color-mix(in srgb,var(--lab-ink) 4%,transparent)}}
-@media(prefers-reduced-motion:reduce){.overview-comparison .overview-product,.overview-comparison .overview-partner{transition:none}}
+.overview-comparison .overview-product,.overview-comparison .overview-partner,.cab-action-card{transition:box-shadow 180ms ease}
+@media(hover:hover){.overview-comparison .overview-product:hover,.overview-comparison .overview-partner:hover,.overview-comparison .overview-package:hover,.cab-action-card:hover{box-shadow:inset 0 0 0 1px var(--lab-line),0 6px 20px color-mix(in srgb,var(--lab-ink) 4%,transparent)}}
+@media(prefers-reduced-motion:reduce){.overview-comparison .overview-product,.overview-comparison .overview-partner,.cab-action-card{transition:none}}
 
 .overview-comparison .overview-profile,.overview-comparison .overview-sponsor{padding:32px}
 .overview-profile>.overview-loading,.overview-sponsor>.overview-loading,.overview-profile>.overview-error,.overview-sponsor>.overview-error{inset:32px}
