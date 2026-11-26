@@ -1,7 +1,7 @@
 import React,{useEffect,useRef} from 'react';
 const menuIcons=import.meta.glob('../../assets/navigation/*.svg',{eager:true,query:'?raw',import:'default'});
 function MenuIcon({name,Shared}){const svg=menuIcons['../../assets/navigation/'+name+'.svg'];return svg?<span className="demo-icon" aria-hidden="true" dangerouslySetInnerHTML={{__html:svg.replaceAll('"black"','"currentColor"')}}/>:<Shared.Icon name={name}/>;}
-const items=[['profile','Мой профиль','user-circle-linear'],['security','Безопасность','shield-linear'],['details','Реквизиты','wallet-linear'],['settings','Настройки','settings-linear']];
+const items=[['profile','Мой профиль','user-circle-linear'],['orders','Мои покупки','bag-linear'],['security','Безопасность','shield-linear'],['details','Реквизиты','wallet-linear'],['settings','Настройки','settings-linear']];
 export default function ProfileMenu({open,Shared,photo,page,navigate,onClose,onLogout,dark,onTheme,onServices}){
  const ref=useRef(null);
  useEffect(()=>{if(open&&document.activeElement?.matches('.cab-avatar:focus-visible'))ref.current?.querySelector('[role=menuitem]')?.focus();},[open]);

@@ -12,6 +12,7 @@ import {profileInitialData} from './profileData.js';
 import cardIcon from '../../assets/navigation/card-linear.svg';
 import walletIcon from '../../assets/navigation/wallet-linear.svg';
 import './checkout.css';
+import './checkout-success.css';
 
 export const paymentLabels={external:'Банковская карта','external-bonus':'Внешняя оплата + бонусный счёт',balance:'Балансовый счёт','saved-card':'Сохранённая карта'};
 const paymentMethods=[
@@ -259,6 +260,46 @@ function CheckoutStage({ui,stage,title,active,complete,summary,headerAction,edit
  </div>;
 }
 
+function CheckoutSuccess({ui,order,navigate}){
+ const heading=useRef(null);
+ useLayoutEffect(()=>heading.current?.focus(),[order.id]);
+ const delivery=order.delivery;
+ const payment=paymentLabels[order.paymentChoice==='external-bonus'?'external':order.paymentChoice];
+ return <div className="profile checkout checkout-confirmation">
+  <section className="profile-card checkout-success" aria-labelledby="checkout-success-title">
+   <span className="checkout-success-mark" aria-hidden="true"><ui.Shared.Icon name="Auth / Icon / Success"/></span>
+   <h2 id="checkout-success-title" ref={heading} tabIndex={-1}>Тестовый заказ № {order.id}</h2>
+   <p>Проверка оплаты завершена. Деньги не списаны.</p>
+   <div className="checkout-receipt">
+    <div className="checkout-receipt-heading">
+     <h3>Состав заказа</h3>
+     <ui.Shared.Status tone="Neutral" label="Без оплаты"/>
+    </div>
+    <ul className="checkout-success-products">{order.items.map(item=>{
+     const product=products.find(product=>product.id===item.productId);
+     return <li key={item.id}>
+      {product?.image&&<AssetImage asset={product.image} alt=""/>}
+      <div><strong>{item.name}</strong><small>{item.quantity} шт.</small></div>
+     </li>;
+    })}</ul>
+    <div className="checkout-receipt-details">
+     <section>
+      <h3>Получение</h3>
+      {delivery?<FulfillmentDetails details={{...delivery,name:delivery.recipient}}/>:<p>Онлайн-продукты · доставка не нужна</p>}
+     </section>
+     {order.recipient&&<section><h3>Аккаунт получателя</h3><p>{order.recipient.name||order.recipient.login}</p><p>{order.recipient.id}</p></section>}
+     {payment&&<section><h3>Способ оплаты</h3><p>{payment}</p></section>}
+    </div>
+    <CheckoutTotals quote={order.quote} pickup={delivery?.method==='Самовывоз'} totalLabel="Сумма проверки"/>
+   </div>
+   <div className="checkout-actions">
+    <Button {...ui} label="Мои покупки" tone="Primary" onClick={()=>navigate('orders','order:'+order.id)}/>
+    <Button {...ui} label="Продолжить покупки" onClick={()=>navigate('shop')}/>
+   </div>
+  </section>
+ </div>;
+}
+
 export default function Checkout({Shared,db,lines,draft,setDraft,navigate,onFixturePaid,order,confirmation=false,scenario='ready',guest=false,onSignIn,onGuestVerified,deliveryProfile}){
  const [errors,setErrors]=useState({}),[submitError,setSubmitError]=useState(false),[balanceReview,setBalanceReview]=useState(false);
  const [recipientLoading,setRecipientLoading]=useState(false),[fulfillmentLoading,setFulfillmentLoading]=useState(false);
@@ -368,8 +409,8 @@ export default function Checkout({Shared,db,lines,draft,setDraft,navigate,onFixt
  };
  const account=applied.buyer,receiving=applied.fulfillment;
  const back=(label,page)=><Button {...ui} label={label} leadingIconContent={<Shared.Icon name="return-to-list"/>} onClick={()=>navigate(page)}/>;
- if(confirmation&&order)return <div className="profile checkout checkout-confirmation"><section className="profile-card checkout-success" aria-labelledby="checkout-success-title"><span className="checkout-success-mark" aria-hidden="true"><Shared.Icon name="Auth / Icon / Success"/></span><h2 id="checkout-success-title">Тестовый заказ № {order.id}</h2><p>Проверка оплаты завершена. Деньги не списаны.</p><div className="checkout-receipt"><div className="checkout-success-products">{order.items.map(item=>{const p=products.find(p=>p.id===item.productId);return <span key={item.id}><AssetImage asset={p.image} alt={item.name}/><small>{item.quantity} шт.</small></span>;})}</div>{order.quote?<CheckoutTotals quote={order.quote} pickup={order.delivery?.method==='Самовывоз'} totalLabel="Сумма проверки"/>:<div className="checkout-confirm-amount"><span>Сумма товаров</span><strong>{euro(order.items.reduce((sum,item)=>sum+item.unitCents*item.quantity,0))}</strong></div>}<p className="checkout-caption">Денежный способ: {order.paymentChoice==='balance'?'балансовый счёт':'банковская карта'}{(order.useBonus??order.paymentChoice==='external-bonus')&&<> · Бонусный счёт: запрошен</>}</p><Shared.Status tone="Success" label="Проверка пройдена"/></div><div className="checkout-actions"><Button {...ui} label="Мои покупки" tone="Primary" onClick={()=>navigate('orders')}/><Button {...ui} label="Продолжить покупки" onClick={()=>navigate('shop')}/></div></section></div>;
- if(!lines.length||confirmation)return <div className="profile checkout"><section className="profile-card profile-empty"><EmptyIllustration kind="cart"/><h2>{confirmation?'Нет подтверждённого заказа':'Корзина пуста'}</h2><p>Добавьте товары, чтобы перейти к оформлению.</p>{back('Вернуться к магазину','shop')}</section></div>;
+ if(confirmation&&order&&!guest)return <CheckoutSuccess {...{ui,order,navigate}}/>;
+ if(!lines.length||confirmation)return <div className="profile checkout"><section className="profile-card profile-empty"><EmptyIllustration kind="cart"/><h2>{confirmation?'Нет подтверждённого заказа':'Корзина пуста'}</h2><p>{confirmation?'Проверьте список в «Моих покупках».':'Добавьте товары, чтобы перейти к оформлению.'}</p>{back('Вернуться к магазину','shop')}</section></div>;
  if(paying)return <div className="profile checkout"><CheckoutPaymentPage {...{ui,draft,scenario,quote,navigate,onFixturePaid,heading}} back={showForm}/></div>;
  return <div className="profile checkout checkout-one-page" ref={form}>
   <div className="checkout-top">{back('Вернуться к каталогу','shop')}</div>
