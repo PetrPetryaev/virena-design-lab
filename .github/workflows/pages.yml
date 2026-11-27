@@ -57,7 +57,7 @@ jobs:
       - name: Check out the TES-344 review version
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
-          ref: 914cbaa5e72981b21322dcdc059239028c08c1ef
+          ref: 2327a38d737f7434f4932621267e0e0e91bdc478
           path: orders-review
           persist-credentials: false
       - name: Build orders review
