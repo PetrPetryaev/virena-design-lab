@@ -4,7 +4,7 @@ import InviteDialog from './CabinetDialog.jsx';
 import React,{useEffect,useRef,useState,useId} from 'react';
 import {createPortal} from 'react-dom';
 import CatalogToolbar from '../../CatalogToolbar.jsx';
-import ToolbarFilters from '../../ToolbarFilters.jsx';
+import ToolbarFilters from '../../LegacyToolbarFilters.jsx';
 import {MemberRegistration,MemberTeam} from './MemberDirectoryFacts.jsx';
 import MemberStatus from './MemberStatus.jsx';
 import ActionDropdown from '../../ds/ActionDropdown.jsx';

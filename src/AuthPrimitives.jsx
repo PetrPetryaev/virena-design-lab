@@ -1,5 +1,6 @@
 import React,{useState} from 'react';
 import {t} from './i18n.js';
+import './ds/segmented-tabs.css';
 
 const authTabs=[['login','Вход'],['register','Регистрация']];
 
@@ -14,7 +15,7 @@ export function SegmentedTabs({items,value,onChange,disabled=false,label,idPrefi
   onChange(next);
   requestAnimationFrame(()=>document.getElementById(idPrefix+next)?.focus());
  }
- return <div className={'auth-flow-tabs '+className} role="tablist" aria-label={label} style={{gridTemplateColumns:`repeat(${items.length},minmax(0,1fr))`}}>
+ return <div className={'auth-flow-tabs '+className} role="tablist" aria-label={label}>
   {items.map(item=><button key={item.value} id={idPrefix+item.value} type="button" role="tab" aria-selected={value===item.value} aria-controls={panelId} tabIndex={value===item.value?0:-1} disabled={disabled||item.disabled} onClick={()=>onChange(item.value)} onKeyDown={keyDown}>{item.label}{item.count!==undefined&&<span className="segmented-count">{item.count}</span>}</button>)}
  </div>;
 }

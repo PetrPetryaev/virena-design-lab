@@ -10,6 +10,15 @@
 :root{--motion-fast:120ms;--motion-normal:180ms;--motion-ease:cubic-bezier(.2,.8,.2,1)}
 .motion-surface{transition:background-color var(--motion-fast) ease-out,box-shadow var(--motion-fast) ease-out,opacity var(--motion-fast) ease-out,transform var(--motion-fast) var(--motion-ease)}
 .preview-control[data-kind=button][data-state=Pressed]>.motion-surface{transition-duration:70ms}
+/* Ghost feedback extends beyond the visual alignment without changing the hit target. */
+.preview-control[data-tone="Ghost"]{position:relative;isolation:isolate}
+.preview-control[data-tone="Ghost"]::before{
+ content:"";position:absolute;inset:0 -4px;z-index:-1;pointer-events:none;border-radius:inherit;
+ background-color:transparent;transition:background-color var(--motion-fast) ease-out;
+}
+.preview-control[data-tone="Ghost"][data-state="Hover"]::before{background-color:var(--button-soft-hover)}
+.preview-control[data-tone="Ghost"][data-state="Pressed"]::before{background-color:var(--button-soft-pressed)}
+@media(prefers-reduced-motion:reduce){.preview-control[data-tone="Ghost"]::before{transition:none}}
 .motion-surface>span{transition:opacity var(--motion-fast) ease-out}
 .motion-thumb{display:block;transition:transform var(--motion-normal) var(--motion-ease)!important}
 .motion-loader{animation:lab-appear var(--motion-fast) ease-out}
@@ -85,3 +94,22 @@ html,body,aside,main,.canvas,.real-stage,.preview-stage,.option-menu,.composite-
 
 .password-rules{display:flex;flex-wrap:wrap;column-gap:16px;row-gap:6px}
 .password-rules li{white-space:nowrap;gap:6px}
+.select-demo .select-trigger {
+ font: 16px Inter;
+ text-align: start;
+ min-width: 0;
+ flex: 1;
+ height: 100%;
+ border: 0;
+ padding: 0;
+ background: transparent;
+ color: var(--lab-ink);
+ white-space: nowrap;
+ overflow: hidden;
+ text-overflow: ellipsis;
+}
+
+.select-demo .select-trigger[data-placeholder=true] { color: var(--lab-muted); }
+.select-demo .select-trigger:not(:disabled), .select-demo .select-search[readonly]:not(:disabled) { cursor: pointer; }
+.select-demo .select-search[readonly] { caret-color: transparent; }
+.select-demo .select-trigger:focus-visible { outline: 2px solid var(--lab-link); outline-offset: 2px; }

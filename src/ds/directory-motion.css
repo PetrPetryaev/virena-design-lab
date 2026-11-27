@@ -9,14 +9,14 @@
 :is(.ds-table-body>.ds-table-row,.ds-hover-row):is(:hover,:focus-within)::before{opacity:1}
 .ds-table-row::after{transition:opacity var(--directory-exit) ease-out}
 .member-details-drawer[open]{animation:directory-drawer 220ms var(--directory-ease)}
-.inv-modal[open],.toolbar-filter-popover,.participants .option-menu,.invitations .option-menu,.participants-empty,.inv-empty,.inv-active-filters>*,.participants-applied>*{animation:directory-enter var(--directory-enter) var(--directory-ease)}
+.inv-modal[open],.participants .option-menu,.invitations .option-menu,.participants-empty,.inv-empty,.inv-active-filters>*,.participants-applied>*{animation:directory-enter var(--directory-enter) var(--directory-ease)}
 .invitations .auth-toast,.inv-dialog .auth-toast{animation:directory-enter var(--directory-enter) var(--directory-ease)}
 .ds-table-skeleton .ds-table-placeholder,.inv-skeleton{animation:directory-pulse 1200ms ease-in-out infinite}
 .ds-action-popover{opacity:0;transform:translateY(-4px);transition:opacity var(--directory-exit) ease-in,transform var(--directory-exit) ease-in,display var(--directory-exit) allow-discrete,overlay var(--directory-exit) allow-discrete}
 .ds-action-popover:popover-open{opacity:1;transform:translateY(0);transition-duration:var(--directory-enter)}
 @starting-style{.ds-action-popover:popover-open{opacity:0;transform:translateY(-4px)}}
 @media(prefers-reduced-motion:reduce){
- :is(.participants,.invitations,.member-details-drawer,.inv-modal,.ds-action-popover,.toolbar-filter-popover),:is(.participants,.invitations,.member-details-drawer,.inv-modal,.ds-action-popover,.toolbar-filter-popover) *,:is(.participants,.invitations) *::before,:is(.participants,.invitations) *::after{animation:none!important;transition:none!important}
+ :is(.participants,.invitations,.member-details-drawer,.inv-modal,.ds-action-popover),:is(.participants,.invitations,.member-details-drawer,.inv-modal,.ds-action-popover) *,:is(.participants,.invitations) *::before,:is(.participants,.invitations) *::after{animation:none!important;transition:none!important}
  :is(.participants,.invitations,.member-details-drawer,.inv-modal,.ds-action-popover) button:active>.motion-surface{transform:none}
 }
 

@@ -40,12 +40,13 @@
  .ds-data-table:not(.ds-table-records):not(.ds-table-purchases) .ds-table-row>[data-column=structure]{grid-column:1;grid-row:3}
  .ds-data-table:not(.ds-table-records):not(.ds-table-purchases) .ds-table-row>[data-column=registered]{grid-column:2;grid-row:3}
  .ds-data-table:not(.ds-table-records):not(.ds-table-purchases) .ds-table-row>[data-column=action]{grid-column:1/-1;grid-row:1;justify-self:end;align-self:center;z-index:2}
- .ds-table-purchases .ds-table-body>.ds-table-row{grid-template-columns:repeat(2,minmax(0,1fr));padding:var(--table-gap)}
+ .ds-table-purchases .ds-table-body>.ds-table-row{--table-hover-inset:calc(var(--table-gap) - 8px);grid-template-columns:minmax(0,1.15fr) minmax(0,1fr) var(--table-action-size);padding:var(--table-gap);row-gap:8px}
  .ds-table-purchases .ds-table-row>[data-column=order]{grid-column:1/-1;grid-row:1}
- .ds-table-purchases .ds-table-row>[data-column=amount]{grid-column:1;grid-row:2}
- .ds-table-purchases .ds-table-row>[data-column=points]{grid-column:2;grid-row:2}
- .ds-table-purchases .ds-table-row>[data-column=status]{grid-column:1;grid-row:3}
- .ds-table-purchases .ds-table-row>[data-column=action]{grid-column:2;grid-row:3;align-self:end}
+ .ds-table-purchases .ds-table-row>[data-column=status]{grid-column:1/-1;grid-row:2}
+ .ds-table-purchases .ds-table-row>[data-column=amount]{grid-column:1;grid-row:3}
+ .ds-table-purchases .ds-table-row>[data-column=points]{grid-column:2;grid-row:3}
+ .ds-table-purchases .ds-table-row>:is([data-column=amount],[data-column=points])>*{font-size:16px;line-height:20px;font-weight:600}
+ .ds-table-purchases .ds-table-row>[data-column=action]{grid-column:3;grid-row:3;align-self:center;justify-self:end}
  .ds-table-records .ds-table-body>.ds-table-row{padding:var(--table-gap)}
  .ds-table-records .ds-table-row>[data-column=action],.ds-table-records .ds-table-row>[data-column=info]{justify-self:end}
 }

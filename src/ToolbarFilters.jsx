@@ -1,9 +1,17 @@
-import useMotionDismiss from './ds/useMotionDismiss.js';
-import React,{useState,useRef,useEffect,useId} from 'react';
+import React,{useState} from 'react';
+import {FilterTrigger} from './ds/FilterControls.jsx';
+import Dialog from './cabinet/components/CabinetDialog.jsx';
+import Button from './cabinet/components/CabinetButton.jsx';
 import './toolbar-filters.css';
-export default function ToolbarFilters({Shared,db,count=0,children,label='Фильтры участников'}){
- const [open,setOpen]=useState(false),root=useRef(null),panel=useRef(null),id=useId();
- const dismiss=useMotionDismiss(panel,()=>setOpen(false));
- useEffect(()=>{if(!open)return;const outside=e=>{if(!root.current?.contains(e.target))dismiss();};const key=e=>{if(e.key==='Escape'){dismiss();root.current?.querySelector('button')?.focus();}};document.addEventListener('pointerdown',outside);document.addEventListener('keydown',key);return()=>{document.removeEventListener('pointerdown',outside);document.removeEventListener('keydown',key);};},[open]);
- return <div className="toolbar-filters" ref={root}><Shared.Button group={db.components.find(c=>c.name==='Boris / Button')} choice={{Tone:'White',Size:'48'}} label={`Фильтры${count?' · '+count:''}`} ariaExpanded={open} ariaControls={id} iconContent={<Shared.Icon name="Virena / Icon / Filter"/>} onClick={()=>open?dismiss():setOpen(true)}/>{open&&<div ref={panel} id={id} className="toolbar-filter-popover" role="region" aria-label={label}><div className="toolbar-filter-heading"><strong>Фильтры</strong><Shared.Button group={db.components.find(c=>c.name==='Boris / Icon button')} choice={{Tone:'Ghost',Size:'40'}} ariaLabel="Закрыть фильтры" iconContent={<Shared.Icon name="Cross"/>} onClick={dismiss}/></div>{children}</div>}</div>;
+
+export default function ToolbarFilters({Shared,db,count=0,value,onApply,children,label='Фильтры участников',applyLabel='Показать результаты',invalid}){
+  const [draft,setDraft]=useState(null);
+  const close=()=>setDraft(null);
+  return <div className="toolbar-filters">
+    <FilterTrigger {...{Shared,db,count}} expanded={draft!==null} onClick={()=>setDraft(value)}/>
+    {draft!==null&&<Dialog {...{Shared,db}} className="toolbar-filter-dialog" title={label} onClose={close}
+      footer={<Button {...{Shared,db}} tone="Primary" label={typeof applyLabel==='function'?applyLabel(draft):applyLabel} disabled={invalid?.(draft)} onClick={()=>{onApply(draft);close();}}/>}>
+      {children(draft,setDraft)}
+    </Dialog>}
+  </div>;
 }

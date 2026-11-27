@@ -2,7 +2,7 @@ import React,{useState} from 'react';
 import {activityLabel,legLabel} from './genealogyData.js';
 import {directoryCells as genealogyCells} from './memberDirectory.js';
 import {MemberRegistration,MemberTeam} from './MemberDirectoryFacts.jsx';
-import ToolbarFilters from '../../ToolbarFilters.jsx';
+import ToolbarFilters from '../../LegacyToolbarFilters.jsx';
 import CatalogToolbar from '../../CatalogToolbar.jsx';
 import MemberTable from './MemberTable.jsx';
 import ParticipantDetails from './ParticipantDetails.jsx';

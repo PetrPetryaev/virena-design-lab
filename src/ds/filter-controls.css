@@ -1,0 +1,4 @@
+.ds-filter-chips{display:flex;flex-wrap:wrap;gap:8px;align-items:center;width:fit-content;max-width:100%;min-width:0}
+.ds-filter-chips .motion-surface{padding-inline:16px!important;flex-direction:row-reverse}
+.ds-filter-chips button{max-width:100%}
+.ds-filter-chips .motion-surface>span:last-child{min-width:0;overflow:hidden;text-overflow:ellipsis}

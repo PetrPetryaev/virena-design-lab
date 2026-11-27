@@ -4,7 +4,7 @@ import React,{useEffect,useMemo,useRef,useState} from 'react';
 import {createPortal} from 'react-dom';
 import {SegmentedTabs} from '../../AuthPrimitives.jsx';
 import CatalogToolbar from '../../CatalogToolbar.jsx';
-import ToolbarFilters from '../../ToolbarFilters.jsx';
+import ToolbarFilters from '../../LegacyToolbarFilters.jsx';
 import DataTable from '../../ds/DataTable.jsx';
 import Button from './CabinetButton.jsx';
 import Dialog from './CabinetDialog.jsx';

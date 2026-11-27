@@ -1,0 +1,52 @@
+.auth-flow-tabs {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  max-width: 100%;
+  gap: 4px;
+  padding: 4px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  border-radius: 28px;
+  background: var(--segmented-track, var(--lab-soft));
+}
+.auth-flow-tabs > button {
+  display: inline-flex;
+  flex: 1 0 auto;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 32px;
+  padding: 0 12px;
+  border: 0;
+  border-radius: 24px;
+  background: transparent;
+  color: var(--lab-muted);
+  font: 500 14px/20px Inter, sans-serif;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color 160ms ease, color 160ms ease;
+}
+.auth-flow-tabs > button:hover:enabled { background: var(--lab-hover); }
+.auth-flow-tabs > button[aria-selected=true] {
+  background: var(--segmented-active, var(--lab-surface));
+  color: var(--lab-ink);
+  box-shadow: 0 1px 3px #00000014;
+}
+.auth-flow-tabs > button:focus-visible { outline: 2px solid var(--lab-link); outline-offset: 1px; }
+.auth-flow-tabs > button:disabled { opacity: .45; cursor: default; }
+.segmented-count { color: var(--lab-muted); font-size: 12px; font-variant-numeric: tabular-nums; }
+[data-design=soft] .auth-flow-tabs { --segmented-track: var(--lab-surface); --segmented-active: var(--lab-soft); }
+[data-design=soft] .auth-flow-tabs > button[aria-selected=true] { box-shadow: none; }
+@media(prefers-reduced-motion:reduce) { .auth-flow-tabs > button { transition: none; } }
+
+/* Desktop tab tracks fit their labels even inside stretching page toolbars. */
+@media (min-width: 769px) {
+  .auth-flow-tabs[role=tablist] {
+    width: max-content !important;
+    max-width: 100% !important;
+    flex: 0 1 auto !important;
+  }
+  .auth-flow-tabs[role=tablist] > button { flex: 0 0 auto; }
+}
