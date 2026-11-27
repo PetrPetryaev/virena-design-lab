@@ -72,7 +72,7 @@ jobs:
       - name: Check out the TES-342 review version
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
-          ref: d6136da624084e23c9ec6bd4a8e1ed026924c2f9
+          ref: 228903799186fdd23d31a9383ac078eae3454b9f
           path: invitations-review
           persist-credentials: false
       - name: Build invitations review
