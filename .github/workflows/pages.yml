@@ -68,6 +68,20 @@ jobs:
           npm ci
           npm run build
           mv dist ../dist/tes-344
+      - name: Check out the TES-342 review version
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: d6136da624084e23c9ec6bd4a8e1ed026924c2f9
+          path: invitations-review
+          persist-credentials: false
+      - name: Build invitations review
+        working-directory: invitations-review
+        env:
+          DEPLOY_BASE: /virena-design-lab/tes-342/
+        run: |
+          npm ci
+          npm run build
+          mv dist ../dist/tes-342
       - uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d
       - uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9
         with:
