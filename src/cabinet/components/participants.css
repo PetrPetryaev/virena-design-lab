@@ -50,8 +50,8 @@
  .participants .participants-count{margin-inline:var(--tree-xl);padding-inline:var(--tree-sm)}
 }
 @media(prefers-reduced-motion:reduce){.participants-row::before{transition:none}}
-.toolbar-filter-popover .participants-filterbar{display:flex;flex-direction:column;align-items:stretch;gap:var(--tree-md)}
-.toolbar-filter-popover .participants-filterbar>div{flex:none;width:100%}
+
+
 @media(max-width:600px){.participants-panel::after{display:none}}
 /* Stretch the existing details button over the row; keep tree action above it. */
 .participants-row{position:relative;cursor:pointer}
@@ -65,7 +65,7 @@
 .participants-sort .demo-icon{display:flex;width:var(--tree-xl);height:var(--tree-xl);flex:none}
 .participants-sort>span.is-sorted{opacity:1}
 .participants-sort svg,.participants-filter-chip svg{width:100%;height:100%}
-.participants-filter-groups{max-height:50vh;overflow:auto;display:grid;gap:var(--tree-xl)}
+.participants-filter-groups{display:grid;gap:var(--tree-xl)}
 .participants-filter-groups fieldset{border:0;margin:0;padding:0;display:grid;gap:var(--tree-md)}
 .participants-filter-groups legend{font-size:var(--tree-body);font-weight:600;margin-bottom:var(--tree-md)}
 .participants-check{display:flex;align-items:center;gap:var(--tree-md);font-size:var(--tree-body);cursor:pointer;min-height:var(--tree-gap)}
@@ -100,8 +100,8 @@
 .participants-empty .cab-empty-art{margin-bottom:0}
 .participants-empty>p{max-width:38ch;line-height:1.5}
 .participants-sort:disabled{cursor:default}
-@media(max-width:1250px){.participants-mobile-sort{display:block;max-width:360px;width:100%}.participants-mobile-sort .select-demo,.participants-mobile-sort .real-field{width:100%!important;margin:0}}
-@media(max-width:600px){.participants-mobile-sort{max-width:none}.participants-empty{background:var(--lab-surface);border-radius:var(--tree-xl)}}
+@media(max-width:1250px){.participants-mobile-sort{display:block}}
+@media(max-width:600px){.participants-empty{background:var(--lab-surface);border-radius:var(--tree-xl)}}
 .participants-person small{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:100%}
 @media(max-width:600px){.participants-person small{white-space:normal;overflow-wrap:anywhere}}
 /* Common identity data now has the same source as Invitations. */
@@ -113,7 +113,7 @@
 .participants-sort{white-space:normal;min-width:0}.participants-sort>span{flex:none}.participants-columns{column-gap:var(--tree-md)}
 
 /* The sort control is part of the toolbar; the results begin one DS gap below it. */
-.participants{gap:var(--tree-gap)}
+.participants{gap:var(--catalog-toolbar-gap)}
 .participants>.shared-catalog-toolbar{padding:0}
 
 .participants-tab-short{display:none}
@@ -121,15 +121,5 @@
  .participants-tab-full{display:none}.participants-tab-short{display:inline}
  .participants-panel{background:var(--lab-surface);overflow:hidden}
  .participants-pagination{margin-top:0;border-radius:0}
- .participants-mobile-sort{margin-left:auto;max-width:220px}
- .participants-mobile-sort .real-field{background:var(--lab-surface)!important}
 }
 
-@media(max-width:600px){
- .participants .catalog-toolbar-actions{justify-content:flex-start;flex-wrap:nowrap}
- .participants .participants-mobile-sort{display:block;flex:1 1 auto;width:auto;max-width:190px;min-width:0;margin-left:auto}
- .participants .participants-mobile-sort .real-field{height:44px!important;min-height:44px!important;border-radius:22px!important;background:var(--lab-surface)!important}
- .participants .participants-mobile-sort .option-menu{left:auto;right:0}
- .participants .catalog-toolbar-actions:has(>.expanding-search-frame>.expanding-search[data-open=true]){flex-wrap:wrap}
- .participants .catalog-toolbar-actions:has(>.expanding-search-frame>.expanding-search[data-open=true])>.catalog-toolbar-filters{flex-basis:auto}
-}

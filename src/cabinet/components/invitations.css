@@ -21,14 +21,14 @@
 /* Directory toolbar shares placement and controls with Participants. */
 .invitations>.shared-catalog-toolbar{background:transparent}
 .inv-list-label{font-size:var(--tree-body);color:var(--lab-muted)}
-.invitations .toolbar-filter-popover{max-height:min(640px,65dvh);overflow:auto}
-.invitations .toolbar-filter-popover .inv-filter-fields{grid-template-columns:minmax(0,1fr)}
+
+
 .inv-pagination>.inv-page-size{order:1;display:flex;align-items:center;gap:var(--tree-sm);width:calc(var(--tree-control) * 3)}
 .inv-pagination>nav{order:2}
 .inv-tabs{display:block;padding:0;max-width:100%;overflow:auto}
 .inv-tabs .store-category-tabs{display:flex;width:max-content;max-width:none;white-space:nowrap}
 .inv-tabs .store-category-tabs>button{flex:none}
-.inv-tabs .store-category-tabs>button:disabled{opacity:.45;cursor:default}
+
 .inv-mobile-facts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--tree-lg);margin-top:var(--tree-lg);font-size:var(--tree-body)}.inv-mobile-facts>div{min-width:0;overflow-wrap:anywhere}.inv-mobile-facts .genealogy-rank{margin:var(--tree-xs) 0 0;display:flex}
 
 .inv-row-actions{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
@@ -45,5 +45,5 @@
 .participant-dialog.inv-modal{height:fit-content}
 
 /* Keep the results one DS gap below the toolbar or its search hint. */
-.invitations{gap:var(--tree-gap)}
+.invitations{gap:var(--catalog-toolbar-gap)}
 .invitations>.shared-catalog-toolbar{padding:0}

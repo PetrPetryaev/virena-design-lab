@@ -1,0 +1,14 @@
+.ds-filter-choice-group{min-width:0}
+.ds-filter-choice-group + .ds-filter-choice-group{border-top:1px solid var(--lab-line)}
+.ds-filter-choice-heading{display:flex;align-items:center;gap:8px;width:100%;min-height:48px;padding:8px 0;border:0;background:transparent;color:var(--lab-ink);font:inherit;text-align:start;cursor:pointer}
+.ds-filter-choice-heading strong{font-weight:600}
+.ds-filter-choice-heading:hover strong{color:var(--lab-muted)}
+.ds-filter-choice-heading:focus-visible{outline:2px solid var(--lab-link);outline-offset:-2px;border-radius:8px}
+.ds-filter-choice-summary{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--lab-muted);font-size:14px;text-align:end}
+.ds-filter-choice-chevron{flex:none;display:grid;place-items:center;margin-inline-start:auto;width:24px;height:24px}
+.ds-filter-choice-heading[aria-expanded=true] .ds-filter-choice-chevron{transform:rotate(180deg)}
+.ds-filter-choice-options{display:grid;justify-items:stretch;gap:4px;padding-block:0 12px}
+.ds-filter-choice-options>button{justify-self:start}
+.ds-filter-choice-option{display:flex;align-items:center;gap:10px;min-height:36px;font-size:14px;cursor:pointer}
+.ds-filter-choice-option span{overflow-wrap:anywhere}
+.ds-filter-choice-stack{display:grid;min-width:0}
