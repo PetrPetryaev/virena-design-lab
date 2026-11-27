@@ -70,7 +70,7 @@
 .pd-profile-note strong { color:var(--lab-ink) }
 .partner-dashboard.card-loading .pd-results,.partner-dashboard.card-loading .pd-development,.partner-dashboard.card-loading .pd-bottom { opacity:.4; filter:blur(3px) }
 @media(max-width:1000px) { .pd-development { grid-template-columns:repeat(2,minmax(0,1fr)) } .pd-top,.pd-bottom { grid-template-columns:1fr 1fr } }
-@media(max-width:700px) { .partner-dashboard,.pd-top,.pd-bottom,.pd-results,.pd-development,.pd-aside { gap:var(--ov-sm) } .pd-top,.pd-bottom,.pd-results,.pd-development { grid-template-columns:1fr } .pd-card { padding:var(--ov-sm) } .pd-warning { align-items:flex-start; flex-direction:column; padding:var(--ov-sm) } .pd-top .pd-invite { order:2 } .pd-events:not(.is-expanded) .pd-event:nth-child(n+6) { display:none } }
+@media(max-width:700px) { .partner-dashboard,.pd-top,.pd-bottom,.pd-results,.pd-development,.pd-aside { gap:var(--ov-sm) } .pd-top,.pd-bottom,.pd-results,.pd-development { grid-template-columns:1fr } .pd-card { padding:var(--ov-sm) } .pd-warning { align-items:flex-start; flex-direction:column; padding:var(--ov-sm) } .pd-top .pd-invite { order:2 } }
 .cabinet .pd-aside { width:auto; min-width:0; padding:0; margin:0; border:0; background:none }
 .partner-dashboard .pd-aside .overview-sponsor { width:100%; min-width:0; box-sizing:border-box; border-radius:var(--cab-radius); padding:var(--ov-md) }
 .partner-dashboard .pd-aside .overview-person h2 { font-size:var(--overview-title); overflow-wrap:normal; word-break:normal }
@@ -95,7 +95,6 @@
 .cabinet .overview-framed-profile .partner-dashboard .overview-profile-meta { background:transparent }
 .pd-achievement-badge { width:var(--profile-px-120,120px); height:var(--profile-px-120,120px); object-fit:contain; align-self:center; background:var(--lab-on-primary); border-radius:50% }
 .pd-career-actions { display:flex; flex-wrap:wrap; gap:var(--ov-xs); margin-top:auto }
-.pd-awards-dialog section+section { margin-top:var(--ov-lg) }
 .pd-awards-dialog section h3 { margin:0; font-size:var(--overview-title) }
 .pd-awards-dialog section p { color:var(--lab-muted); font-size:var(--overview-body); line-height:1.5 }
 .pd-awards-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:var(--ov-xs) }

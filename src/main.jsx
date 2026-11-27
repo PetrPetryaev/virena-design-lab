@@ -141,7 +141,7 @@ function App(){useLocale();
   if(/Забыли пароль/.test(label)){go('forgot');return;}
   if(/Зарегистрироваться/.test(label)&&!current.startsWith('register')){go('register');return;}
   if(/Уже.*Войти|Назад ко входу|Вернуться ко входу/.test(label)){go('login');return;}
-  if(/Google/.test(label)){setMessage('Google – внешняя интеграция. В демо можно выбрать google-complete в списке состояний.');return;}
+  if(/Google/.test(label)){setMessage('Вход через Google сейчас недоступен.');return;}
   if(/Войти/.test(label)&&current.startsWith('login')){go(scenario==='network'?'login-network':scenario==='error'?'login-error':Object.values(values).filter(v=>typeof v==='string'&&v).length<2?'login-validation':'destination');return;}
   if(/Зарегистрироваться|Создать аккаунт/.test(label)&&current.startsWith('register')){
    const vv=Object.values(values).filter(v=>typeof v==='string');if(!vv.some(v=>/^.+@.+\..+$/.test(v))||!vv.some(v=>v.length>=8&&/[a-zа-я]/i.test(v)&&/\d/.test(v))||!Object.entries(values).some(([k,v])=>/принимаю/i.test(k)&&v===true)){go('register-errors');return;}
@@ -153,7 +153,7 @@ function App(){useLocale();
   if(/Назад/.test(label)){go(current==='onboard-3'?'onboard-2':current==='onboard-2'?'onboard-1':'login');return;}
   if(/кабинет/i.test(label)){go('destination');return;}
   if(/Скопировать/.test(label)){go('welcome-copy');return;}
-  if(/повторно|ещё раз/i.test(label)){setMessage('Демо: код отправлен повторно. Для проверки используйте 123456.');return;}
+  if(/повторно|ещё раз/i.test(label)){setMessage('Отправка кода сейчас недоступна.');return;}
   setMessage('Для этого действия пока доступен макет, полноценное поведение ещё не подключено.');
  }
  function setValue(key,value){const next={...values,[key]:value,...(key==='Страна'?{Город:''}:{})};setValues(next);if((screen.startsWith('verify')||screen.startsWith('reset-code'))&&key.includes(':')){const codes=[];function walk(n){if(groups.get(n.set)?.name==='Auth / Code cell')codes.push(next[n.id]||'');n.children?.forEach(walk);}walk(snap);if(codes.length===6&&codes.every(Boolean)){go(codes.join('')==='123456'?(screen.startsWith('verify')?'onboard-1':'new-password'):(screen.startsWith('verify')?'verify-invalid':'reset-code-error'));}}}

@@ -1,5 +1,6 @@
 /* Tree-specific geometry and roles; shared controls and palette remain unchanged. */
-.genealogy{--tree-xs:4px;--tree-sm:8px;--tree-md:12px;--tree-lg:16px;--tree-xl:24px;--tree-gap:32px;--tree-control:48px;--tree-caption:12px;--tree-body:14px;--tree-title:20px;--tree-card-width:280px;--tree-line:1px;--tree-focus:2px;--tree-connector:color-mix(in srgb,var(--lab-muted) 40%,var(--lab-accent-soft));font-family:Inter,sans-serif;color:var(--lab-ink);min-width:0;max-width:100%;display:flex;flex-direction:column;flex:1;min-height:0}
+.genealogy,.member-details-drawer{--tree-xs:4px;--tree-sm:8px;--tree-md:12px;--tree-lg:16px;--tree-xl:24px;--tree-gap:32px;--tree-control:48px;--tree-caption:12px;--tree-body:14px;--tree-title:20px;--tree-card-width:280px;--tree-line:1px;--tree-focus:2px;--tree-connector:color-mix(in srgb,var(--lab-muted) 40%,var(--lab-accent-soft))}
+.genealogy{font-family:Inter,sans-serif;color:var(--lab-ink);min-width:0;max-width:100%;display:flex;flex-direction:column;flex:1;min-height:0}
 .genealogy *{box-sizing:border-box}.genealogy button{font-family:inherit}.genealogy p{margin:0}
 .cabinet .cab-main:has(>.visual-tree){flex:1;overflow:hidden;padding-bottom:16px}
 .cab-main:has(>.visual-tree)>.cab-footer{display:none}
@@ -178,3 +179,5 @@
 .genealogy-return-card{position:absolute;right:calc(100% + var(--tree-lg));top:0}
 .genealogy-return-mobile{display:none}
 @media(max-width:900px){.genealogy-return-card{display:none}.genealogy-return-mobile{display:block}}
+
+.genealogy-search>.expanding-search-frame{justify-content:flex-end}

@@ -21,7 +21,7 @@ try{
   const rows=page.locator('#finance-history-results .ds-table-body>.ds-table-row');await rows.first().waitFor();const initialRows=await rows.count();assert.ok(initialRows>0);
   await page.getByRole('button',{name:'Фильтры',exact:true}).click();
   await page.getByRole('combobox',{name:'Нога',exact:true}).click();await page.getByRole('option',{name:'Правая нога',exact:true}).click();
-  await page.getByRole('checkbox',{name:'Сгорает за 30 дней',exact:true}).click();await page.getByRole('button',{name:'Закрыть фильтры',exact:true}).click();
+  await page.getByRole('checkbox',{name:'Сгорает за 30 дней',exact:true}).click();await page.getByRole('button',{name:'Показать результаты',exact:true}).click();
   await page.getByRole('heading',{name:'Баллов по этим условиям нет',exact:true}).waitFor();assert.equal(await rows.count(),0);
   await page.locator('#finance-history-results').getByRole('button',{name:'Сбросить фильтры',exact:true}).click();await rows.first().waitFor();assert.equal(await rows.count(),initialRows);
   assert.equal(await page.getByRole('button',{name:/^Фильтры ·/}).count(),0);

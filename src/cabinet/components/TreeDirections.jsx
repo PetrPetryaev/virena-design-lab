@@ -41,7 +41,7 @@ export default function TreeDirections({photo}){
   {stack>0&&<button className="td-continuation" onClick={()=>navigate(person.login)}><span>Ещё {stack} уровня</span><span aria-hidden="true">↓</span></button>}
  </div>;
  return <section className={`tree-directions td-${variant}`}>
-  <div className="td-review"><div><small>ВИЗУАЛЬНЫЕ НАПРАВЛЕНИЯ · ЛОКАЛЬНЫЙ ЭСКИЗ</small><h2>Карточки, связи и скрытые уровни</h2><p>Одна композиция для сравнения. Это условный фрагмент, не новые бизнес-правила.</p></div><a href="?tab=cabinet&page=genealogy">Вернуться к прототипу</a></div>
+  <div className="td-review"><div><small>ВИЗУАЛЬНЫЕ НАПРАВЛЕНИЯ · ЛОКАЛЬНЫЙ ЭСКИЗ</small><h2>Карточки, связи и скрытые уровни</h2><p>Одна композиция для сравнения. Это условный фрагмент, не новые бизнес-правила.</p></div><a href="?tab=cabinet&page=genealogy">Вернуться к структуре</a></div>
 
   <div className="td-description"><p>Выбранное направление · точки, низкие стеки и мягкие переходы</p><div><button disabled={busy||!inside} onClick={up}>↑ Переход выше</button><button disabled={busy} onClick={()=>navigate(people[0].login)}>Переход ниже ↓</button></div></div>
   <div className="td-scroll" ref={viewport}><div className="td-fit" style={{width:1120*scale,height:(inside?940:750)*scale}}><div className={`td-scene ${inside?'has-parents':'at-start'}`} style={{transform:`scale(${scale})`,transformOrigin:'top left'}} aria-busy={busy}><div className="td-scene-content" ref={content} inert={busy||undefined}>
@@ -62,6 +62,6 @@ export default function TreeDirections({photo}){
    <div className="td-first td-first-left"><Card person={people[0]}/></div><div className="td-first td-first-right"><Card person={people[1]}/></div>
    <div className="td-last td-last-one"><Card person={people[2]} leaf stack={2}/></div><div className="td-last td-last-two"><Card person={people[3]} leaf/></div><div className="td-last td-last-three"><Card person={people[4]} leaf stack={3}/></div><div className="td-last td-last-four"><Card person={people[5]} leaf/></div>
   </div></div></div></div>
-  <p className="td-caption">Стек появляется только у скрытого продолжения. У Анны и Михаила дети уже видны – дополнительных слоёв под ними нет. Карточка или нижний пилл – спуск; верхняя карточка – подъём. Движение демонстрационное, структура условная.</p>
+  <p className="td-caption">Стек появляется только у скрытого продолжения. У Анны и Михаила дети уже видны – дополнительных слоёв под ними нет. Карточка или нижний пилл – спуск; верхняя карточка – подъём. </p>
  </section>;
 }

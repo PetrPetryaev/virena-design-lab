@@ -282,3 +282,10 @@
   font-variant-numeric: tabular-nums;
 }
 
+
+
+.cabinet [data-ui=Toggle][role=checkbox]{filter:grayscale(1)}
+[data-theme=dark] .cabinet [data-ui=Toggle][role=checkbox]{filter:grayscale(1) invert(1)}
+
+
+@media(max-width:720px){.cabinet .cab-header .cab-top-actions>span button,.cabinet .cab-avatar{width:44px!important;height:44px!important;min-width:44px!important;min-height:44px!important}}

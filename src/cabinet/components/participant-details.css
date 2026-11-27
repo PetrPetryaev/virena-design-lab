@@ -1,6 +1,6 @@
 /* Product dialog follows the existing cabinet scale; native dialog supplies
    modal focus containment, top-layer placement and background inertness. */
-.genealogy{--participant-width:560px;--participant-scrim:rgb(0 0 0 / 20%)}
+.genealogy,.member-details-drawer{--participant-width:560px;--participant-scrim:rgb(0 0 0 / 20%)}
 .genealogy-node{position:relative;display:flex;max-width:var(--tree-card-width);width:100%;min-width:0}
 .genealogy-info{position:absolute;right:var(--tree-xs);bottom:var(--tree-xs)}
 .genealogy-node>.genealogy-member{padding-bottom:var(--tree-control)}
@@ -10,7 +10,7 @@
 .participant-scroll{overflow:auto;overscroll-behavior:contain;padding:0 var(--tree-xl) var(--tree-xl);min-height:0}.participant-badges{display:flex;gap:var(--tree-sm);flex-wrap:wrap}.participant-badges>span:not([data-ui]){padding:var(--tree-xs) var(--tree-sm);border-radius:var(--tree-sm);background:var(--lab-soft);font-size:var(--tree-caption)}.participant-activity{margin:var(--tree-md) 0!important;color:var(--lab-muted)}
 .participant-facts{margin:0;display:grid;gap:var(--tree-md)}.participant-facts>div{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr);gap:var(--tree-lg)}.participant-facts dt{color:var(--lab-muted)}.participant-facts dd{margin:0;overflow-wrap:anywhere}
 .participant-legs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--tree-sm);margin:var(--tree-xl) 0}.participant-legs>div{background:var(--lab-soft);border-radius:var(--tree-md);padding:var(--tree-lg);min-width:0}.participant-legs h3,.participant-contacts h3{font-size:var(--tree-body);margin:0 0 var(--tree-sm);font-weight:600}.participant-legs strong{display:block;font-size:var(--tree-title);overflow-wrap:anywhere;font-variant-numeric:tabular-nums}.participant-legs span,.participant-legs p{font-size:var(--tree-caption);color:var(--lab-muted)}.participant-legs p{margin-top:var(--tree-sm)}
-.participant-contacts{display:grid;gap:var(--tree-md);padding-top:var(--tree-lg);box-shadow:inset 0 var(--tree-line) 0 var(--lab-line)}.participant-note{font-size:var(--tree-caption);color:var(--lab-muted)}.participant-actions{padding:var(--tree-lg) var(--tree-xl);box-shadow:inset 0 var(--tree-line) 0 var(--lab-line);flex:none;display:flex;justify-content:flex-end}.participant-actions button{max-width:100%}
+.participant-contacts{display:grid;gap:var(--tree-md)}.participant-note{font-size:var(--tree-caption);color:var(--lab-muted)}.participant-actions{padding:var(--tree-lg) var(--tree-xl);box-shadow:inset 0 var(--tree-line) 0 var(--lab-line);flex:none;display:flex;justify-content:flex-end}.participant-actions button{max-width:100%}
 @media(max-width:720px){.participant-dialog{width:100%;height:calc(100dvh - env(safe-area-inset-top));max-height:100dvh;margin:auto 0 0;border-radius:var(--tree-xl) var(--tree-xl) 0 0}.participant-heading{padding:var(--tree-lg)}.participant-scroll{padding:0 var(--tree-lg) var(--tree-lg)}.participant-actions{padding:var(--tree-lg);padding-bottom:max(var(--tree-lg),env(safe-area-inset-bottom))}.participant-actions>button{width:100%;min-width:0!important}.participant-contacts>button{max-width:100%;min-width:0!important}.participant-facts>div{grid-template-columns:minmax(0,1fr) minmax(0,1.2fr)}}
 
 .participant-identity{display:flex;align-items:center;gap:var(--tree-md)}.participant-identity>div{min-width:0}.participant-identity>.genealogy-avatar{width:var(--tree-control);height:var(--tree-control);color:var(--lab-link);font-size:var(--tree-body)}.participant-scroll:focus-visible{outline:var(--tree-focus) solid var(--lab-link);outline-offset:calc(-1 * var(--tree-focus))}
@@ -20,9 +20,19 @@
 .participant-facts>div{align-items:center;padding-block:var(--tree-xs)}
 .participant-heading{padding-bottom:var(--tree-lg)}
 .participant-scroll>.participant-facts{padding-top:var(--tree-sm)}
-.participant-contacts{box-shadow:inset 0 var(--tree-line) 0 color-mix(in srgb,var(--lab-line) 65%,var(--lab-surface))}
 .participant-actions{gap:var(--tree-md);box-shadow:inset 0 var(--tree-line) 0 color-mix(in srgb,var(--lab-line) 65%,var(--lab-surface))}
 
 /* Shared detail-panel placement for the directory, tree and personal invitations. */
-.member-details-drawer{--participant-width:640px;width:min(var(--participant-width),100vw);height:100dvh;max-height:100dvh;margin:0 0 0 auto;border-radius:var(--tree-xl) 0 0 var(--tree-xl)}
-@media(max-width:720px){.member-details-drawer{width:100%;height:100dvh;max-height:100dvh;margin:0;border-radius:0}}
+.member-details-drawer{--drawer-inset:var(--tree-gap);--participant-width:640px;width:min(var(--participant-width),100vw);height:100dvh;max-height:100dvh;margin:0 0 0 auto;border-radius:var(--tree-xl) 0 0 var(--tree-xl)}
+@media(max-width:720px){.member-details-drawer{--drawer-inset:var(--tree-xl);width:100%;height:100dvh;max-height:100dvh;margin:0;border-radius:0}}
+
+.drawer-header-actions,.drawer-navigation{display:flex;align-items:center;gap:var(--tree-sm);flex:none}.drawer-header-actions{margin-left:auto}.drawer-navigation{gap:0}
+@media(max-width:720px){.member-details-drawer .participant-heading{gap:var(--tree-sm)}.member-details-drawer .drawer-header-actions{gap:0}.member-details-drawer .participant-actions{flex-wrap:wrap}}
+
+.drawer-next{display:inline-flex;transform:rotate(180deg)}
+.drawer-section{padding-top:var(--tree-xl);margin-top:var(--tree-xl);box-shadow:inset 0 var(--tree-line) 0 var(--lab-line)}
+
+.member-details-drawer > :is(.participant-heading,.participant-scroll,.participant-actions) { padding-inline:var(--drawer-inset); }
+.member-details-drawer .drawer-title-group { flex:1; min-width:0; }
+.drawer-title-row { display:flex; align-items:center; gap:var(--tree-xs); min-height:40px; }
+.drawer-title-row h2 { margin:0; }

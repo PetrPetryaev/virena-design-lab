@@ -18,7 +18,7 @@ export const profileInitialData={
 
 // Local-only demo fixtures. Account information is masked; these are not payment details.
 export const profileDemoRequisites={items:[{
- recipient:'Александра Соколова',recipientType:'Физлицо',bank:'Демо Банк',masked:'•••• 4821',primary:true,activating:false,
+ recipient:'Александра Соколова',recipientType:'Физлицо',bank:'Банк',masked:'•••• 4821',primary:true,activating:false,
 }]};
 export const profileDemoSuccessor={person:{
  name:'Александр Соколов',relationship:'Брат / сестра',otherRelationship:'',birthDate:'',phone:'+7 900 000-00-00',email:'successor.demo@example.com',added:'04.11.2026',

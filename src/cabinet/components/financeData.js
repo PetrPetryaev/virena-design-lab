@@ -20,7 +20,7 @@ const base=[
  op('F-1100','2026-11-02','Премия за скорость',5000,'Ранг ★ · 01.10–02.11','Бинарный чек 1 000 € × 5% = 50 €.',{state:'Начислено',unlock:'2026-12-01'}),
  op('F-1099','2026-11-05','Бинарный бонус',-1500,'По правилам маркетинг-плана','Корректировка начисления F-1104 по правилам маркетинг-плана.',{kind:'Корректировка',state:'Начислено',unlock:'2026-12-01'}),
  op('F-1031','2026-10-31','Бинарный бонус',20000,'За 30.10 · 2 цикла','2 × 450/450: списано 900 BV из каждой ноги.'),
- op('F-1028','2026-10-28','ВЗР',5400,'denis_demo · Bio Life · №100231','Покупка 300 € × 18% = 54 €. Возврат отражён отдельной операцией F-1102.',{login:'denis_demo',order:'100231'}),
+ op('F-1028','2026-10-28','ВЗР',5400,'denis_demo · BioLife · №100231','Покупка 300 € × 18% = 54 €. Возврат отражён отдельной операцией F-1102.',{login:'denis_demo',order:'100231'}),
  op('F-1025','2026-10-25','Годовой бонус',41200,'Расчётный год 25.10.2025–24.10.2026','Годовой бонус после закрытия расчётного года.'),
  op('F-1020','2026-10-20','Вывод',-30000,'Заявка №1024 · счёт ••4821','Выплачено 300 € по заявке №1024.',{state:'Выведено'}),
  op('F-1015','2026-10-15','ВЗР',9720,'irina_demo · Balance · №100198','Покупка 540 € × 18% = 97,20 €.',{login:'irina_demo',order:'100198'}),
@@ -28,8 +28,8 @@ const base=[
 export function ledgerFor(scenario,member){
  if(scenario==='empty'||['newcomer','client','partner-no-package','deactivated'].includes(member))return [];
  if(scenario==='single')return [base[0]];
- if(scenario==='many')return [...base,...Array.from({length:35},(_,i)=>op('F-extra-'+i,`2026-10-${String(1+i%14).padStart(2,'0')}`,'ВЗР',1800,`partner_${i+1} · Bio Life · №${200000+i}`,'Покупка 100 € × 18% = 18 €.',{login:`partner_${i+1}`}))];
- if(scenario==='long')return [{...base[0],id:'F-long',amount:123456789012,basis:'alexandra_very_long_partner_login · Комплект продуктов и оборудования Virena · №100245',detail:'Демонстрация длинного значения: 1 234 567 890,12 €.'},...base.slice(1)];
+ if(scenario==='many')return [...base,...Array.from({length:35},(_,i)=>op('F-extra-'+i,`2026-10-${String(1+i%14).padStart(2,'0')}`,'ВЗР',1800,`partner_${i+1} · BioLife · №${200000+i}`,'Покупка 100 € × 18% = 18 €.',{login:`partner_${i+1}`}))];
+ if(scenario==='long')return [{...base[0],id:'F-long',amount:123456789012,basis:'alexandra_very_long_partner_login · Комплект продуктов и оборудования Virena · №100245',detail:'1 234 567 890,12 €.'},...base.slice(1)];
  return base.map(r=>({...r}));
 }
 export const pointBatches=[

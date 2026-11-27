@@ -8,5 +8,5 @@
 
 .cab-language-menu{position:relative}
 .cab-language-popover{position:fixed;left:16px;right:auto;top:auto;bottom:88px;z-index:100;max-width:calc(100vw - 32px)}
-.lab-settings:has(.cab-overview-toolbar select[aria-label="Участник"]){left:16px;right:auto}
-.lab-settings:has(.cab-overview-toolbar select[aria-label="Участник"]) .lab-settings-panel{left:0;right:auto}
+#root:not(:has(>.cabinet.is-collapsed,>.cabinet.menu-open))>.lab-settings:has(.cab-overview-toolbar select[aria-label="Участник"]){left:16px;right:auto}
+#root:not(:has(>.cabinet.is-collapsed,>.cabinet.menu-open))>.lab-settings:has(.cab-overview-toolbar select[aria-label="Участник"]) .lab-settings-panel{left:0;right:auto}

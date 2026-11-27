@@ -168,8 +168,8 @@
 .fd-plan-compare .fd-plan-current-note{margin-top:var(--tree-lg);line-height:1.5}
 .fd-plan-upgrade{margin-top:auto;padding-top:var(--tree-xl);align-items:stretch}
 .fd-dashboard .finance-income-period{gap:var(--tree-sm)}
-.fd-dashboard .finance-income-period .store-category-tabs{width:fit-content;max-width:100%;padding:var(--tree-xs);gap:0;align-self:center}
-.fd-dashboard .finance-income-period .store-category-tabs [role=tab]{min-height:var(--tree-gap);padding:var(--tree-xs) var(--tree-md);font-size:var(--tree-caption)}
+.fd-dashboard .finance-income-period .store-category-tabs{width:fit-content;max-width:100%;align-self:center}
+
 .fd-dashboard .finance-period-nav>span:not(.inv-next){padding-block:var(--tree-sm);font-size:var(--tree-caption)}
 .fd-dashboard .finance-stacked-bar{gap:calc(var(--tree-xs) / 2);border-radius:var(--tree-sm);overflow:visible}
 .fd-dashboard .finance-stacked-bar>button{transition:flex-grow 400ms cubic-bezier(.16,1,.3,1),opacity 180ms ease,transform 180ms ease;transform-origin:center;border-radius:calc(var(--tree-xs) / 2)}
@@ -182,8 +182,8 @@
 /* Income: compact reference header, rolling digits and linked emphasis. */
 .fd-dashboard{--finance-source-0:#1bb1c5;--finance-source-1:#3c7df5;--finance-source-2:#9756ed;--finance-source-3:#e84a96;--finance-source-4:#20c67b}
 .fd-dashboard .finance-income-horizontal .profile-card-heading{align-items:center;flex-wrap:nowrap;gap:var(--tree-sm)}
-.fd-dashboard .finance-mini-tabs{display:flex;padding:var(--tree-xs);gap:0;background:var(--lab-soft);border-radius:var(--tree-xl);width:fit-content}
-.fd-dashboard .finance-mini-tabs [role=tab]{min-width:var(--tree-gap);min-height:var(--tree-gap);padding:var(--tree-xs) var(--tree-sm);font-size:var(--tree-caption)}
+.fd-dashboard .finance-mini-tabs{width:fit-content}
+
 .finance-income-value{margin-block:var(--tree-lg)}
 .finance-rolling-money{font-size:var(--profile-px-40);font-weight:500;letter-spacing:-.035em;line-height:1.2;font-variant-numeric:tabular-nums}
 .finance-rolling-money>span{display:flex;align-items:baseline;white-space:pre}
@@ -201,7 +201,7 @@
 @media(prefers-reduced-motion:reduce){.finance-digit-reel,.fd-dashboard .finance-source-amount{transition:none}}
 @media(max-width:480px){.fd-dashboard .finance-income-horizontal .profile-card-heading h2{font-size:var(--profile-px-18)}.finance-rolling-money{font-size:var(--profile-px-32)}}
 
-.fd-dashboard .finance-mini-tabs [role=tab]{min-width:calc(var(--tree-control) + var(--tree-xs));padding-inline:var(--tree-sm)}
+
 .finance-income-value-top{display:flex;justify-content:space-between;align-items:center;gap:var(--tree-md);flex-wrap:wrap}
 .fd-dashboard .finance-income-value-top .finance-income-period{width:auto;max-width:100%;margin-left:auto}
 .fd-dashboard .finance-income-value-top .finance-period-nav{width:calc(var(--tree-control) * 4);max-width:100%;gap:var(--tree-xs)}

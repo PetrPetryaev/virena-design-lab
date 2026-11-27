@@ -1,3 +1,4 @@
+import ExpandingSearch from '../../ExpandingSearch.jsx';
 import TreeLegMetrics from './TreeLegMetrics.jsx';
 import MemberOwnBadge from './MemberOwnBadge.jsx';
 import MemberPackage from './MemberPackage.jsx';
@@ -151,7 +152,7 @@ export default function Genealogy({Shared, db, photo, cells=defaultCells, placem
   ].map(([label,target,disabled,direction])=><Shared.Button key={label} group={db.components.find(c=>c.name==='Boris / Button')} choice={{Tone:'Soft',Size:'40'}} label={label} iconContent={<span className={`genealogy-nav-icon nav-${direction}`} aria-hidden="true"><Shared.Icon name={direction==='home'?'Virena / Navigation icon / Home':'Auth / Icon / Back'}/></span>} disabled={disabled||busy} onClick={()=>{canvas.current.scrollTo({top:0,behavior:'instant'});open(target);}}/>)}</nav>
    </div>
    <div className="genealogy-search" onBlur={e=>{if(!e.currentTarget.contains(e.relatedTarget))setSearchOpen(false);}} onFocus={()=>setSearchOpen(true)} onKeyDown={e=>{if(e.key==='Escape'){e.currentTarget.querySelector('input')?.focus();setSearchOpen(false);}if(e.key==='ArrowDown'&&e.target.tagName==='INPUT'){e.preventDefault();e.currentTarget.querySelector('.genealogy-result')?.focus();}}}>
-    <label className="store-search"><span className="store-search-symbol" aria-hidden="true"><Shared.Icon name="Serach"/></span><input type="search" aria-label="Поиск по структуре" placeholder="Найти участника" value={query} onChange={e=>{setQuery(e.target.value);setSearchOpen(true);}}/></label>
+    <ExpandingSearch {...{Shared,db}} label="Поиск по структуре" value={query} onChange={value=>{setQuery(value);setSearchOpen(Boolean(value));}}/>
     {searchOpen && query.trim().length>0 && <div className="genealogy-results" role="region" aria-label="Результаты поиска">
      {query.trim().length<3 ? <p role="status">Введите не менее 3 символов</p> : results.length ? results.map(c=><button type="button" className="genealogy-result" key={c.path} onClick={()=>{setSelected(c);setSearchOpen(false);}}><strong>{c.login}</strong>{c.personal && <span>{c.name}</span>}<small>{legLabel(c.path)} · уровень {c.path.length}</small></button>) : <p role="status">В вашей структуре не найдено</p>}
     </div>}
